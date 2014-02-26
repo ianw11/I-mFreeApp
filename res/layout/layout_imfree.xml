@@ -1,0 +1,67 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".ImFree" >
+
+    <Button
+        android:id="@+id/freeWhosFreeButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/whos_free" />
+
+    <EditText
+        android:id="@+id/freeWhereEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/freePostButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="46dp"
+        android:hint="@string/where"
+        android:ems="10" >
+
+    </EditText>
+
+    <TimePicker
+        android:id="@+id/freeTimePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/freeWhereEditText"
+        android:layout_alignLeft="@+id/freeWhereEditText"
+        android:layout_marginBottom="52dp" />
+
+    <Button
+        android:id="@+id/freePostButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="26dp"
+        android:text="@string/post" />
+
+    <TextView
+        android:id="@+id/freeFreeUntil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/freeTimePicker"
+        android:layout_alignLeft="@+id/freeTimePicker"
+        android:text="@string/free_until"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <Button
+        android:id="@+id/freeLogoutButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/logout" />
+
+</RelativeLayout>

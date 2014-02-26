@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">I\'m Free</string>
+    <string name="actionbar_title">I\'m Free</string>
+    <string name="default_name">John Doe</string>
+    <string name="default_timeSlot">Free from 1:00 AM to 6:00 AM</string>
+    <string name="default_location">At the CSL</string>
+    <string name="illHang_text">I\'ll Hang</string>
+
+    <!-- MenuItem titles -->
+    <string name="menuTitle_startRecording">Start</string>
+    <string name="menuTitle_stopRecording">Stop</string>
+    <string name="menuTitle_load">Load</string>
+    <string name="menuTitle_save">Save</string>
+    <string name="menuTitle_takePicture">Take Picture</string>
+    <string name="menuTitle_enableGPS">Enable GPS</string>
+    <string name="login">Login</string>
+    <string name="username_hint">Username/Email</string>
+    <string name="password_hint">Password</string>
+    <string name="remember_me_checkbox">Remember Me</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="facebook_sign_up">Sign In With Facebook</string>
+    <string name="sign_up_text">Sign Up!</string>
+    <string name="title_activity_login">I\'m Free</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_sign_up">Sign Up</string>
+    <string name="name">Name</string>
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
+    <string name="confirm">Confirm!!</string>
+    <string name="title_activity_im_free">Set Availability</string>
+    <string name="whos_free">See Who\'s Free</string>
+    <string name="where">Where?</string>
+    <string name="post">POST</string>
+    <string name="free_until">Free Until</string>
+    <string name="logout">Logout</string>
+    <string name="title_activity_maps">MapsActivity</string>
+
+</resources>
