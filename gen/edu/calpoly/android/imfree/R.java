@@ -839,10 +839,11 @@ containing a value of this type.
         public static final int abs__bright_foreground_disabled_holo_light=0x7f04000f;
         public static final int abs__bright_foreground_holo_dark=0x7f04000c;
         public static final int abs__bright_foreground_holo_light=0x7f04000d;
-        public static final int abs__primary_text_disable_only_holo_dark=0x7f040010;
-        public static final int abs__primary_text_disable_only_holo_light=0x7f040011;
-        public static final int abs__primary_text_holo_dark=0x7f040012;
-        public static final int abs__primary_text_holo_light=0x7f040013;
+        public static final int abs__primary_text_disable_only_holo_dark=0x7f040015;
+        public static final int abs__primary_text_disable_only_holo_light=0x7f040016;
+        public static final int abs__primary_text_holo_dark=0x7f040017;
+        public static final int abs__primary_text_holo_light=0x7f040018;
+        public static final int black=0x7f040011;
         public static final int common_action_bar_splitter=0x7f040009;
         /**  Sign-in Button Colors 
          */
@@ -855,8 +856,12 @@ containing a value of this type.
         public static final int common_signin_btn_light_text_disabled=0x7f040006;
         public static final int common_signin_btn_light_text_focused=0x7f040007;
         public static final int common_signin_btn_light_text_pressed=0x7f040005;
-        public static final int common_signin_btn_text_dark=0x7f040014;
-        public static final int common_signin_btn_text_light=0x7f040015;
+        public static final int common_signin_btn_text_dark=0x7f040019;
+        public static final int common_signin_btn_text_light=0x7f04001a;
+        public static final int green=0x7f040013;
+        public static final int loginBlue=0x7f040010;
+        public static final int white=0x7f040012;
+        public static final int yellow=0x7f040014;
     }
     public static final class dimen {
         /**  Default height of an action bar. 
@@ -1109,6 +1114,7 @@ containing a value of this type.
         public static final int item=0x7f02008d;
     }
     public static final class id {
+        public static final int RelativeLayout1=0x7f05003c;
         public static final int abs__action_bar=0x7f050024;
         public static final int abs__action_bar_container=0x7f050023;
         public static final int abs__action_bar_subtitle=0x7f050015;
@@ -1148,10 +1154,9 @@ containing a value of this type.
         public static final int abs__textButton=0x7f050017;
         public static final int abs__title=0x7f05001f;
         public static final int abs__up=0x7f05000f;
-        public static final int action_settings=0x7f05004e;
+        public static final int action_settings=0x7f05004f;
         public static final int disableHome=0x7f05000d;
         public static final int edit_query=0x7f05002a;
-        public static final int facebookSignUpTextView=0x7f050041;
         public static final int forgotPasswordTextView=0x7f05003f;
         public static final int freeFreeUntil=0x7f05003a;
         public static final int freeLogoutButton=0x7f05003b;
@@ -1161,32 +1166,33 @@ containing a value of this type.
         public static final int freeWhosFreeButton=0x7f050036;
         public static final int homeAsUp=0x7f05000a;
         public static final int hybrid=0x7f050004;
-        public static final int illHangButton=0x7f05004d;
+        public static final int illHangButton=0x7f05004e;
         public static final int listMode=0x7f050006;
-        public static final int locationTextView=0x7f05004c;
+        public static final int locationTextView=0x7f05004d;
         public static final int loginButton=0x7f050040;
-        public static final int map=0x7f050043;
+        public static final int loginTextView=0x7f05003d;
+        public static final int map=0x7f050044;
         public static final int none=0x7f050000;
         public static final int normal=0x7f050001;
-        public static final int passwordEditText=0x7f05003d;
-        public static final int postListViewGroup=0x7f050049;
-        public static final int posterNameTextView=0x7f05004a;
-        public static final int rememberMeCheckBox=0x7f05003e;
+        public static final int passwordEditText=0x7f050042;
+        public static final int postListViewGroup=0x7f05004a;
+        public static final int posterNameTextView=0x7f05004b;
+        public static final int rememberMeCheckBox=0x7f050041;
         public static final int satellite=0x7f050002;
         public static final int showCustom=0x7f05000c;
         public static final int showHome=0x7f050009;
         public static final int showTitle=0x7f05000b;
-        public static final int signUpButton=0x7f050042;
-        public static final int signUpConfirmButton=0x7f050044;
-        public static final int signUpEmailEditText=0x7f050048;
-        public static final int signUpNameEditText=0x7f050047;
-        public static final int signUpPasswordEditText=0x7f050045;
-        public static final int signUpTextView=0x7f050046;
+        public static final int signUpButton=0x7f05003e;
+        public static final int signUpConfirmButton=0x7f050045;
+        public static final int signUpEmailEditText=0x7f050049;
+        public static final int signUpNameEditText=0x7f050048;
+        public static final int signUpPasswordEditText=0x7f050046;
+        public static final int signUpTextView=0x7f050047;
         public static final int tabMode=0x7f050007;
         public static final int terrain=0x7f050003;
-        public static final int timeSlotTextView=0x7f05004b;
+        public static final int timeSlotTextView=0x7f05004c;
         public static final int useLogo=0x7f050008;
-        public static final int usernameEditText=0x7f05003c;
+        public static final int usernameEditText=0x7f050043;
         public static final int wrap_content=0x7f050005;
     }
     public static final class integer {
