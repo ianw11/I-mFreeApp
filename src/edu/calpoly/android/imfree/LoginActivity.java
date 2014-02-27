@@ -91,12 +91,6 @@ public class LoginActivity extends Activity implements OnClickListener {
       mSignUpButton.setOnClickListener(this);
    }
 
-   @Override
-   public boolean onCreateOptionsMenu(Menu menu) {
-      // Inflate the menu; this adds items to the action bar if it is present.
-      getMenuInflater().inflate(R.menu.login, menu);
-      return true;
-   }
 
    @Override
    public void onClick(View v) {

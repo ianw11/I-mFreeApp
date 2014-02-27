@@ -95,14 +95,6 @@ public class WhosFree extends SherlockFragmentActivity {
 	}
 
 	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
-		MenuInflater inflater = this.getSupportMenuInflater();
-		inflater.inflate(R.menu.mainmenu, menu);
-		return true;
-	}
-	
 	
 	public void addPost(Post post) {
 		this.mPostList.add(post);
