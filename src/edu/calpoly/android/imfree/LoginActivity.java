@@ -28,7 +28,6 @@ public class LoginActivity extends Activity implements OnClickListener {
    private EditText mPasswordEditText;
    private CheckBox mRememberMeCheckBox;
    private TextView mForgotPasswordTextView;
-   private TextView mFacebookSignInTextView;
    private Button mSignUpButton;
 
    @Override
@@ -82,7 +81,6 @@ public class LoginActivity extends Activity implements OnClickListener {
       this.mPasswordEditText = (EditText)findViewById(R.id.passwordEditText);
       this.mRememberMeCheckBox = (CheckBox)findViewById(R.id.rememberMeCheckBox);
       this.mForgotPasswordTextView = (TextView)findViewById(R.id.forgotPasswordTextView);
-      this.mFacebookSignInTextView = (TextView)findViewById(R.id.facebookSignUpTextView);
       this.mSignUpButton = (Button)findViewById(R.id.signUpButton);
       
    }
@@ -90,7 +88,6 @@ public class LoginActivity extends Activity implements OnClickListener {
    private void initializeListeners() {
       mForgotPasswordTextView.setOnClickListener(this);
       mLoginButton.setOnClickListener(this);
-      mFacebookSignInTextView.setOnClickListener(this);
       mSignUpButton.setOnClickListener(this);
    }
 
@@ -137,9 +134,6 @@ public class LoginActivity extends Activity implements OnClickListener {
             break;
          case R.id.forgotPasswordTextView:
             Toast.makeText(this, "Forgot Password Clicked", Toast.LENGTH_SHORT).show();
-            break;
-         case R.id.facebookSignUpTextView:
-            Toast.makeText(this, "Facebook Clicked", Toast.LENGTH_SHORT).show();
             break;
          case R.id.signUpButton:
             Intent i = new Intent(this, SignUpActivity.class);
