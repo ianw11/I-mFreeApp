@@ -48,11 +48,10 @@ public class LoginActivity extends Activity implements OnClickListener {
       
       if (!getIntent().hasExtra("intent")) {
       
-         Parse.initialize(this, "IRL0T2KM6IP9GjaXU4ai7NAHLNnqli1iVVaPfV1U", 
-               "ADfT5SkIThn2a4uEAg1Vf5ZjiIAEx6S863jgguQn");
+         
          ParseUser.enableAutomaticUser();
          ParseACL defaultACL = new ParseACL();
-         
+
          if (!prefs.getString("username", "").equals("")) {
             ParseUser.logInInBackground(mUsernameEditText.getText().toString(), mPasswordEditText.getText().toString(), new LogInCallback() {
                public void done(ParseUser user, ParseException e) {

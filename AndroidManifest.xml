@@ -8,6 +8,7 @@
         android:minSdkVersion="10"
         android:targetSdkVersion="19" />
 
+    <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
@@ -24,11 +25,6 @@
         android:allowBackup="true"
         android:label="@string/app_name"
         android:theme="@style/Theme.Sherlock.Light" >
-        <activity
-            android:name="edu.calpoly.android.imfree.WhosFree"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" >
-        </activity>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -41,14 +37,14 @@
             android:name="com.google.android.maps"
             android:required="true" />
 
+        <!-- Activity Declarations -->
+        <activity
+            android:name="edu.calpoly.android.imfree.WhosFree"
+            android:label="@string/app_name" >
+        </activity>
         <activity
             android:name="edu.calpoly.android.imfree.LoginActivity"
             android:label="@string/title_activity_login" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="edu.calpoly.android.imfree.SignUpActivity"
@@ -61,6 +57,17 @@
         <activity
             android:name="edu.calpoly.android.imfree.MapsActivity"
             android:label="@string/title_activity_maps" >
+        </activity>
+        <activity
+            android:name="edu.calpoly.android.imfree.SplashScreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name"
+            android:theme="@style/FullscreenTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

@@ -37,10 +37,14 @@
     <string name="free_until">Free Until</string>
     <string name="logout">Logout</string>
     <string name="title_activity_maps">MapsActivity</string>
+
     <color name="loginBlue">#1197F0</color>
     <color name="black">#000</color>
     <color name="white">#FFF</color>
     <color name="green">#05A100</color>
     <color name="yellow">#F2FF00</color>
+
+    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="dummy_content">SPLASH\nSCREEN</string>
 
 </resources>
