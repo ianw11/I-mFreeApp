@@ -10,14 +10,11 @@ import android.util.Log;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.parse.FindCallback;
-import com.parse.Parse;
-import com.parse.ParseACL;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -71,14 +68,19 @@ public class WhosFree extends SherlockFragmentActivity {
     	  public void done(List<ParseUser> objects, ParseException e) {
     	    if (e == null) {
     	        for (ParseUser user : objects) {
-    	           Date date = user.getDate("TimeFree");
-    	           if (!user.getUsername().equals(musername) && date != null && date.after(new Date())) {
-    	              Log.d("datetime", "found later date");
-    	              addPost(new Post(user.getUsername(), date.toString(), "My House", new LatLng(35.300609, -120.660592)));
-    	        	}
+    	           final Date date = user.getDate("TimeFree");
+    	           if (date != null && !user.getUsername().equals(musername) && date.after(new Date())) {
+    	              final ParseGeoPoint gp = user.getParseGeoPoint("Location");
+    	              final LatLng loc = new LatLng(gp.getLatitude(), gp.getLongitude());
+    	              final String userLocation = user.getString("UserLocation");
+    	              
+    	              final Post post = new Post(user.getString("FriendlyName"), date.toString(), userLocation, loc, getSupportFragmentManager());
+    	              addPost(post);
+    	           }
     	        }
     	    } else {
     	        // Something went wrong.
+    	       Log.e("WhosFree", "Exception in findInBackground");
     	    }
     	  }
     	});

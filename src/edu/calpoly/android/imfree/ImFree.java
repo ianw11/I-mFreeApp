@@ -1,12 +1,13 @@
 package edu.calpoly.android.imfree;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -30,11 +31,15 @@ public class ImFree extends Activity {
    private Button navWhosFree;
    
    private Button navLogout;
+   
+   private LocationManager locManager;
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.layout_imfree);
+      
+      initLocationData();
       
       Intent i = getIntent();
       musername = i.getStringExtra("ParseUser");
@@ -53,12 +58,15 @@ public class ImFree extends Activity {
                @Override
                public void done(ParseUser user, ParseException e) {
                   if (e == null) {
-                     user.put("Location", new ParseGeoPoint(0,0));
                      user.put("UserLocation", mLocation.getText().toString());
                      Date temp = new Date();
                      temp.setHours(mTimePicker.getCurrentHour());
                      temp.setMinutes(mTimePicker.getCurrentMinute());
                      user.put("TimeFree", temp);
+                     
+                     Location currLoc = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                     ParseGeoPoint geoPoint = new ParseGeoPoint(currLoc.getLatitude(), currLoc.getLongitude());
+                     user.put("Location", geoPoint);
                      
                      user.saveInBackground();
                   }
@@ -100,6 +108,10 @@ public class ImFree extends Activity {
       
       navWhosFree = (Button)findViewById(R.id.freeWhosFreeButton);
       navLogout = (Button)findViewById(R.id.freeLogoutButton);
+   }
+   
+   private void initLocationData() {
+      locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
    }
 
 }

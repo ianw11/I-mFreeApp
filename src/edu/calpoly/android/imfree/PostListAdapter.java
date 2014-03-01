@@ -3,6 +3,7 @@ package edu.calpoly.android.imfree;
 import java.util.List;
 
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;

@@ -29,9 +29,10 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <!-- Google Maps API Key -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyA-kW_d0fD-exio7df5yhkafpAieyh9wPA" />
+            android:value="AIzaSyBOiN9SzOV3FbM5xLYaVotHIzzMROG-V0w" />
 
         <uses-library
             android:name="com.google.android.maps"

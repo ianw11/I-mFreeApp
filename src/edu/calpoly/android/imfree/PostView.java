@@ -1,7 +1,6 @@
 package edu.calpoly.android.imfree;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -10,14 +9,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class PostView extends LinearLayout implements OnClickListener {
 
 	private TextView mPosterNameTextView;
 	private TextView mTimeSlotTextView;
 	private TextView mLocationTextView;
-	private MapView mMap;
+	private GoogleMap mMap;
 	private Button mIllHangButton;
 	
 	private Post mPost;
@@ -33,9 +36,8 @@ public class PostView extends LinearLayout implements OnClickListener {
 		
 		this.mIllHangButton = (Button)findViewById(R.id.illHangButton);
 		this.mIllHangButton.setOnClickListener(this);
-		this.setPost(post);
 		
-		this.setOnClickListener(this);
+		this.setPost(post);
 	}
 
 	public void setPost(Post post) {
@@ -44,13 +46,14 @@ public class PostView extends LinearLayout implements OnClickListener {
 		this.mTimeSlotTextView.setText(mPost.getTimeSlot());
 		this.mLocationTextView.setText(mPost.getLocation());
 		
-		/*
-		GoogleMap googleMap = this.mMap.getMap();
-		Marker marker = googleMap.addMarker(null);
-		marker.setPosition(mPost.getGeoLoc());
-		CameraUpdate camUpdate = CameraUpdateFactory.newLatLng(mPost.getGeoLoc());
-		googleMap.moveCamera(camUpdate);
-		*/
+		mMap = ((SupportMapFragment)(post.getFragmentManager().findFragmentById(R.id.postMap))).getMap();
+      mMap.moveCamera(CameraUpdateFactory.newLatLng(post.getGeoLoc()));
+      mMap.moveCamera(CameraUpdateFactory.zoomTo(17));
+		mMap.addMarker(new MarkerOptions().position(mPost.getGeoLoc()));
+		
+		UiSettings settings = mMap.getUiSettings();
+		settings.setZoomControlsEnabled(false);
+		settings.setAllGesturesEnabled(false);
 	}
 	
 	@Override
@@ -60,9 +63,6 @@ public class PostView extends LinearLayout implements OnClickListener {
 	      Toast.makeText(getContext(), this.mPost.getPosterName() + " has been notified.", Toast.LENGTH_SHORT).show();
 	      break;
 	   default:
-	      Intent i = new Intent(getContext(), MapsActivity.class);
-	      i.putExtra("latlng", mPost.getGeoLoc());
-	      getContext().startActivity(i);
 	      break;
 	   }
 	}
