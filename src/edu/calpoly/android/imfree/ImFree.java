@@ -8,17 +8,20 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 public class ImFree extends Activity {
    
@@ -52,6 +55,12 @@ public class ImFree extends Activity {
          @Override
          public void onClick(View v) {
             //Upload to Server
+            
+            /**
+             * Is this query object even required?  Can't we just pass the ParseUser object
+             * from login around through the intents?  Seems like that would lessen
+             * network calls....
+             */
             ParseQuery<ParseUser> query = ParseUser.getQuery();
             query.getInBackground(mObjectId, new GetCallback<ParseUser>() {
 
@@ -68,7 +77,19 @@ public class ImFree extends Activity {
                      ParseGeoPoint geoPoint = new ParseGeoPoint(currLoc.getLatitude(), currLoc.getLongitude());
                      user.put("Location", geoPoint);
                      
-                     user.saveInBackground();
+                     user.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                           if (e == null) {
+                              // Successful save
+                              Toast.makeText(ImFree.this, "Saved!", Toast.LENGTH_SHORT).show();
+                           } else {
+                              // Unsuccessful save
+                              Log.e("ImFree", e.toString());
+                              Toast.makeText(ImFree.this, "Save Unsuccessful", Toast.LENGTH_SHORT).show();
+                           }
+                        }
+                     });
                   }
                }
                
