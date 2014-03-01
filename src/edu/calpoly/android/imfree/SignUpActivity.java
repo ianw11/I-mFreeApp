@@ -1,5 +1,7 @@
 package edu.calpoly.android.imfree;
 
+import java.util.regex.Pattern;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -25,6 +27,16 @@ public class SignUpActivity extends Activity implements OnClickListener {
    private String name;
    private String email;
    private String password;
+   
+   public final Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile(
+         "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+         "\\@" +
+         "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+         "(" +
+         "\\." +
+         "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+         ")+"
+     );
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +74,13 @@ public class SignUpActivity extends Activity implements OnClickListener {
       email = mEmail.getText().toString();
       password = mPassword.getText().toString();
       
-      /**
-       * TODO: Perform a check on the email to ensure it's formatted correctly
-       */
       if (!name.equals("") && !email.equals("") && !password.equals("")) {
+         
+         if (!EMAIL_ADDRESS_PATTERN.matcher(email).matches()) {
+            Toast.makeText(this, "Enter a valid email", Toast.LENGTH_SHORT).show();
+            return;
+         }
+         
          ParseUser user = new ParseUser();
          user.setUsername(email);
          user.setEmail(email);
