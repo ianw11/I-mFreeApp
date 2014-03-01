@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -15,10 +13,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.LogInCallback;
-import com.parse.Parse;
-import com.parse.ParseACL;
-import com.parse.ParseException;
 import com.parse.ParseUser;
 
 public class LoginActivity extends Activity implements OnClickListener {
@@ -33,7 +27,6 @@ public class LoginActivity extends Activity implements OnClickListener {
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
-      
       setContentView(R.layout.layout_login);
       
       initLayout();
@@ -42,33 +35,7 @@ public class LoginActivity extends Activity implements OnClickListener {
       SharedPreferences prefs = getSharedPreferences("edu.calpoly.android.imfree", Context.MODE_PRIVATE);
       if (!prefs.getString("username", "").equals("")) {
          mUsernameEditText.setText(prefs.getString("username", ""));
-         mPasswordEditText.setText(prefs.getString("password", ""));
-         mRememberMeCheckBox.setChecked(true);
-      }
-      
-      if (!getIntent().hasExtra("intent")) {
-      
-         
-         ParseUser.enableAutomaticUser();
-         ParseACL defaultACL = new ParseACL();
-
-         if (!prefs.getString("username", "").equals("")) {
-            ParseUser.logInInBackground(mUsernameEditText.getText().toString(), mPasswordEditText.getText().toString(), new LogInCallback() {
-               public void done(ParseUser user, ParseException e) {
-                  if (user != null) {
-                     Intent i = new Intent(LoginActivity.this, ImFree.class);
-                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                     i.putExtra("ParseUser", user.getUsername());
-                     i.putExtra("ParseObjectId", user.getObjectId());
-                     startActivity(i);
-                     finish();
-                  } else {
-                     Toast.makeText(LoginActivity.this, "Failed Login", Toast.LENGTH_SHORT).show();
-                     Log.d("ParseException", e.toString());
-                  }
-               }
-            });
-         }
+         //mPasswordEditText.setText(prefs.getString("password", ""));
       }
       
    }
@@ -82,6 +49,8 @@ public class LoginActivity extends Activity implements OnClickListener {
       this.mForgotPasswordTextView = (TextView)findViewById(R.id.forgotPasswordTextView);
       this.mSignUpButton = (Button)findViewById(R.id.signUpButton);
       
+      mRememberMeCheckBox.setChecked(true);
+      
    }
    
    private void initializeListeners() {
@@ -93,49 +62,43 @@ public class LoginActivity extends Activity implements OnClickListener {
 
    @Override
    public void onClick(View v) {
-      switch(v.getId()){
+      switch(v.getId()) {
+      
          case R.id.loginButton:
-            String username = mUsernameEditText.getText().toString();
-            String password = mPasswordEditText.getText().toString();
-            if (!username.equals("") && !password.equals("")) {
-               
-               if (mRememberMeCheckBox.isChecked()) {
-                  SharedPreferences prefs = this.getSharedPreferences("edu.calpoly.android.imfree", Context.MODE_PRIVATE);
-                  prefs.edit().putString("username", username).putString("password", password).commit();
-               } else {
-                  SharedPreferences prefs = this.getSharedPreferences("edu.calpoly.android.imfree", Context.MODE_PRIVATE);
-                  prefs.edit().putString("username", "").putString("password", "").commit();
-               }
-               
-               ParseUser.logInInBackground(mUsernameEditText.getText().toString(), mPasswordEditText.getText().toString(), new LogInCallback() {
-                  public void done(ParseUser user, ParseException e) {
-                     if (user != null) {
-                        Intent i = new Intent(LoginActivity.this, ImFree.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        i.putExtra("ParseUser", user.getUsername());
-                        i.putExtra("ParseObjectId", user.getObjectId());
-                        startActivity(i);
-                        finish();
-                     } else {
-                        Toast.makeText(LoginActivity.this, "Failed Login", Toast.LENGTH_SHORT).show();
-                        Log.d("ParseException", e.toString());
-                     }
-                  }
-               });
-            }
-            
+            performLogin();
             break;
+            
          case R.id.forgotPasswordTextView:
             Toast.makeText(this, "Forgot Password Clicked", Toast.LENGTH_SHORT).show();
             break;
+            
          case R.id.signUpButton:
             Intent i = new Intent(this, SignUpActivity.class);
             startActivity(i);
             break;
+            
          default:
             break;
       }
       
+   }
+   
+   private void performLogin() {
+      final String username = mUsernameEditText.getText().toString();
+      final String password = mPasswordEditText.getText().toString();
+      if (!username.equals("") && !password.equals("")) {
+
+         // Save login data for future use, if desired
+         if (mRememberMeCheckBox.isChecked()) {
+            SharedPreferences prefs = this.getSharedPreferences("edu.calpoly.android.imfree", Context.MODE_PRIVATE);
+            prefs.edit().putString("username", username).putString("password", password).commit();
+         } else {
+            SharedPreferences prefs = this.getSharedPreferences("edu.calpoly.android.imfree", Context.MODE_PRIVATE);
+            prefs.edit().putString("username", "").putString("password", "").commit();
+         }
+
+         ParseUser.logInInBackground(username, password, new LoginHelper(LoginActivity.this));
+      }
    }
 
 }

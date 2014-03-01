@@ -2,6 +2,7 @@ package edu.calpoly.android.imfree;
 
 import com.parse.LogInCallback;
 import com.parse.Parse;
+import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
@@ -28,19 +29,19 @@ public class SplashScreenActivity extends Activity {
     * Whether or not the system UI should be auto-hidden after
     * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
     */
-   private static final boolean AUTO_HIDE = true;
+   //private static final boolean AUTO_HIDE = true;
 
    /**
     * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
     * user interaction before hiding the system UI.
     */
-   private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
+   //private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
 
    /**
     * If set, will toggle the system UI visibility upon interaction. Otherwise,
     * will show the system UI visibility upon interaction.
     */
-   private static final boolean TOGGLE_ON_CLICK = true;
+   //private static final boolean TOGGLE_ON_CLICK = true;
 
    /**
     * The flags to pass to {@link SystemUiHider#getInstance}.
@@ -55,18 +56,16 @@ public class SplashScreenActivity extends Activity {
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
-
       setContentView(R.layout.layout_splash_screen);
 
-      final View controlsView = findViewById(R.id.fullscreen_content_controls);
+      //final View controlsView = findViewById(R.id.fullscreen_content_controls);
       
       // The TextView
       final View contentView = findViewById(R.id.fullscreen_content);
 
       // Set up an instance of SystemUiHider to control the system UI for
       // this activity.
-      mSystemUiHider = SystemUiHider
-            .getInstance(this, contentView, HIDER_FLAGS);
+      mSystemUiHider = SystemUiHider.getInstance(this, contentView, HIDER_FLAGS);
       mSystemUiHider.setup();
       
       /****************************************************/
@@ -74,34 +73,26 @@ public class SplashScreenActivity extends Activity {
       Parse.initialize(this, "IRL0T2KM6IP9GjaXU4ai7NAHLNnqli1iVVaPfV1U", 
             "ADfT5SkIThn2a4uEAg1Vf5ZjiIAEx6S863jgguQn");
       
+      ParseUser.enableAutomaticUser();
+      ParseACL defaultACL = new ParseACL();
+      
       SharedPreferences prefs = getSharedPreferences("edu.calpoly.android.imfree", Context.MODE_PRIVATE);
-      if (prefs.getString("username", "").equals("")) {
+      final String username = prefs.getString("username", "");
+      if (username.equals("")) {
+         // Previous data isn't stored, either new user or didn't choose "Remember Me"
          Intent i = new Intent(this, LoginActivity.class);
          i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
          startActivity(i);
          finish();
       } else {
-         
-         ParseUser.logInInBackground(prefs.getString("username", ""), prefs.getString("password", ""), new LogInCallback() {
-            public void done(ParseUser user, ParseException e) {
-               if (user != null) {
-                  Intent i = new Intent(SplashScreenActivity.this, ImFree.class);
-                  i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                  i.putExtra("ParseUser", user.getUsername());
-                  i.putExtra("ParseObjectId", user.getObjectId());
-                  startActivity(i);
-                  finish();
-               } else {
-                  Toast.makeText(SplashScreenActivity.this, "Failed Login", Toast.LENGTH_SHORT).show();
-                  Log.d("ParseException", e.toString());
-                  Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
-                  i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                  startActivity(i);
-                  finish();
-               }
-            }
-         });
+         // User has logged in before and checked "Remember Me"
+         ParseUser.logInInBackground(username, prefs.getString("password", ""), new LoginHelper(this, true));
       }
+      /**************************************************/
+      /**
+       * In essence, the end of the function. Excess code appears below and is commented out.
+       * This extra code is from Android's/Eclipse's auto-generated "Full Screen Activity"
+       */
       
 /*
       mSystemUiHider.setOnVisibilityChangeListener(new SystemUiHider.OnVisibilityChangeListener() {
@@ -165,6 +156,7 @@ public class SplashScreenActivity extends Activity {
       //findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
    }
 
+   /*
    @Override
    protected void onPostCreate(Bundle savedInstanceState) {
       super.onPostCreate(savedInstanceState);
@@ -174,12 +166,14 @@ public class SplashScreenActivity extends Activity {
       // are available.
       delayedHide(100);
    }
+   */
 
    /**
     * Touch listener to use for in-layout UI controls to delay hiding the system
     * UI. This is to prevent the jarring behavior of controls going away while
     * interacting with activity UI.
     */
+   /*
    View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
       @Override
       public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -189,7 +183,9 @@ public class SplashScreenActivity extends Activity {
          return false;
       }
    };
+   */
 
+   /*
    Handler mHideHandler = new Handler();
    Runnable mHideRunnable = new Runnable() {
       @Override
@@ -197,13 +193,16 @@ public class SplashScreenActivity extends Activity {
          mSystemUiHider.hide();
       }
    };
+   */
 
    /**
     * Schedules a call to hide() in [delay] milliseconds, canceling any
     * previously scheduled calls.
     */
+   /*
    private void delayedHide(int delayMillis) {
       mHideHandler.removeCallbacks(mHideRunnable);
       mHideHandler.postDelayed(mHideRunnable, delayMillis);
    }
+   */
 }
