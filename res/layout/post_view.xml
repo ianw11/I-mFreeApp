@@ -1,47 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent" 
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/posterNameTextView"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/posterNameTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/default_name" />
-
-    <TextView
-        android:id="@+id/timeSlotTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/default_timeSlot" />
-
-    <TextView
-        android:id="@+id/locationTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/default_location" />
-    
-    <LinearLayout
-        android:id="@+id/mapWrapper"
-        android:layout_width="fill_parent"
-        android:layout_height="100dp"
-        android:orientation="vertical">
-        
-         
-        <fragment android:id="@+id/postMap"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:name="com.google.android.gms.maps.SupportMapFragment" />
-        
-        
-    </LinearLayout>
-
-
-	<Button
-	    android:id="@+id/illHangButton"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:text="@string/illHang_text" />
-
-</LinearLayout>
+    android:text="@string/default_name"
+    android:textSize="24sp" />

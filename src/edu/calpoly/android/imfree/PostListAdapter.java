@@ -3,18 +3,19 @@ package edu.calpoly.android.imfree;
 import java.util.List;
 
 import android.content.Context;
-import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+
 public class PostListAdapter extends BaseAdapter {
 
-	private Context mContext;
+	private SherlockFragmentActivity mContext;
 	private List<Post> mPosts;
 	
 	public PostListAdapter(Context context, List<Post> posts) {
-		this.mContext = context;
+		this.mContext = (SherlockFragmentActivity)context;
 		this.mPosts = posts;
 	}
 	
@@ -38,6 +39,7 @@ public class PostListAdapter extends BaseAdapter {
 		PostView postView = null;
 		
 		if (convertView == null) {
+		   // Always pass in the same map fragment
 			postView = new PostView(mContext, this.mPosts.get(position));
 		}
 		else {
