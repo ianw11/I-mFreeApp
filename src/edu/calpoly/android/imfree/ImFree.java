@@ -1,5 +1,6 @@
 package edu.calpoly.android.imfree;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import android.app.Activity;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -23,19 +25,25 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-public class ImFree extends Activity {
+public class ImFree extends Activity implements android.location.LocationListener {
    
    private String musername;
    private String mObjectId;
    
    private TimePicker mTimePicker;
    private Button mPost;
+   private Button mEdit;
+   private Button mCancel;
    private EditText mLocation;
    private Button navWhosFree;
+   private TextView mFreeUntilTime;
    
    private Button navLogout;
    
    private LocationManager locManager;
+   
+   private static final int MIN_TIME_CHANGE = 3000;
+   private static final int MIN_DISTANCE_CHANGE = 3;
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +56,135 @@ public class ImFree extends Activity {
       musername = i.getStringExtra("ParseUser");
       mObjectId = i.getStringExtra("ParseObjectId");
       
-      initLayout();
+      initLayout(false);
+      initOnClickListeners();
+   }
+   
+   @Override
+   protected void onResume() {
+	   super.onResume();
+	   initLayout(true);
+   }
+   
+   private void initLayout(boolean resuming) {
+	   if (!resuming) {
+		   mTimePicker = (TimePicker)findViewById(R.id.freeTimePicker);
+		   mPost = (Button)findViewById(R.id.freePostButton);
+		   mEdit = (Button)findViewById(R.id.freeEditButton);
+		   mCancel = (Button)findViewById(R.id.freeCancelButton);
+		   mLocation = (EditText)findViewById(R.id.freeWhereEditText);
+		   mFreeUntilTime = (TextView)findViewById(R.id.freeUntilTextView);
+	      
+		   navWhosFree = (Button)findViewById(R.id.freeWhosFreeButton);
+		   navLogout = (Button)findViewById(R.id.freeLogoutButton);
+	   }
       
-      mPost.setOnClickListener(new OnClickListener() {
+	   ParseQuery<ParseUser> query = ParseUser.getQuery();
+	   query.getInBackground(mObjectId, new GetCallback<ParseUser>() {
+		   
+		   @Override
+		   public void done(ParseUser user, ParseException e) {
+			   if (e == null) {
+				   Date mostRecentPostDate = user.getDate("TimeFree");
+				   if (mostRecentPostDate != null && mostRecentPostDate.after(new Date())) {
+					   setActivePostLayout(user, false);
+				   }
+				   else {
+					   setDefaultPostLayout(user, false);
+				   }
+			   }
+		   }
+	   });
+   }
+   
+   // Sets uneditable views based on the user's active post
+   private void setActivePostLayout(ParseUser user, boolean fromPost) {
+	   if (!fromPost)
+		   mLocation.setText(user.getString("UserLocation"));
+	   mLocation.setEnabled(false);
+	   mLocation.setFocusable(false);
+	   mLocation.setFocusableInTouchMode(false);
+	   
+	   mTimePicker.setEnabled(false);
+	   mTimePicker.setFocusable(false);
+	   mTimePicker.setVisibility(View.INVISIBLE);
+	   
+	   Date date = null;
+	   String timeOfDay = "AM";
+	   Integer hour;
+	   Integer minutes;
+	   
+	   if (!fromPost) {
+		   date = user.getDate("TimeFree");
+		   hour = date.getHours();
+		   minutes = date.getMinutes();
+	   }
+	   else {
+		   hour = mTimePicker.getCurrentHour();
+		   minutes = mTimePicker.getCurrentMinute();
+	   }
+	   if (hour > 12) {
+		   hour = hour - 12;
+		   timeOfDay = "PM";
+	   }
+	   mFreeUntilTime.setText(hour.toString() + ":" + minutes.toString() + timeOfDay);
+	   
+	   mPost.setEnabled(false);
+	   mPost.setVisibility(View.INVISIBLE);
+	   
+	   mEdit.setEnabled(true);
+	   mEdit.setVisibility(View.VISIBLE);
+	   
+	   mCancel.setEnabled(true);
+	   mCancel.setVisibility(View.VISIBLE);
+   }
+   
+   // Sets views based on a fresh post or active post to be edited
+   private void setDefaultPostLayout(ParseUser user, boolean fromEdit) {
+	   if (fromEdit) {
+		   String mostRecentLocation = user.getString("UserLocation");
+		   mLocation.setText(mostRecentLocation);
+	   }
+	   else {
+		   mLocation.setText("");
+	   }
+	   mLocation.setEnabled(true);
+	   mLocation.setFocusable(true);
+	   mLocation.setFocusableInTouchMode(true);
+	   
+	   mTimePicker.setEnabled(true);
+	   mTimePicker.setFocusable(true);
+	   mTimePicker.setVisibility(View.VISIBLE);
+	   
+	   if (!fromEdit) {
+		   Calendar cal = Calendar.getInstance();
+		   mTimePicker.setCurrentHour(cal.get(Calendar.HOUR_OF_DAY));
+		   mTimePicker.setCurrentMinute(cal.get(Calendar.MINUTE));
+	   }
+	   
+	   mFreeUntilTime.setText("");
+	   
+	   mPost.setEnabled(true);
+	   mPost.setVisibility(View.VISIBLE);
+	   
+	   mEdit.setEnabled(false);
+	   mEdit.setVisibility(View.INVISIBLE);
+	   
+	   mCancel.setEnabled(false);
+	   mCancel.setVisibility(View.INVISIBLE);
+   }
+   
+   private void initLocationData() {
+      locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+      locManager.requestLocationUpdates(
+				LocationManager.GPS_PROVIDER, 
+				ImFree.MIN_TIME_CHANGE, 
+				ImFree.MIN_DISTANCE_CHANGE,
+				this);
+   }
+   
+   private void initOnClickListeners() {
+	   mPost.setOnClickListener(new OnClickListener() {
 
          @Override
          public void onClick(View v) {
@@ -74,15 +208,22 @@ public class ImFree extends Activity {
                      user.put("TimeFree", temp);
                      
                      Location currLoc = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                     ParseGeoPoint geoPoint = new ParseGeoPoint(currLoc.getLatitude(), currLoc.getLongitude());
-                     user.put("Location", geoPoint);
+                     if (currLoc != null) {
+                    	 ParseGeoPoint geoPoint = new ParseGeoPoint(currLoc.getLatitude(), currLoc.getLongitude());
+                    	 user.put("Location", geoPoint);
+                    	 // Remove location updates after posting to save battery
+                    	 locManager.removeUpdates(ImFree.this);
+                     }
+                     else {
+                    	 Toast.makeText(ImFree.this, "Cannot post; GPS has no last known location.", Toast.LENGTH_SHORT).show();
+                    	 return;
+                     }
                      
                      user.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
                            if (e == null) {
-                              // Successful save
-                              Toast.makeText(ImFree.this, "Saved!", Toast.LENGTH_SHORT).show();
+                              // Nothing to do for successful save
                            } else {
                               // Unsuccessful save
                               Log.e("ImFree", e.toString());
@@ -90,15 +231,63 @@ public class ImFree extends Activity {
                            }
                         }
                      });
+                     
+                     setActivePostLayout(user, true);
                   }
                }
-               
             });
          }
-         
-      });
-      
-      navWhosFree.setOnClickListener(new OnClickListener() {
+	   });
+	   
+	   mEdit.setOnClickListener(new OnClickListener() {
+
+		   @Override
+		   public void onClick(View v) {
+			   ParseQuery<ParseUser> query = ParseUser.getQuery();
+			   query.getInBackground(mObjectId, new GetCallback<ParseUser>() {
+	            	
+				   @Override
+				   public void done(ParseUser user, ParseException e) {
+					   if (e == null) {
+	            			setDefaultPostLayout(user, true);
+					   }
+				   }
+			   });
+		   }
+	   });
+	   
+	   mCancel.setOnClickListener(new OnClickListener() {
+
+		   @Override
+		   public void onClick(View v) {
+			   ParseQuery<ParseUser> query = ParseUser.getQuery();
+			   query.getInBackground(mObjectId, new GetCallback<ParseUser>() {
+	            	
+				   @Override
+				   public void done(ParseUser user, ParseException e) {
+					   if (e == null) {
+						   user.put("TimeFree", new Date());
+						   setDefaultPostLayout(user, false);
+						   
+						   user.saveInBackground(new SaveCallback() {
+							   @Override
+							   public void done(ParseException e) {
+								   if (e == null) {
+									   // Nothing to do for successful cancel
+								   } else {
+									   // Unsuccessful cancel
+									   Log.e("ImFree", e.toString());
+									   Toast.makeText(ImFree.this, "Post could not be removed.", Toast.LENGTH_SHORT).show();
+								   }
+							   }
+						   });
+					   }
+				   }
+			   });
+		   }
+	   });
+	   
+	  navWhosFree.setOnClickListener(new OnClickListener() {
 
          @Override
          public void onClick(View v) {
@@ -108,7 +297,7 @@ public class ImFree extends Activity {
          }
          
       });
-      
+	      
       navLogout.setOnClickListener(new OnClickListener() {
 
          @Override
@@ -118,21 +307,27 @@ public class ImFree extends Activity {
             startActivity(i);
             finish();
          }
-         
       });
    }
-   
-   private void initLayout() {
-      mTimePicker = (TimePicker)findViewById(R.id.freeTimePicker);
-      mPost = (Button)findViewById(R.id.freePostButton);
-      mLocation = (EditText)findViewById(R.id.freeWhereEditText);
-      
-      navWhosFree = (Button)findViewById(R.id.freeWhosFreeButton);
-      navLogout = (Button)findViewById(R.id.freeLogoutButton);
-   }
-   
-   private void initLocationData() {
-      locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-   }
+
+@Override
+public void onLocationChanged(Location location) {
+	// Nothing to be done
+}
+
+@Override
+public void onProviderDisabled(String provider) {
+	// Nothing to be done
+}
+
+@Override
+public void onProviderEnabled(String provider) {
+	// Nothing to be done
+}
+
+@Override
+public void onStatusChanged(String provider, int status, Bundle extras) {
+	// Nothing to be done
+}
 
 }

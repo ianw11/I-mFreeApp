@@ -29,14 +29,6 @@
 
     </EditText>
 
-    <TimePicker
-        android:id="@+id/freeTimePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/freeWhereEditText"
-        android:layout_alignLeft="@+id/freeWhereEditText"
-        android:layout_marginBottom="52dp" />
-
     <Button
         android:id="@+id/freePostButton"
         android:layout_width="wrap_content"
@@ -46,15 +38,6 @@
         android:layout_marginBottom="26dp"
         android:text="@string/post" />
 
-    <TextView
-        android:id="@+id/freeFreeUntil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/freeTimePicker"
-        android:layout_alignLeft="@+id/freeTimePicker"
-        android:text="@string/free_until"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
     <Button
         android:id="@+id/freeLogoutButton"
         style="?android:attr/buttonStyleSmall"
@@ -63,5 +46,53 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:text="@string/logout" />
+
+    <TextView
+        android:id="@+id/freeFreeUntil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/freeTimePicker"
+        android:layout_alignLeft="@+id/freeWhosFreeButton"
+        android:layout_marginBottom="56dp"
+        android:text="@string/free_until"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TimePicker
+        android:id="@+id/freeTimePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/freeLogoutButton"
+        android:layout_below="@+id/freeWhosFreeButton"
+        android:layout_marginTop="47dp" />
+
+    <TextView
+        android:id="@+id/freeUntilTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/freeFreeUntil"
+        android:layout_alignBottom="@+id/freeFreeUntil"
+        android:layout_centerHorizontal="true"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/freeEditButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/freePostButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="27dp"
+        android:visibility="invisible"
+        android:text="@string/edit" />
+
+    <Button
+        android:id="@+id/freeCancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/freePostButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:visibility="invisible"
+        android:text="@string/cancel" />
 
 </RelativeLayout>

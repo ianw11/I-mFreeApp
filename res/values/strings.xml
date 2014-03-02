@@ -34,6 +34,8 @@
     <string name="whos_free">See Who\'s Free</string>
     <string name="where">Where?</string>
     <string name="post">POST</string>
+    <string name="edit">EDIT</string>
+    <string name="cancel">CANCEL</string>
     <string name="free_until">Free Until</string>
     <string name="logout">Logout</string>
     <string name="title_activity_maps">MapsActivity</string>
