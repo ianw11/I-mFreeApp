@@ -1,6 +1,20 @@
-Splash Screen for Login
 Settings Activity/Menu
+
+Update Splash Screen with something actually good
+
 Ability to modify (add, delete) and view friends list
+	With this comes the need to actually figure out how to do a friends list
+
 Action bar to w/e we're doing for main navigation
+
 Ability for user to edit or cancel current post
+	Also switching what the activity looks like when post is active
+
 "Forgot Password" functionality
+
+When logging out, remove auto login functionality
+
+Lock buttons when waiting on network calls
+
+Change signup page to have firstName and lastName
+
