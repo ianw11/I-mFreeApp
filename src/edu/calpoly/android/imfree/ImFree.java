@@ -25,7 +25,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-public class ImFree extends Activity implements android.location.LocationListener {
+public class ImFree extends BaseActivity implements android.location.LocationListener {
    
    private String musername;
    private String mObjectId;
@@ -35,10 +35,8 @@ public class ImFree extends Activity implements android.location.LocationListene
    private Button mEdit;
    private Button mCancel;
    private EditText mLocation;
-   private Button navWhosFree;
    private TextView mFreeUntilTime;
    
-   private Button navLogout;
    
    private LocationManager locManager;
    
@@ -46,7 +44,7 @@ public class ImFree extends Activity implements android.location.LocationListene
    private static final int MIN_DISTANCE_CHANGE = 3;
 
    @Override
-   protected void onCreate(Bundle savedInstanceState) {
+   public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.layout_imfree);
       
@@ -54,6 +52,8 @@ public class ImFree extends Activity implements android.location.LocationListene
       
       Intent i = getIntent();
       musername = i.getStringExtra("ParseUser");
+      setBaseUsername(musername);
+      setActivityName("ImFree");
       mObjectId = i.getStringExtra("ParseObjectId");
       
       initLayout(false);
@@ -74,9 +74,6 @@ public class ImFree extends Activity implements android.location.LocationListene
 		   mCancel = (Button)findViewById(R.id.freeCancelButton);
 		   mLocation = (EditText)findViewById(R.id.freeWhereEditText);
 		   mFreeUntilTime = (TextView)findViewById(R.id.freeUntilTextView);
-	      
-		   navWhosFree = (Button)findViewById(R.id.freeWhosFreeButton);
-		   navLogout = (Button)findViewById(R.id.freeLogoutButton);
 	   }
       
 	   ParseQuery<ParseUser> query = ParseUser.getQuery();
@@ -286,49 +283,25 @@ public class ImFree extends Activity implements android.location.LocationListene
 			   });
 		   }
 	   });
-	   
-	  navWhosFree.setOnClickListener(new OnClickListener() {
-
-         @Override
-         public void onClick(View v) {
-            Intent i = new Intent(ImFree.this, WhosFree.class);
-            i.putExtra("ParseUser", musername);
-            startActivity(i);
-         }
-         
-      });
-	      
-      navLogout.setOnClickListener(new OnClickListener() {
-
-         @Override
-         public void onClick(View v) {
-            DataStore.clearData();
-            Intent i = new Intent(ImFree.this, LoginActivity.class);
-            i.putExtra("intent", "ImFree");
-            startActivity(i);
-            finish();
-         }
-      });
    }
 
-@Override
-public void onLocationChanged(Location location) {
-	// Nothing to be done
-}
-
-@Override
-public void onProviderDisabled(String provider) {
-	// Nothing to be done
-}
-
-@Override
-public void onProviderEnabled(String provider) {
-	// Nothing to be done
-}
-
-@Override
-public void onStatusChanged(String provider, int status, Bundle extras) {
-	// Nothing to be done
-}
-
+   @Override
+   public void onLocationChanged(Location location) {
+	   // Nothing to be done
+   }
+	
+   @Override
+   public void onProviderDisabled(String provider) {
+	   // Nothing to be done
+   }
+	
+   @Override
+   public void onProviderEnabled(String provider) {
+	   // Nothing to be done
+   }
+	
+   @Override
+   public void onStatusChanged(String provider, int status, Bundle extras) {
+	   // Nothing to be done
+   }
 }

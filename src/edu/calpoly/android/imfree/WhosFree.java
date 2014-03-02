@@ -32,7 +32,7 @@ import com.parse.ParseUser;
  * a traveled path, mark the map with information and take pictures that become
  * associated with the map.
  */
-public class WhosFree extends SherlockFragmentActivity implements OnClickListener {
+public class WhosFree extends BaseActivity implements OnClickListener {
 
 	private ArrayList<Post> mPostList;
 	private PostListAdapter mPostAdapter;
@@ -61,7 +61,9 @@ public class WhosFree extends SherlockFragmentActivity implements OnClickListene
       
        Intent i = getIntent();
        musername = i.getStringExtra("ParseUser");
-		
+       setBaseUsername(musername);
+       setActivityName("WhosFree");
+       
        initLayout();
        initLocationData();
        

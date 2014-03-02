@@ -33,6 +33,9 @@
     <string name="free_until">Free Until</string>
     <string name="logout">Logout</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="menuTitle_logout">Logout</string>
+    <string name="menuTitle_imfree">Post</string>
+    <string name="menuTitle_whosfree">View Posts</string>
 
     <color name="loginBlue">#1197F0</color>
     <color name="black">#000</color>

@@ -8,15 +8,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ImFree" >
 
-    <Button
-        android:id="@+id/freeWhosFreeButton"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/whos_free" />
-
     <EditText
         android:id="@+id/freeWhereEditText"
         android:layout_width="wrap_content"
@@ -37,15 +28,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="26dp"
         android:text="@string/post" />
-
-    <Button
-        android:id="@+id/freeLogoutButton"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/logout" />
 
     <TextView
         android:id="@+id/freeFreeUntil"

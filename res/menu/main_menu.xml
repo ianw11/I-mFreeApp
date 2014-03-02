@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <item android:id="@+id/menu_logout"
+        android:title="@string/menuTitle_logout"
+        android:showAsAction="ifRoom|withText|collapseActionView"></item>
+    
+    <item android:id="@+id/menu_imfree"
+        android:title="@string/menuTitle_imfree"
+        android:showAsAction="ifRoom|withText|collapseActionView"></item>
+    
+    <item android:id="@+id/menu_whosfree"
+        android:title="@string/menuTitle_whosfree"
+        android:showAsAction="ifRoom|withText|collapseActionView"></item>
+
+</menu>
