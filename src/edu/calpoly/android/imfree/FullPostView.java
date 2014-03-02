@@ -14,6 +14,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class FullPostView extends LinearLayout {
    
@@ -37,6 +38,8 @@ public class FullPostView extends LinearLayout {
       mLocationTextView = (TextView)findViewById(R.id.fullPostLocation);
       mIllHangButton = (Button)findViewById(R.id.fullPostHangButton);
       
+      mIllHangButton.setOnClickListener((OnClickListener)context);
+      
       fragment = (SupportMapFragment) ((SherlockFragmentActivity)context).getSupportFragmentManager().findFragmentById(R.id.postMap);
       if (fragment == null) {
          Log.e("FullPostView", "Null fragment");
@@ -53,7 +56,9 @@ public class FullPostView extends LinearLayout {
       
       LatLng location = post.getGeoLoc();
       
-      map.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(location, 16, 0, 0)));
+      map.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(location, 15, 0, 0)));
+      map.clear();
+      map.addMarker(new MarkerOptions().position(location));
       
       UiSettings settings = map.getUiSettings();
       settings.setAllGesturesEnabled(false);

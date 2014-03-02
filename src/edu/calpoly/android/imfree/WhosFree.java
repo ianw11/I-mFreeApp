@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
@@ -39,6 +41,10 @@ public class WhosFree extends SherlockFragmentActivity implements OnClickListene
 	private String musername;
 	
 	private FullPostView fullPost;
+	
+	private Button backButton;
+	private Button addFriend;
+	private Button removeFriend;
 	
 	
     @Override
@@ -71,14 +77,15 @@ public class WhosFree extends SherlockFragmentActivity implements OnClickListene
     	query.findInBackground(new FindCallback<ParseUser>() {
     	  public void done(List<ParseUser> objects, ParseException e) {
     	    if (e == null) {
+    	      List<String> friends = DataStore.getParseFriends();
     	        for (ParseUser user : objects) {
     	           final Date date = user.getDate("TimeFree");
-    	           if (date != null && !user.getUsername().equals(musername) && date.after(new Date())) {
+    	           if (date != null && !user.getUsername().equals(musername) && date.after(new Date()) && friends.contains(user.getUsername())) {
     	              final ParseGeoPoint gp = user.getParseGeoPoint("Location");
     	              final LatLng loc = new LatLng(gp.getLatitude(), gp.getLongitude());
     	              final String userLocation = user.getString("UserLocation");
     	              
-    	              final Post post = new Post(user.getString("FriendlyName"), date.toString(), userLocation, loc);
+    	              final Post post = new Post(user.getString("FriendlyName"), user.getEmail(), date.toString(), userLocation, loc);
     	              addPost(post);
     	           }
     	        }
@@ -99,9 +106,13 @@ public class WhosFree extends SherlockFragmentActivity implements OnClickListene
 		this.mPostLayout = (ListView)this.findViewById(R.id.postListViewGroup);
 		this.mPostLayout.setAdapter(mPostAdapter);
 		
-		LinearLayout layout = (LinearLayout)findViewById(R.id.whosFreeLayout);
-		fullPost = new FullPostView(this);
-		layout.addView(fullPost, 0, new LayoutParams(450, 350));
+		backButton = (Button)findViewById(R.id.whosFreeBackButton);
+		addFriend = (Button)findViewById(R.id.whosFreeAddFriendButton);
+		removeFriend = (Button)findViewById(R.id.whosFreeRemoveFriendButton);
+		
+		backButton.setOnClickListener(this);
+		addFriend.setOnClickListener(this);
+		removeFriend.setOnClickListener(this);
 	}
 
 	
@@ -110,11 +121,53 @@ public class WhosFree extends SherlockFragmentActivity implements OnClickListene
 		this.mPostList.add(post);
 		this.mPostAdapter.notifyDataSetChanged();
 	}
+	
+	public void removePost(String username) {
+	   for (Post p : mPostList) {
+	      if (p.getEmail().equals(username)) {
+	         mPostList.remove(p);
+	         break;
+	      }
+	   }
+	   mPostAdapter.notifyDataSetChanged();
+	}
 
    @Override
    public void onClick(View v) {
+      switch(v.getId()) {
       
-      fullPost.setPost(((PostView)v).getPost());
+      case R.id.whosFreeBackButton:
+         finish();
+         break;
+         
+      case R.id.whosFreeAddFriendButton:
+         Toast.makeText(this, "Add Friend", Toast.LENGTH_SHORT).show();
+         DataStore.addParseFriend(((EditText)findViewById(R.id.whosFreeAddFriendEditText)).getText().toString());
+         break;
+         
+      case R.id.whosFreeRemoveFriendButton:
+         final String removedUser = ((EditText)findViewById(R.id.whosFreeAddFriendEditText)).getText().toString();
+         DataStore.removeParseFriend(removedUser);
+         removePost(removedUser);
+         break;
+         
+      case R.id.fullPostHangButton:
+         Toast.makeText(this, "Hang Button Pressed", Toast.LENGTH_SHORT).show();
+         break;
+      
+      default:
+         LinearLayout layout = (LinearLayout)findViewById(R.id.whosFreeLayout);
+         if (fullPost == null) {
+            fullPost = new FullPostView(this);
+            // Adding this to index 1 of the linearlayout.  This needs to be
+            // changed if more gets added to layout_whosfree.xml
+            Log.d("WhosFree", "width: " + layout.getWidth());
+            layout.addView(fullPost, 1, new LayoutParams(600, 600));
+         }
+         
+         fullPost.setPost(((PostView)v).getPost());
+         break;
+      }
       
    }
 }

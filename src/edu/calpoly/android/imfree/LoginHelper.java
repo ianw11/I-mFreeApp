@@ -1,5 +1,9 @@
 package edu.calpoly.android.imfree;
 
+import java.util.List;
+
+import org.json.JSONArray;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +31,19 @@ public class LoginHelper extends LogInCallback {
    @Override
    public void done(ParseUser user, ParseException e) {
       if (user != null) {
+         DataStore.setCurrentUser(user);
+         
+         
+         List<Object> arr = user.getList("Friends");
+         if (arr != null) {
+            Log.d("JSONArray", arr.toString());
+            //DataStore.addMultipleParseFriends((List<String>)user.getList("Friends"));
+            for (Object f : arr) {
+               Log.d("friends", (String)f);
+               DataStore.addParseFriend((String)f);
+            }
+         }
+         
          Intent i = new Intent(context, ImFree.class);
          i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
          i.putExtra("ParseUser", user.getUsername());

@@ -302,6 +302,7 @@ public class ImFree extends Activity implements android.location.LocationListene
 
          @Override
          public void onClick(View v) {
+            DataStore.clearData();
             Intent i = new Intent(ImFree.this, LoginActivity.class);
             i.putExtra("intent", "ImFree");
             startActivity(i);

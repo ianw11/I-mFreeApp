@@ -7,12 +7,14 @@ public class Post {
 	private String mTimeSlot;
 	private String mLocation;
 	private LatLng mGeoLoc;
+	private String email;
 	
-	public Post(String name, String timeSlot, String location, LatLng geoLoc) {
+	public Post(String name, String email, String timeSlot, String location, LatLng geoLoc) {
 		this.mPosterName = name;
 		this.mTimeSlot = timeSlot;
 		this.mLocation = location;
 		this.mGeoLoc = geoLoc;
+		this.email = email;
 	}
 	
 	public String getPosterName() {
@@ -29,5 +31,9 @@ public class Post {
 	
 	public LatLng getGeoLoc() {
 		return this.mGeoLoc;
+	}
+	
+	public String getEmail() {
+	   return this.email;
 	}
 }

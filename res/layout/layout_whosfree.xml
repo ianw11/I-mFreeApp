@@ -6,6 +6,49 @@
     android:layout_width="match_parent"
     android:layout_height="fill_parent" >
     
+    <LinearLayout
+        android:id="@+id/whosFreeHeader"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+        
+        <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+        <Button
+            android:id="@+id/whosFreeBackButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/whosFree_back"
+            />
+        
+        <EditText
+            android:id="@+id/whosFreeAddFriendEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress" />
+        </LinearLayout>
+        
+        <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+        
+        <Button
+            android:id="@+id/whosFreeAddFriendButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/whosFree_addFriend" />
+        
+        <Button
+            android:id="@+id/whosFreeRemoveFriendButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/whosFree_removeFriend" />
+        </LinearLayout>
+        
+    </LinearLayout>
     
 	<ListView 
 	    android:id="@+id/postListViewGroup"

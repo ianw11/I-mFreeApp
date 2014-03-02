@@ -9,12 +9,6 @@
     <string name="illHang_text">I\'ll Hang</string>
 
     <!-- MenuItem titles -->
-    <string name="menuTitle_startRecording">Start</string>
-    <string name="menuTitle_stopRecording">Stop</string>
-    <string name="menuTitle_load">Load</string>
-    <string name="menuTitle_save">Save</string>
-    <string name="menuTitle_takePicture">Take Picture</string>
-    <string name="menuTitle_enableGPS">Enable GPS</string>
     <string name="login">Login</string>
     <string name="username_hint">Username/Email</string>
     <string name="password_hint">Password</string>
@@ -48,5 +42,8 @@
 
     <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="dummy_content">SPLASH\nSCREEN</string>
+    <string name="whosFree_back">Back</string>
+    <string name="whosFree_addFriend">Add Friend</string>
+    <string name="whosFree_removeFriend">Remove Friend</string>
 
 </resources>
