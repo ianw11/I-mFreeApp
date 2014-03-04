@@ -42,7 +42,6 @@ public class WhosFree extends BaseActivity implements OnClickListener {
 	
 	private FullPostView fullPost;
 	
-	private Button backButton;
 	private Button addFriend;
 	private Button removeFriend;
 	
@@ -107,12 +106,9 @@ public class WhosFree extends BaseActivity implements OnClickListener {
 		this.setContentView(R.layout.layout_whosfree);
 		this.mPostLayout = (ListView)this.findViewById(R.id.postListViewGroup);
 		this.mPostLayout.setAdapter(mPostAdapter);
-		
-		backButton = (Button)findViewById(R.id.whosFreeBackButton);
 		addFriend = (Button)findViewById(R.id.whosFreeAddFriendButton);
 		removeFriend = (Button)findViewById(R.id.whosFreeRemoveFriendButton);
 		
-		backButton.setOnClickListener(this);
 		addFriend.setOnClickListener(this);
 		removeFriend.setOnClickListener(this);
 	}
@@ -137,10 +133,6 @@ public class WhosFree extends BaseActivity implements OnClickListener {
    @Override
    public void onClick(View v) {
       switch(v.getId()) {
-      
-      case R.id.whosFreeBackButton:
-         finish();
-         break;
          
       case R.id.whosFreeAddFriendButton:
          Toast.makeText(this, "Add Friend", Toast.LENGTH_SHORT).show();

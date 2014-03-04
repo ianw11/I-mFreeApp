@@ -1,7 +1,9 @@
 package edu.calpoly.android.imfree;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -19,6 +21,14 @@ public class BaseActivity extends SherlockFragmentActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.main_menu, menu);
+		
+		if (this.mActivityName.equals("ImFree")) {
+		   menu.getItem(1).setVisible(false);
+		   menu.getItem(2).setVisible(true);
+		} else if (this.mActivityName.equals("WhosFree")) {
+		   menu.getItem(1).setVisible(true);
+         menu.getItem(2).setVisible(false);
+		}
 		return true;
 	}
 	
@@ -26,22 +36,26 @@ public class BaseActivity extends SherlockFragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_imfree:
-			Intent imFree = new Intent(BaseActivity.this, ImFree.class);
-            imFree.putExtra("ParseUser", mBaseUsername);
-            startActivity(imFree);
+         finish();
 			break;
+			
 		case R.id.menu_whosfree:
 			Intent whosFree = new Intent(BaseActivity.this, WhosFree.class);
-            whosFree.putExtra("ParseUser", mBaseUsername);
-            startActivity(whosFree);
+         whosFree.putExtra("ParseUser", mBaseUsername);
+         startActivity(whosFree);
 			break;
+			
 		case R.id.menu_logout:
 			DataStore.clearData();
-            Intent logout = new Intent(BaseActivity.this, LoginActivity.class);
-            logout.putExtra("intent", mActivityName);
-            startActivity(logout);
-            finish();
+			this.getSharedPreferences("edu.calpoly.android.imfree", Context.MODE_PRIVATE).edit().putString("username", "").commit();
+         Intent logout = new Intent(BaseActivity.this, LoginActivity.class);
+         logout.putExtra("intent", mActivityName);
+         startActivity(logout);
+         finish();
 			break;
+		
+		default:
+		   break;
 		}
 		return true;
 	}

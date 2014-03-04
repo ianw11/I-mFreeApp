@@ -35,7 +35,6 @@ public class LoginActivity extends Activity implements OnClickListener {
       SharedPreferences prefs = getSharedPreferences("edu.calpoly.android.imfree", Context.MODE_PRIVATE);
       if (!prefs.getString("username", "").equals("")) {
          mUsernameEditText.setText(prefs.getString("username", ""));
-         //mPasswordEditText.setText(prefs.getString("password", ""));
       }
       
    }
@@ -50,6 +49,8 @@ public class LoginActivity extends Activity implements OnClickListener {
       this.mSignUpButton = (Button)findViewById(R.id.signUpButton);
       
       mRememberMeCheckBox.setChecked(true);
+      
+      mUsernameEditText.requestFocus();
       
    }
    

@@ -3,7 +3,6 @@ package edu.calpoly.android.imfree;
 import java.util.Calendar;
 import java.util.Date;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -25,7 +24,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-public class ImFree extends BaseActivity implements android.location.LocationListener {
+public class ImFree extends BaseActivity implements android.location.LocationListener, OnClickListener {
    
    private String musername;
    private String mObjectId;
@@ -181,108 +180,11 @@ public class ImFree extends BaseActivity implements android.location.LocationLis
    }
    
    private void initOnClickListeners() {
-	   mPost.setOnClickListener(new OnClickListener() {
-
-         @Override
-         public void onClick(View v) {
-            //Upload to Server
-            
-            /**
-             * Is this query object even required?  Can't we just pass the ParseUser object
-             * from login around through the intents?  Seems like that would lessen
-             * network calls....
-             */
-            ParseQuery<ParseUser> query = ParseUser.getQuery();
-            query.getInBackground(mObjectId, new GetCallback<ParseUser>() {
-
-               @Override
-               public void done(ParseUser user, ParseException e) {
-                  if (e == null) {
-                     user.put("UserLocation", mLocation.getText().toString());
-                     Date temp = new Date();
-                     temp.setHours(mTimePicker.getCurrentHour());
-                     temp.setMinutes(mTimePicker.getCurrentMinute());
-                     user.put("TimeFree", temp);
-                     
-                     Location currLoc = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                     if (currLoc != null) {
-                    	 ParseGeoPoint geoPoint = new ParseGeoPoint(currLoc.getLatitude(), currLoc.getLongitude());
-                    	 user.put("Location", geoPoint);
-                    	 // Remove location updates after posting to save battery
-                    	 locManager.removeUpdates(ImFree.this);
-                     }
-                     else {
-                    	 Toast.makeText(ImFree.this, "Cannot post; GPS has no last known location.", Toast.LENGTH_SHORT).show();
-                    	 return;
-                     }
-                     
-                     user.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                           if (e == null) {
-                              // Nothing to do for successful save
-                           } else {
-                              // Unsuccessful save
-                              Log.e("ImFree", e.toString());
-                              Toast.makeText(ImFree.this, "Save Unsuccessful", Toast.LENGTH_SHORT).show();
-                           }
-                        }
-                     });
-                     
-                     setActivePostLayout(user, true);
-                  }
-               }
-            });
-         }
-	   });
+	   mPost.setOnClickListener(this);
 	   
-	   mEdit.setOnClickListener(new OnClickListener() {
-
-		   @Override
-		   public void onClick(View v) {
-			   ParseQuery<ParseUser> query = ParseUser.getQuery();
-			   query.getInBackground(mObjectId, new GetCallback<ParseUser>() {
-	            	
-				   @Override
-				   public void done(ParseUser user, ParseException e) {
-					   if (e == null) {
-	            			setDefaultPostLayout(user, true);
-					   }
-				   }
-			   });
-		   }
-	   });
+	   mEdit.setOnClickListener(this);
 	   
-	   mCancel.setOnClickListener(new OnClickListener() {
-
-		   @Override
-		   public void onClick(View v) {
-			   ParseQuery<ParseUser> query = ParseUser.getQuery();
-			   query.getInBackground(mObjectId, new GetCallback<ParseUser>() {
-	            	
-				   @Override
-				   public void done(ParseUser user, ParseException e) {
-					   if (e == null) {
-						   user.put("TimeFree", new Date());
-						   setDefaultPostLayout(user, false);
-						   
-						   user.saveInBackground(new SaveCallback() {
-							   @Override
-							   public void done(ParseException e) {
-								   if (e == null) {
-									   // Nothing to do for successful cancel
-								   } else {
-									   // Unsuccessful cancel
-									   Log.e("ImFree", e.toString());
-									   Toast.makeText(ImFree.this, "Post could not be removed.", Toast.LENGTH_SHORT).show();
-								   }
-							   }
-						   });
-					   }
-				   }
-			   });
-		   }
-	   });
+	   mCancel.setOnClickListener(this);
    }
 
    @Override
@@ -303,5 +205,119 @@ public class ImFree extends BaseActivity implements android.location.LocationLis
    @Override
    public void onStatusChanged(String provider, int status, Bundle extras) {
 	   // Nothing to be done
+   }
+   
+   private void lockButtons() {
+      mPost.setClickable(false);
+   }
+   
+   private void unlockButtons() {
+      mPost.setClickable(true);
+   }
+
+   @Override
+   public void onClick(View v) {
+      switch (v.getId()) {
+      
+      case R.id.freeEditButton:
+         ParseQuery<ParseUser> query = ParseUser.getQuery();
+         query.getInBackground(mObjectId, new GetCallback<ParseUser>() {
+            @Override
+            public void done(ParseUser user, ParseException e) {
+               if (e == null) {
+                     setDefaultPostLayout(user, true);
+               }
+            }
+         });
+         break;
+         
+      case R.id.freePostButton:
+         //Upload to Server
+         
+         lockButtons();
+         
+         /**
+          * Is this query object even required?  Can't we just pass the ParseUser object
+          * from login around through the intents?  Seems like that would lessen
+          * network calls....
+          */
+         ParseQuery<ParseUser> uploadQuery = ParseUser.getQuery();
+         uploadQuery.getInBackground(mObjectId, new GetCallback<ParseUser>() {
+
+            @Override
+            public void done(ParseUser user, ParseException e) {
+               if (e == null) {
+                  user.put("UserLocation", mLocation.getText().toString());
+                  Date temp = new Date();
+                  temp.setHours(mTimePicker.getCurrentHour());
+                  temp.setMinutes(mTimePicker.getCurrentMinute());
+                  user.put("TimeFree", temp);
+                  
+                  Location currLoc = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                  if (currLoc != null) {
+                   ParseGeoPoint geoPoint = new ParseGeoPoint(currLoc.getLatitude(), currLoc.getLongitude());
+                   user.put("Location", geoPoint);
+                   // Remove location updates after posting to save battery
+                   locManager.removeUpdates(ImFree.this);
+                  }
+                  else {
+                   Toast.makeText(ImFree.this, "Cannot post; GPS has no last known location.", Toast.LENGTH_SHORT).show();
+                   unlockButtons();
+                   return;
+                  }
+                  
+                  user.saveInBackground(new SaveCallback() {
+                     @Override
+                     public void done(ParseException e) {
+                        if (e == null) {
+                           // Nothing to do for successful save
+                        } else {
+                           // Unsuccessful save
+                           Log.e("ImFree", e.toString());
+                           Toast.makeText(ImFree.this, "Save Unsuccessful", Toast.LENGTH_SHORT).show();
+                        }
+                     }
+                  });
+                  
+                  setActivePostLayout(user, true);
+               }
+            }
+         });
+         
+         unlockButtons();
+         
+         break;
+      
+      case R.id.freeCancelButton:
+         ParseQuery<ParseUser> cancelQuery = ParseUser.getQuery();
+         cancelQuery.getInBackground(mObjectId, new GetCallback<ParseUser>() {
+               
+            @Override
+            public void done(ParseUser user, ParseException e) {
+               if (e == null) {
+                  user.put("TimeFree", new Date());
+                  setDefaultPostLayout(user, false);
+                  
+                  user.saveInBackground(new SaveCallback() {
+                     @Override
+                     public void done(ParseException e) {
+                        if (e == null) {
+                           // Nothing to do for successful cancel
+                        } else {
+                           // Unsuccessful cancel
+                           Log.e("ImFree", e.toString());
+                           Toast.makeText(ImFree.this, "Post could not be removed.", Toast.LENGTH_SHORT).show();
+                        }
+                     }
+                  });
+               }
+            }
+         });
+         break;
+      
+      default:
+         break;
+      }
+      
    }
 }

@@ -12,23 +12,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
         
-        <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
-        <Button
-            android:id="@+id/whosFreeBackButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/whosFree_back"
-            />
         
         <EditText
             android:id="@+id/whosFreeAddFriendEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress" />
-        </LinearLayout>
+            android:inputType="textEmailAddress"
+            android:hint="@string/whosFree_addFriend" />
         
         <LinearLayout
         android:orientation="horizontal"
