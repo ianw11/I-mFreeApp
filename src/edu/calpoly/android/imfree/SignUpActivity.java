@@ -19,12 +19,14 @@ import com.parse.SignUpCallback;
 
 public class SignUpActivity extends Activity implements OnClickListener {
    
-   private EditText mName;
+   private EditText mFirstName;
+   private EditText mLastName;
    private EditText mEmail;
    private EditText mPassword;
    private Button mConfirm;
    
-   private String name;
+   private String firstName;
+   private String lastName;
    private String email;
    private String password;
    
@@ -48,7 +50,8 @@ public class SignUpActivity extends Activity implements OnClickListener {
    
    private void initLayout() {
       
-      mName = (EditText)findViewById(R.id.signUpNameEditText);
+      mFirstName = (EditText)findViewById(R.id.signUpFirstNameEditText);
+      mLastName = (EditText)findViewById(R.id.signUpLastNameEditText);
       mEmail = (EditText)findViewById(R.id.signUpEmailEditText);
       mPassword = (EditText)findViewById(R.id.signUpPasswordEditText);
       mConfirm = (Button)findViewById(R.id.signUpConfirmButton);
@@ -70,11 +73,13 @@ public class SignUpActivity extends Activity implements OnClickListener {
    }
    
    private void performSignup() {
-      name = mName.getText().toString();
+      firstName = mFirstName.getText().toString(); 
+      lastName = mLastName.getText().toString();
       email = mEmail.getText().toString();
       password = mPassword.getText().toString();
       
-      if (!name.equals("") && !email.equals("") && !password.equals("")) {
+      if (!firstName.equals("") && !lastName.equals("") && 
+    		  !email.equals("") && !password.equals("")) {
          
          if (!EMAIL_ADDRESS_PATTERN.matcher(email).matches()) {
             Toast.makeText(this, "Enter a valid email", Toast.LENGTH_SHORT).show();
@@ -85,7 +90,8 @@ public class SignUpActivity extends Activity implements OnClickListener {
          user.setUsername(email);
          user.setEmail(email);
          user.setPassword(password);
-         user.put("FriendlyName", name);
+         user.put("FirstName", firstName);
+         user.put("LastName", lastName);
          
          user.signUpInBackground(new SignUpCallback() {
             @Override
@@ -103,6 +109,8 @@ public class SignUpActivity extends Activity implements OnClickListener {
             }
          });
       }
+      else {
+    	  Toast.makeText(this, "Make sure all fields are filled in.", Toast.LENGTH_SHORT).show();
+      }
    }
-
 }
