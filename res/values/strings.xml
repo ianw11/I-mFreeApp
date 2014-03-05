@@ -24,7 +24,7 @@
     <string name="lastName">Last Name</string>
     <string name="email">E-mail</string>
     <string name="password">Password</string>
-    <string name="confirm">Confirm!!</string>
+    <string name="confirm">Confirm</string>
     <string name="title_activity_im_free">Set Availability</string>
     <string name="whos_free">See Who\'s Free</string>
     <string name="where">Where?</string>
@@ -37,6 +37,11 @@
     <string name="menuTitle_logout">Logout</string>
     <string name="menuTitle_imfree">Post</string>
     <string name="menuTitle_whosfree">View Posts</string>
+    <string name="reset_confirm">Reset</string>
+    <string name="reset_cancel">Cancel</string>
+    <string name="reset_sent">Check your e-mail for reset instructions.</string>
+    <string name="reset_genericError">Reset error. Please try again.</string>
+    <string name="reset_emailNotFound">It looks like you aren\'t registered. Are you sure you provided the correct E-mail address?</string>
 
     <color name="loginBlue">#1197F0</color>
     <color name="black">#000</color>

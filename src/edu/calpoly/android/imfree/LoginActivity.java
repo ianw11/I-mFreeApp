@@ -1,10 +1,14 @@
 package edu.calpoly.android.imfree;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -13,7 +17,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.RequestPasswordResetCallback;
 
 public class LoginActivity extends Activity implements OnClickListener {
    
@@ -70,7 +77,7 @@ public class LoginActivity extends Activity implements OnClickListener {
             break;
             
          case R.id.forgotPasswordTextView:
-            Toast.makeText(this, "Forgot Password Clicked", Toast.LENGTH_SHORT).show();
+            resetPassword();
             break;
             
          case R.id.signUpButton:
@@ -102,4 +109,46 @@ public class LoginActivity extends Activity implements OnClickListener {
       }
    }
 
+   private void resetPassword() {
+	   final String username = mUsernameEditText.getText().toString();
+	   AlertDialog.Builder resetDialog = new AlertDialog.Builder(this);
+
+	   resetDialog.setTitle("Reset Password");
+	   final EditText emailView = new EditText(this);
+	   emailView.setHint(R.string.email);
+	   emailView.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+	   resetDialog.setView(emailView);
+	   
+	   resetDialog.setPositiveButton(R.string.reset_confirm, new DialogInterface.OnClickListener() {
+
+		   @Override
+		   public void onClick(DialogInterface dialog, int which) {
+			   String email = emailView.getText().toString();
+			   if (!email.equals("")) {
+				   
+				   ParseUser.requestPasswordResetInBackground(email,
+						   new RequestPasswordResetCallback() {
+					   public void done(ParseException e) {
+						   if (e == null) {
+							   Toast.makeText(LoginActivity.this, R.string.reset_sent, Toast.LENGTH_LONG).show();
+						   } else if (e.getCode() == ParseException.EMAIL_NOT_FOUND){
+							   Toast.makeText(LoginActivity.this, R.string.reset_emailNotFound, Toast.LENGTH_LONG).show();
+						   } else {
+							   Toast.makeText(LoginActivity.this, R.string.reset_genericError, Toast.LENGTH_LONG).show();
+						   }
+					   }
+				   });
+			   }
+		   }
+	   });
+	   resetDialog.setNegativeButton(R.string.reset_cancel, new DialogInterface.OnClickListener() {
+		   
+		   @Override
+		   public void onClick(DialogInterface dialog, int which) {
+			   dialog.dismiss();
+		   }
+	   });
+	   
+	   resetDialog.show();
+   }
 }
