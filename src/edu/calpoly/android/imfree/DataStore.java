@@ -124,7 +124,5 @@ public class DataStore {
 	           }
 	       }
 	   });
-	  //currentUser.removeAll("Requests", Arrays.asList(email));
-	  //currentUser.saveInBackground();
    }
 }
