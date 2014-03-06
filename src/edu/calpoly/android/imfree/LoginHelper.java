@@ -51,7 +51,7 @@ public class LoginHelper extends LogInCallback {
          
          if (isNewUser) {
             ParseObject friendRequests = new ParseObject("FriendRequests");
-            friendRequests.put("OwnedBy", user.getObjectId());
+            friendRequests.put("OwnedBy", user.getEmail());
             friendRequests.saveInBackground();
             Log.d("LoginHelper", "Created new FriendRequests object");
          }
