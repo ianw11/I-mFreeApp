@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -178,11 +179,7 @@ public class ImFree extends BaseActivity implements android.location.LocationLis
    
    private void initLocationData() {
       locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-      locManager.requestLocationUpdates(
-				LocationManager.GPS_PROVIDER, 
-				ImFree.MIN_TIME_CHANGE, 
-				ImFree.MIN_DISTANCE_CHANGE,
-				this);
+      //locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,ImFree.MIN_TIME_CHANGE,ImFree.MIN_DISTANCE_CHANGE,this);
    }
    
    private void initOnClickListeners() {
@@ -264,20 +261,18 @@ public class ImFree extends BaseActivity implements android.location.LocationLis
                    ParseGeoPoint geoPoint = new ParseGeoPoint(currLoc.getLatitude(), currLoc.getLongitude());
                    user.put("Location", geoPoint);
                    // Remove location updates after posting to save battery
-                   locManager.removeUpdates(ImFree.this);
+                   //locManager.removeUpdates(ImFree.this);
                   }
                   else {
-                   Toast.makeText(ImFree.this, "Cannot post; GPS has no last known location.", Toast.LENGTH_SHORT).show();
-                   unlockButtons();
-                   return;
+                     Toast.makeText(ImFree.this, "Cannot post; GPS has no last known location.", Toast.LENGTH_SHORT).show();
+                     unlockButtons();
+                     return;
                   }
                   
                   user.saveInBackground(new SaveCallback() {
                      @Override
                      public void done(ParseException e) {
-                        if (e == null) {
-                           // Nothing to do for successful save
-                        } else {
+                        if (e != null) {
                            // Unsuccessful save
                            Log.e("ImFree", e.toString());
                            Toast.makeText(ImFree.this, "Save Unsuccessful", Toast.LENGTH_SHORT).show();

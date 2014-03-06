@@ -60,6 +60,9 @@ public class DataStore {
    }
    
    public static void trueAddParseFriend(String friend) {
+      if (friendsList.contains(friend))
+         return;
+      
 	   friendsList.add(friend);
 	   currentUser.addUnique("Friends", friend);
 	   currentUser.saveInBackground();

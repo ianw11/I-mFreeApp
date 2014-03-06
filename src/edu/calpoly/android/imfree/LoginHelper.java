@@ -45,7 +45,7 @@ public class LoginHelper extends LogInCallback {
             //DataStore.addMultipleParseFriends((List<String>)user.getList("Friends"));
             for (Object f : arr) {
                Log.d("friends", (String)f);
-               DataStore.addParseFriend((String)f);
+               DataStore.trueAddParseFriend((String)f);
             }
          }
          
