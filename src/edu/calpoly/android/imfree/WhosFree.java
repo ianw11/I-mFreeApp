@@ -113,6 +113,7 @@ public class WhosFree extends BaseActivity implements OnClickListener {
 		
 		addFriend.setOnClickListener(this);
 		removeFriend.setOnClickListener(this);
+		viewRequests.setOnClickListener(this);
 	}
 
 	
