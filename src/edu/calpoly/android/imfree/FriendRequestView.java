@@ -45,14 +45,17 @@ public class FriendRequestView extends LinearLayout implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		
 		case R.id.friendReqAccept:
 			Toast.makeText(context, "Accepted", Toast.LENGTH_SHORT).show();
-			
+			DataStore.acceptFriendRequest(mEmail);
 			break;
+			
 		case R.id.friendReqDecline:
 			Toast.makeText(context, "Declined", Toast.LENGTH_SHORT).show();
-			
+			DataStore.removeFriendRequest(mEmail);
 			break;
+			
 		default:
 			break;
 		}

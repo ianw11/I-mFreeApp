@@ -6,6 +6,9 @@ import java.util.List;
 
 import android.util.Log;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 
@@ -20,10 +23,31 @@ public class DataStore {
       currentUser = null;
    }
    
-   public static void addParseFriend(String friend) {
-      friendsList.add(friend);
-      currentUser.addUnique("Friends", friend);
-      currentUser.saveInBackground();
+   public static void addParseFriend(final String friend) {
+	   // Prevent users from adding duplicates
+	   if (friendsList.contains(friend))
+		   return;
+	   
+	   ParseQuery<ParseUser> query = ParseUser.getQuery();
+	   query.whereEqualTo("email", friend);
+	   
+	   query.findInBackground(new FindCallback<ParseUser>() {
+		   public void done(List<ParseUser> objects, ParseException e) {
+			   if (e == null) {
+				   // Emails are unique so first element is the desired user
+				   ParseUser friendUser = objects.get(0);
+				   friendUser.addUnique("FriendRequests", currentUser.getEmail());
+			   } else {
+				   // Something went wrong.
+			   }
+		   }
+	   });
+   }
+   
+   public static void trueAddParseFriend(String friend) {
+	   friendsList.add(friend);
+	   currentUser.addUnique("Friends", friend);
+	   currentUser.saveInBackground();
    }
    
    public static List<String> getParseFriends() {
@@ -46,13 +70,26 @@ public class DataStore {
    }
    
    public static void acceptFriendRequest(String email) {
-	   DataStore.addParseFriend(email);
-	   currentUser.removeAll("FriendRequests", Arrays.asList(email));
-	   currentUser.saveInBackground();
+	   DataStore.trueAddParseFriend(email);
+	   ParseQuery<ParseUser> query = ParseUser.getQuery();
+	   query.whereEqualTo("email", email);
 	   
+	   query.findInBackground(new FindCallback<ParseUser>() {
+		   public void done(List<ParseUser> objects, ParseException e) {
+			   if (e == null) {
+				   // Emails are unique so first element is the desired user
+				   ParseUser friendUser = objects.get(0);
+				   friendUser.addUnique("Friends", currentUser.getEmail());
+			   } else {
+				   // Something went wrong.
+			   }
+		   }
+	   });
+	   removeFriendRequest(email);
    }
    
-   public static void declineFriendRequest(String email) {
-	   
+   public static void removeFriendRequest(String email) {
+	   currentUser.removeAll("FriendRequests", Arrays.asList(email));
+	   currentUser.saveInBackground();
    }
 }
