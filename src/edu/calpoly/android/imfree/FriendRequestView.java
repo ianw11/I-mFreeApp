@@ -29,9 +29,9 @@ public class FriendRequestView extends LinearLayout implements OnClickListener {
 		mFriendNameTextView.setText(mEmail);
 		
 		mAcceptButton = (Button)findViewById(R.id.friendReqAccept);
-		mAcceptButton.setOnClickListener((OnClickListener)context);
+		mAcceptButton.setOnClickListener(this);
 		mDeclineButton = (Button)findViewById(R.id.friendReqDecline);
-		mDeclineButton.setOnClickListener((OnClickListener)context);
+		mDeclineButton.setOnClickListener(this);
 	}
 	
 	public String getEmail() {
