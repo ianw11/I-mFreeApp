@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -87,7 +88,7 @@ public class WhosFree extends BaseActivity implements OnClickListener {
     	              final LatLng loc = new LatLng(gp.getLatitude(), gp.getLongitude());
     	              final String userLocation = user.getString("UserLocation");
     	              
-    	              final Post post = new Post(user.getString("FirstName") + " " + user.getString("LastName"), user.getEmail(), date.toString(), userLocation, loc);
+    	              final Post post = new Post(user.getString("FirstName") + " " + user.getString("LastName"), user.getEmail(), date.toString(), userLocation, loc, user.getObjectId());
     	              addPost(post);
     	           }
     	        }
@@ -155,6 +156,15 @@ public class WhosFree extends BaseActivity implements OnClickListener {
          
       case R.id.fullPostHangButton:
          Toast.makeText(this, "Hang Button Pressed", Toast.LENGTH_SHORT).show();
+         
+         final ParseUser curr = DataStore.getCurrentUser();
+         
+         ParsePush push = new ParsePush();
+         push.setChannel(fullPost.getPost().getUserId());
+         push.setMessage(curr.getString("FirstName") + " " + curr.getString("LastName") + " is coming!");
+         push.sendInBackground();
+         
+         
          break;
       
       default:

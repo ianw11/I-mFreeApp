@@ -26,6 +26,8 @@ public class FullPostView extends LinearLayout {
    
    private SupportMapFragment fragment;
    private GoogleMap map;
+   
+   private Post smallerPost;
 
    public FullPostView(Context context) {
       super(context);
@@ -38,6 +40,7 @@ public class FullPostView extends LinearLayout {
       mLocationTextView = (TextView)findViewById(R.id.fullPostLocation);
       mIllHangButton = (Button)findViewById(R.id.fullPostHangButton);
       
+      /* This is allowing WhosFree to be the handler of a click */
       mIllHangButton.setOnClickListener((OnClickListener)context);
       
       fragment = (SupportMapFragment) ((SherlockFragmentActivity)context).getSupportFragmentManager().findFragmentById(R.id.postMap);
@@ -47,6 +50,8 @@ public class FullPostView extends LinearLayout {
    }
    
    public boolean setPost(Post post) {
+      
+      smallerPost = post;
       
       map = fragment.getMap();
 
@@ -65,6 +70,10 @@ public class FullPostView extends LinearLayout {
       settings.setZoomControlsEnabled(false);
       
       return true;
+   }
+   
+   public Post getPost() {
+      return smallerPost;
    }
 
 }

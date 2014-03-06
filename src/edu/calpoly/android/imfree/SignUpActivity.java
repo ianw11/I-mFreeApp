@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
@@ -98,9 +99,10 @@ public class SignUpActivity extends Activity implements OnClickListener {
             public void done(ParseException e) {
                if (e == null) {
                   // Successful Signup
+                  
                   SharedPreferences prefs = SignUpActivity.this.getSharedPreferences("edu.calpoly.android.imfree", Context.MODE_PRIVATE);
                   prefs.edit().putString("username", email).putString("password", password).commit();
-                  ParseUser.logInInBackground(email, password, new LoginHelper(SignUpActivity.this));
+                  ParseUser.logInInBackground(email, password, new LoginHelper(SignUpActivity.this, false, true));
                } else {
                   // Failed Signup
                   Toast.makeText(SignUpActivity.this, "Sign up failed...", Toast.LENGTH_SHORT).show();

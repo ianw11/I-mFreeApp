@@ -19,7 +19,8 @@ public class PostView extends LinearLayout {
 		
 		this.mPosterNameTextView = (TextView)findViewById(R.id.posterNameTextView);
 		
-		/* Yes, I know it uses an OnClickListener that's somewhere else. It's for scope reasons */
+		/* Yes, I know it uses an OnClickListener that's somewhere else. It's for scope reasons
+		 * The context is WhosFree, and it uses the default in the switch statement */
 		this.setOnClickListener((OnClickListener)context);
 		
 		this.setPost(post);

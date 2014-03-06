@@ -3,6 +3,7 @@ package edu.calpoly.android.imfree;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseACL;
+import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
@@ -72,6 +73,10 @@ public class SplashScreenActivity extends Activity {
       
       Parse.initialize(this, "IRL0T2KM6IP9GjaXU4ai7NAHLNnqli1iVVaPfV1U", 
             "ADfT5SkIThn2a4uEAg1Vf5ZjiIAEx6S863jgguQn");
+      
+      // Uncomment the following line to add installation analytics 
+      //ParseInstallation.getCurrentInstallation().saveInBackground();
+      ParseAnalytics.trackAppOpened(getIntent());
       
       //ParseUser.enableAutomaticUser();
       //ParseACL defaultACL = new ParseACL();

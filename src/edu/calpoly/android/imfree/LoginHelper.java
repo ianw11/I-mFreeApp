@@ -10,27 +10,34 @@ import android.widget.Toast;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 public class LoginHelper extends LogInCallback {
    
    private Activity context;
    private boolean isFromSplash;
+   private boolean isNewUser;
 
    public LoginHelper(Context c) {
      this(c, false);
    }
    
    public LoginHelper(Context c, boolean fromSplash) {
+      this(c, fromSplash, false);
+   }
+   
+   public LoginHelper(Context c, boolean fromSplash, boolean newUser) {
       context = (Activity)c;
       isFromSplash = fromSplash;
+      isNewUser = newUser;
    }
+   
 
    @Override
    public void done(ParseUser user, ParseException e) {
       if (user != null) {
          DataStore.setCurrentUser(user);
-         
          
          List<Object> arr = user.getList("Friends");
          if (arr != null) {
@@ -40,6 +47,13 @@ public class LoginHelper extends LogInCallback {
                Log.d("friends", (String)f);
                DataStore.addParseFriend((String)f);
             }
+         }
+         
+         if (isNewUser) {
+            ParseObject friendRequests = new ParseObject("FriendRequests");
+            friendRequests.put("OwnedBy", user.getObjectId());
+            friendRequests.saveInBackground();
+            Log.d("LoginHelper", "Created new FriendRequests object");
          }
          
          Intent i = new Intent(context, ImFree.class);

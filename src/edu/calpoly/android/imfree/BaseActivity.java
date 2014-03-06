@@ -48,8 +48,8 @@ public class BaseActivity extends SherlockFragmentActivity {
 			break;
 			
 		case R.id.menu_logout:
+		   PushService.unsubscribe(this, DataStore.getCurrentUser().getObjectId());
 			DataStore.clearData();
-			PushService.unsubscribe(this, "Test");
 			this.getSharedPreferences("edu.calpoly.android.imfree", Context.MODE_PRIVATE).edit().putString("username", "").commit();
          Intent logout = new Intent(BaseActivity.this, LoginActivity.class);
          logout.putExtra("intent", mActivityName);
