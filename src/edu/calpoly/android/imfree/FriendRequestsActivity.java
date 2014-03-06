@@ -35,11 +35,14 @@ public class FriendRequestsActivity extends SherlockFragmentActivity {
 		setContentView(R.layout.layout_friend_requests);
 		
 		mFriendReqListView = (ListView)findViewById(R.id.friendRequestsListView);
+	
+		mRequests = new ArrayList<String>();
+		mAdapter = new FriendReqListAdapter(this, mRequests);
+		mFriendReqListView.setAdapter(mAdapter);
 		updateFriendRequests();
 		if (mRequests == null)
 			mRequests = new ArrayList<String>();
-		mAdapter = new FriendReqListAdapter(this, mRequests);
-		mFriendReqListView.setAdapter(mAdapter);
+		mAdapter.notifyDataSetChanged();
 	}
 
 	private void updateFriendRequests() {
