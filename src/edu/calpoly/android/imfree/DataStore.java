@@ -38,6 +38,7 @@ public class DataStore {
 				   if (!objects.isEmpty()) {
 					   ParseUser friendUser = objects.get(0);
 					   friendUser.addUnique("FriendRequests", currentUser.getEmail());
+					   friendUser.saveInBackground();
 				   }
 			   } else {
 				   // Something went wrong.
