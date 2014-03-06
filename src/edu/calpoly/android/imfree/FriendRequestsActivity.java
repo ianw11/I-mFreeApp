@@ -42,5 +42,7 @@ public class FriendRequestsActivity extends SherlockFragmentActivity {
 	private void updateFriendRequests() {
 		ParseUser currUser = DataStore.getCurrentUser();
 		mRequests = currUser.getList("FriendRequests");
+		if (mRequests == null)
+			mRequests = new ArrayList<String>();
 	}
 }
