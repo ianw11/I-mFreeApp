@@ -45,4 +45,14 @@ public class DataStore {
       return currentUser;
    }
    
+   public static void acceptFriendRequest(String email) {
+	   DataStore.addParseFriend(email);
+	   currentUser.removeAll("FriendRequests", Arrays.asList(email));
+	   currentUser.saveInBackground();
+	   
+   }
+   
+   public static void declineFriendRequest(String email) {
+	   
+   }
 }

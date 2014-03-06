@@ -33,26 +33,23 @@
         android:id="@+id/freeFreeUntil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/freeTimePicker"
-        android:layout_alignLeft="@+id/freeWhosFreeButton"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="30dp"
         android:text="@string/free_until"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TimePicker
         android:id="@+id/freeTimePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/freeLogoutButton"
-        android:layout_below="@+id/freeWhosFreeButton"
-        android:layout_marginTop="47dp" />
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/freeFreeUntil" />"
 
     <TextView
         android:id="@+id/freeUntilTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/freeFreeUntil"
-        android:layout_alignBottom="@+id/freeFreeUntil"
+        android:layout_alignBaseline="@id/freeFreeUntil"
+        android:layout_alignBottom="@id/freeFreeUntil"
         android:layout_centerHorizontal="true"
         android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -61,7 +58,7 @@
         android:id="@+id/freeEditButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/freePostButton"
+        android:layout_alignBottom="@id/freePostButton"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="27dp"
         android:visibility="invisible"
@@ -71,7 +68,7 @@
         android:id="@+id/freeCancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/freePostButton"
+        android:layout_alignTop="@id/freePostButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:visibility="invisible"

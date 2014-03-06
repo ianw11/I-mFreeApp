@@ -44,6 +44,7 @@ public class WhosFree extends BaseActivity implements OnClickListener {
 	
 	private Button addFriend;
 	private Button removeFriend;
+	private Button viewRequests;
 	
 	
     @Override
@@ -86,7 +87,7 @@ public class WhosFree extends BaseActivity implements OnClickListener {
     	              final LatLng loc = new LatLng(gp.getLatitude(), gp.getLongitude());
     	              final String userLocation = user.getString("UserLocation");
     	              
-    	              final Post post = new Post(user.getString("FriendlyName"), user.getEmail(), date.toString(), userLocation, loc);
+    	              final Post post = new Post(user.getString("FirstName") + " " + user.getString("LastName"), user.getEmail(), date.toString(), userLocation, loc);
     	              addPost(post);
     	           }
     	        }
@@ -108,6 +109,7 @@ public class WhosFree extends BaseActivity implements OnClickListener {
 		this.mPostLayout.setAdapter(mPostAdapter);
 		addFriend = (Button)findViewById(R.id.whosFreeAddFriendButton);
 		removeFriend = (Button)findViewById(R.id.whosFreeRemoveFriendButton);
+		viewRequests = (Button)findViewById(R.id.whosFreeViewRequestsButton);
 		
 		addFriend.setOnClickListener(this);
 		removeFriend.setOnClickListener(this);
@@ -144,6 +146,11 @@ public class WhosFree extends BaseActivity implements OnClickListener {
          DataStore.removeParseFriend(removedUser);
          removePost(removedUser);
          break;
+         
+      case R.id.whosFreeViewRequestsButton:
+    	  Intent i = new Intent(this, FriendRequestsActivity.class);
+    	  startActivity(i);
+    	  break;
          
       case R.id.fullPostHangButton:
          Toast.makeText(this, "Hang Button Pressed", Toast.LENGTH_SHORT).show();

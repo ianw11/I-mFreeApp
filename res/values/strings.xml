@@ -42,6 +42,8 @@
     <string name="reset_sent">Check your e-mail for reset instructions.</string>
     <string name="reset_genericError">Reset error. Please try again.</string>
     <string name="reset_emailNotFound">It looks like you aren\'t registered. Are you sure you provided the correct E-mail address?</string>
+    <string name="friendReq_accept">Accept</string>
+    <string name="friendReq_decline">Decline</string>
 
     <color name="loginBlue">#1197F0</color>
     <color name="black">#000</color>
@@ -54,5 +56,7 @@
     <string name="whosFree_back">Back</string>
     <string name="whosFree_addFriend">Add Friend</string>
     <string name="whosFree_removeFriend">Remove Friend</string>
+    <string name="whosFree_viewRequests">Friend Requests</string>
+    <string name="title_activity_friend_requests">FriendRequestsActivity</string>
 
 </resources>
