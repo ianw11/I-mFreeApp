@@ -182,7 +182,7 @@ public class WhosFree extends BaseActivity implements OnClickListener {
          final ParseUser curr = DataStore.getCurrentUser();
          
          ParsePush push = new ParsePush();
-         push.setChannel(fullPost.getPost().getUserId());
+         push.setChannel("channel" + fullPost.getPost().getUserId());
          push.setMessage(curr.getString("FirstName") + " " + curr.getString("LastName") + " is coming!");
          push.sendInBackground();
          

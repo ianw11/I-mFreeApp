@@ -62,7 +62,7 @@ public class ImFree extends BaseActivity implements android.location.LocationLis
       
       //PushService.setDefaultPushCallback(this,  ImFree.class);
       // Subscribe every user to their own "channel"
-      PushService.subscribe(this, DataStore.getCurrentUser().getObjectId(), ImFree.class);
+      PushService.subscribe(this, "channel" + DataStore.getCurrentUser().getObjectId(), ImFree.class);
    }
    
    @Override
