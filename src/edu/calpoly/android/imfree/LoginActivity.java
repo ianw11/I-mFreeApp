@@ -129,6 +129,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 	   final EditText emailView = new EditText(this);
 	   emailView.setHint(R.string.email);
 	   emailView.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+	   if (username != "")
+         emailView.setText(username);
 	   resetDialog.setView(emailView);
 	   
 	   resetDialog.setPositiveButton(R.string.reset_confirm, new DialogInterface.OnClickListener() {
