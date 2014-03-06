@@ -2,8 +2,6 @@ package edu.calpoly.android.imfree;
 
 import java.util.List;
 
-import org.json.JSONArray;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -60,6 +58,8 @@ public class LoginHelper extends LogInCallback {
             context.finish();
          } else {
             Toast.makeText(context, "Failed Login", Toast.LENGTH_SHORT).show();
+            final LoginActivity test = (LoginActivity) context;
+            test.resetViews();
             Log.d("ParseException", e.toString());
          }
       }

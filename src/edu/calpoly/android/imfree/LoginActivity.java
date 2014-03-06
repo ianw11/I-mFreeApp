@@ -8,16 +8,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.RequestPasswordResetCallback;
@@ -30,6 +29,7 @@ public class LoginActivity extends Activity implements OnClickListener {
    private CheckBox mRememberMeCheckBox;
    private TextView mForgotPasswordTextView;
    private Button mSignUpButton;
+   private ProgressBar mProgressBar;
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +54,10 @@ public class LoginActivity extends Activity implements OnClickListener {
       this.mRememberMeCheckBox = (CheckBox)findViewById(R.id.rememberMeCheckBox);
       this.mForgotPasswordTextView = (TextView)findViewById(R.id.forgotPasswordTextView);
       this.mSignUpButton = (Button)findViewById(R.id.signUpButton);
+      this.mProgressBar = (ProgressBar)findViewById(R.id.loginProgressBar);
+      
+      mProgressBar.setVisibility(View.GONE);
+      mLoginButton.setVisibility(View.VISIBLE);
       
       mRememberMeCheckBox.setChecked(true);
       
@@ -65,8 +69,13 @@ public class LoginActivity extends Activity implements OnClickListener {
       mForgotPasswordTextView.setOnClickListener(this);
       mLoginButton.setOnClickListener(this);
       mSignUpButton.setOnClickListener(this);
+      mLoginButton.setClickable(true);
    }
 
+   public void resetViews() {
+      mProgressBar.setVisibility(View.GONE);
+      mLoginButton.setVisibility(View.VISIBLE);
+   }
 
    @Override
    public void onClick(View v) {
@@ -95,6 +104,9 @@ public class LoginActivity extends Activity implements OnClickListener {
       final String username = mUsernameEditText.getText().toString();
       final String password = mPasswordEditText.getText().toString();
       if (!username.equals("") && !password.equals("")) {
+         mProgressBar.setVisibility(View.VISIBLE);
+         mLoginButton.setVisibility(View.INVISIBLE);
+         // To reshow the button and rehide the bar, call resetViews() from callback
 
          // Save login data for future use, if desired
          if (mRememberMeCheckBox.isChecked()) {

@@ -52,7 +52,7 @@
     <color name="yellow">#F2FF00</color>
 
     <string name="title_activity_splash_screen">SplashScreen</string>
-    <string name="dummy_content">SPLASH\nSCREEN</string>
+    <string name="dummy_content">I\'m Free\nSPLASH\nSCREEN</string>
     <string name="whosFree_back">Back</string>
     <string name="whosFree_addFriend">Add Friend</string>
     <string name="whosFree_removeFriend">Remove Friend</string>

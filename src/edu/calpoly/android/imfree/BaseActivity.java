@@ -8,6 +8,8 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.parse.ParsePush;
+import com.parse.PushService;
 
 public class BaseActivity extends SherlockFragmentActivity {
 	private String mBaseUsername;
@@ -47,9 +49,11 @@ public class BaseActivity extends SherlockFragmentActivity {
 			
 		case R.id.menu_logout:
 			DataStore.clearData();
+			PushService.unsubscribe(this, "Test");
 			this.getSharedPreferences("edu.calpoly.android.imfree", Context.MODE_PRIVATE).edit().putString("username", "").commit();
          Intent logout = new Intent(BaseActivity.this, LoginActivity.class);
          logout.putExtra("intent", mActivityName);
+         logout.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
          startActivity(logout);
          finish();
 			break;

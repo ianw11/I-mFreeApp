@@ -18,10 +18,12 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.parse.GetCallback;
+import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.PushService;
 import com.parse.SaveCallback;
 
 public class ImFree extends BaseActivity implements android.location.LocationListener, OnClickListener {
@@ -57,6 +59,10 @@ public class ImFree extends BaseActivity implements android.location.LocationLis
       
       initLayout(false);
       initOnClickListeners();
+      
+      PushService.setDefaultPushCallback(this,  ImFree.class);
+      PushService.subscribe(this, "Test", ImFree.class);
+      ParseAnalytics.trackAppOpened(getIntent());
    }
    
    @Override
