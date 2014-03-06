@@ -9,6 +9,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -40,9 +41,22 @@ public class FriendRequestsActivity extends SherlockFragmentActivity {
 	}
 
 	private void updateFriendRequests() {
-		ParseUser currUser = DataStore.getCurrentUser();
-		mRequests = currUser.getList("FriendRequests");
-		if (mRequests == null)
-			mRequests = new ArrayList<String>();
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("FriendRequests");
+		query.findInBackground(new FindCallback<ParseObject>() {
+			public void done(List<ParseObject> reqList, ParseException e) {
+				if (e == null) {
+					// Emails are unique so first element is the desired user
+					for (ParseObject obj : reqList) {
+						if (obj.getString("OwnedBy").equals(DataStore.getCurrentUser())) {
+							mRequests = obj.getList("Requests");
+							if (mRequests == null)
+								mRequests = new ArrayList<String>();
+						}
+					}
+				} else {
+					Log.d("DataStore", "Error: " + e.toString());
+				}
+			}
+		});
 	}
 }
