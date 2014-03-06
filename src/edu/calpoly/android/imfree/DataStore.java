@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -28,17 +29,16 @@ public class DataStore {
 	   if (friendsList.contains(friend))
 		   return;
 	   
-	   ParseQuery<ParseUser> query = ParseUser.getQuery();
-	   query.whereEqualTo("email", friend);
-	   
-	   query.findInBackground(new FindCallback<ParseUser>() {
-		   public void done(List<ParseUser> objects, ParseException e) {
+	   ParseQuery<ParseObject> query = ParseQuery.getQuery("FriendsRequests");
+	   query.findInBackground(new FindCallback<ParseObject>() {
+		   public void done(List<ParseObject> reqList, ParseException e) {
 			   if (e == null) {
 				   // Emails are unique so first element is the desired user
-				   if (!objects.isEmpty()) {
-					   ParseUser friendUser = objects.get(0);
-					   friendUser.addUnique("FriendRequests", currentUser.getEmail());
-					   friendUser.saveInBackground();
+				   for (ParseObject obj : reqList) {
+					   if (obj.getString("OwnedBy").equals(friend)) {
+						   obj.addUnique("Requests", currentUser.getEmail());
+						   obj.saveInBackground();
+					   }
 				   }
 			   } else {
 				   // Something went wrong.
@@ -72,17 +72,19 @@ public class DataStore {
       return currentUser;
    }
    
-   public static void acceptFriendRequest(String email) {
+   public static void acceptFriendRequest(final String email) {
 	   DataStore.trueAddParseFriend(email);
-	   ParseQuery<ParseUser> query = ParseUser.getQuery();
-	   query.whereEqualTo("email", email);
-	   
-	   query.findInBackground(new FindCallback<ParseUser>() {
-		   public void done(List<ParseUser> objects, ParseException e) {
+	   ParseQuery<ParseObject> query = ParseQuery.getQuery("FriendsRequests");
+	   query.findInBackground(new FindCallback<ParseObject>() {
+		   public void done(List<ParseObject> reqList, ParseException e) {
 			   if (e == null) {
 				   // Emails are unique so first element is the desired user
-				   ParseUser friendUser = objects.get(0);
-				   friendUser.addUnique("Friends", currentUser.getEmail());
+				   for (ParseObject obj : reqList) {
+					   if (obj.getString("OwnedBy").equals(email)) {
+						   obj.addUnique("AcceptedRequests", currentUser.getEmail());
+						   obj.saveInBackground();
+					   }
+				   }
 			   } else {
 				   // Something went wrong.
 			   }
@@ -91,8 +93,23 @@ public class DataStore {
 	   removeFriendRequest(email);
    }
    
-   public static void removeFriendRequest(String email) {
-	   currentUser.removeAll("FriendRequests", Arrays.asList(email));
-	   currentUser.saveInBackground();
+   public static void removeFriendRequest(final String email) {
+	   ParseQuery<ParseObject> query = ParseQuery.getQuery("FriendRequests");
+	   query.findInBackground(new FindCallback<ParseObject>() {
+		   public void done(List<ParseObject> reqList, ParseException e) {
+			   if (e == null) {
+				   for (ParseObject obj : reqList) {
+					   if (obj.getString("OwnedBy").equals(currentUser.getEmail())) {
+						   obj.removeAll("Requests", Arrays.asList(email));
+						   obj.saveInBackground();
+					   }
+				   }
+	           } else {
+	        	   Log.d("score", "Error: " + e.getMessage());
+	           }
+	       }
+	   });
+	  //currentUser.removeAll("Requests", Arrays.asList(email));
+	  //currentUser.saveInBackground();
    }
 }

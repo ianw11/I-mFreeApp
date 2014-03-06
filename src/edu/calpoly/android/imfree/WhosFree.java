@@ -1,6 +1,7 @@
 package edu.calpoly.android.imfree;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +26,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParsePush;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -56,6 +58,26 @@ public class WhosFree extends BaseActivity implements OnClickListener {
        if (checkGooglePlayServices != ConnectionResult.SUCCESS) {
           Log.e("WhosFree", "No Google Play Services");
        }
+       
+       ParseQuery<ParseObject> query = ParseQuery.getQuery("FriendRequests");
+	   query.findInBackground(new FindCallback<ParseObject>() {
+		   public void done(List<ParseObject> reqList, ParseException e) {
+			   if (e == null) {
+				   for (ParseObject obj : reqList) {
+					   if (obj.getString("OwnedBy").equals(DataStore.getCurrentUser().getEmail())) {
+						   List<String> toAdd = obj.getList("AcceptedRequests");
+						   for (String s : toAdd) {
+							   DataStore.trueAddParseFriend(s);
+						   }
+						   obj.removeAll("AcceptedRequests", toAdd);
+						   obj.saveInBackground();
+					   }
+				   }
+	           } else {
+	        	   Log.d("score", "Error: " + e.getMessage());
+	           }
+	       }
+	   });
        
        this.mPostList = new ArrayList<Post>();
        this.mPostAdapter = new PostListAdapter(this, this.mPostList);
