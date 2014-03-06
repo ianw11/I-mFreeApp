@@ -29,7 +29,7 @@ public class DataStore {
 	   if (friendsList.contains(friend))
 		   return;
 	   
-	   ParseQuery<ParseObject> query = ParseQuery.getQuery("FriendsRequests");
+	   ParseQuery<ParseObject> query = ParseQuery.getQuery("FriendRequests");
 	   query.findInBackground(new FindCallback<ParseObject>() {
 		   public void done(List<ParseObject> reqList, ParseException e) {
 			   if (e == null) {
@@ -41,7 +41,7 @@ public class DataStore {
 					   }
 				   }
 			   } else {
-				   // Something went wrong.
+				   Log.d("DataStore", "Error: " + e.toString());
 			   }
 		   }
 	   });
@@ -74,7 +74,7 @@ public class DataStore {
    
    public static void acceptFriendRequest(final String email) {
 	   DataStore.trueAddParseFriend(email);
-	   ParseQuery<ParseObject> query = ParseQuery.getQuery("FriendsRequests");
+	   ParseQuery<ParseObject> query = ParseQuery.getQuery("FriendRequests");
 	   query.findInBackground(new FindCallback<ParseObject>() {
 		   public void done(List<ParseObject> reqList, ParseException e) {
 			   if (e == null) {
