@@ -36,6 +36,8 @@ public class FriendRequestsActivity extends SherlockFragmentActivity {
 		
 		mFriendReqListView = (ListView)findViewById(R.id.friendRequestsListView);
 		updateFriendRequests();
+		if (mRequests == null)
+			mRequests = new ArrayList<String>();
 		mAdapter = new FriendReqListAdapter(this, mRequests);
 		mFriendReqListView.setAdapter(mAdapter);
 	}
@@ -49,8 +51,6 @@ public class FriendRequestsActivity extends SherlockFragmentActivity {
 					for (ParseObject obj : reqList) {
 						if (obj.getString("OwnedBy").equals(DataStore.getCurrentUser())) {
 							mRequests = obj.getList("Requests");
-							if (mRequests == null)
-								mRequests = new ArrayList<String>();
 						}
 					}
 				} else {
