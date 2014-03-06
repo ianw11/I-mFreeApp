@@ -52,6 +52,7 @@ public class FriendRequestsActivity extends SherlockFragmentActivity {
 					for (ParseObject obj : reqList) {
 						if (obj.getString("OwnedBy").equals(DataStore.getCurrentUser().getEmail())) {
 							DataStore.setRequests(obj.getList("Requests"));
+							mAdapter.notifyDataSetChanged();
 						}
 					}
 				} else {
