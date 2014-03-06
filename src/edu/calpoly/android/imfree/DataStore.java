@@ -35,8 +35,10 @@ public class DataStore {
 		   public void done(List<ParseUser> objects, ParseException e) {
 			   if (e == null) {
 				   // Emails are unique so first element is the desired user
-				   ParseUser friendUser = objects.get(0);
-				   friendUser.addUnique("FriendRequests", currentUser.getEmail());
+				   if (!objects.isEmpty()) {
+					   ParseUser friendUser = objects.get(0);
+					   friendUser.addUnique("FriendRequests", currentUser.getEmail());
+				   }
 			   } else {
 				   // Something went wrong.
 			   }
