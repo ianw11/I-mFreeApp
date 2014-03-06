@@ -49,7 +49,7 @@ public class FriendRequestsActivity extends SherlockFragmentActivity {
 				if (e == null) {
 					// Emails are unique so first element is the desired user
 					for (ParseObject obj : reqList) {
-						if (obj.getString("OwnedBy").equals(DataStore.getCurrentUser())) {
+						if (obj.getString("OwnedBy").equals(DataStore.getCurrentUser().getEmail())) {
 							mRequests = obj.getList("Requests");
 						}
 					}
