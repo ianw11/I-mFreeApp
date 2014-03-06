@@ -35,14 +35,12 @@ public class FriendRequestsActivity extends SherlockFragmentActivity {
 		setContentView(R.layout.layout_friend_requests);
 		
 		mFriendReqListView = (ListView)findViewById(R.id.friendRequestsListView);
-	
-		mRequests = new ArrayList<String>();
-		mAdapter = new FriendReqListAdapter(this, mRequests);
-		mFriendReqListView.setAdapter(mAdapter);
 		updateFriendRequests();
+		mRequests = DataStore.getRequests();
 		if (mRequests == null)
 			mRequests = new ArrayList<String>();
-		mAdapter.notifyDataSetChanged();
+		mAdapter = new FriendReqListAdapter(this, mRequests);
+		mFriendReqListView.setAdapter(mAdapter);
 	}
 
 	private void updateFriendRequests() {
@@ -53,7 +51,7 @@ public class FriendRequestsActivity extends SherlockFragmentActivity {
 					// Emails are unique so first element is the desired user
 					for (ParseObject obj : reqList) {
 						if (obj.getString("OwnedBy").equals(DataStore.getCurrentUser().getEmail())) {
-							mRequests = obj.getList("Requests");
+							DataStore.setRequests(obj.getList("Requests"));
 						}
 					}
 				} else {

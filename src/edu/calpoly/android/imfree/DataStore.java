@@ -16,12 +16,24 @@ import com.parse.ParseUser;
 public class DataStore {
    
    private static ArrayList<String> friendsList = new ArrayList<String>();
+   private static List<String> mRequests = new ArrayList<String>();
    
    private static ParseUser currentUser;
    
    public static void clearData() {
       friendsList.clear();
       currentUser = null;
+   }
+   
+   public static void setRequests(List<Object> list) {
+	   mRequests.clear();
+	   for (Object s : list) {
+		   mRequests.add((String)s);
+	   }
+   }
+   
+   public static List<String> getRequests() {
+	   return mRequests;
    }
    
    public static void addParseFriend(final String friend) {
