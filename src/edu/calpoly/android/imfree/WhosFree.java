@@ -66,11 +66,14 @@ public class WhosFree extends BaseActivity implements OnClickListener {
 				   for (ParseObject obj : reqList) {
 					   if (obj.getString("OwnedBy").equals(DataStore.getCurrentUser().getEmail())) {
 						   List<String> toAdd = obj.getList("AcceptedRequests");
-						   for (String s : toAdd) {
-							   DataStore.trueAddParseFriend(s);
+						   
+						   if (toAdd != null) {
+							   for (String s : toAdd) {
+								   DataStore.trueAddParseFriend(s);
+							   }
+							   obj.removeAll("AcceptedRequests", toAdd);
+							   obj.saveInBackground();
 						   }
-						   obj.removeAll("AcceptedRequests", toAdd);
-						   obj.saveInBackground();
 					   }
 				   }
 	           } else {
