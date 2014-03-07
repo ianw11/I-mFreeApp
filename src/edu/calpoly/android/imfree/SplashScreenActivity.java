@@ -1,22 +1,15 @@
 package edu.calpoly.android.imfree;
 
-import com.parse.LogInCallback;
-import com.parse.Parse;
-import com.parse.ParseACL;
-import com.parse.ParseAnalytics;
-import com.parse.ParseException;
-import com.parse.ParseUser;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
+
+import com.parse.ParseAnalytics;
+import com.parse.ParseUser;
+
 import edu.calpoly.android.imfree.util.SystemUiHider;
 
 /**
@@ -70,9 +63,6 @@ public class SplashScreenActivity extends Activity {
       mSystemUiHider.setup();
       
       /****************************************************/
-      
-      Parse.initialize(this, "IRL0T2KM6IP9GjaXU4ai7NAHLNnqli1iVVaPfV1U", 
-            "ADfT5SkIThn2a4uEAg1Vf5ZjiIAEx6S863jgguQn");
       
       // Uncomment the following line to add installation analytics 
       //ParseInstallation.getCurrentInstallation().saveInBackground();

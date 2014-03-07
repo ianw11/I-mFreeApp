@@ -20,27 +20,29 @@
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
-    
-    
-   <!-- Parse Push Permissions -->
-   <uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.WAKE_LOCK" />
-	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-	<uses-permission android:name="android.permission.VIBRATE" />
-	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
-	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-	<permission android:protectionLevel="signature"
-	     android:name="edu.calpoly.android.imfree.permission.C2D_MESSAGE" />
-	<uses-permission android:name="edu.calpoly.android.imfree.permission.C2D_MESSAGE" />
-   <!-- End of Parse Push Permissions -->
 
+    <!-- Parse Push Permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <permission
+        android:name="edu.calpoly.android.imfree.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="edu.calpoly.android.imfree.permission.C2D_MESSAGE" />
+    <!-- End of Parse Push Permissions -->
 
     <application
         android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.Sherlock.Light"
-        android:icon="@drawable/ic_launcher" >
+        android:name="edu.calpoly.android.imfree.ImFreeApplication" >
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -83,33 +85,33 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>android 
         </activity>
         <activity
             android:name="edu.calpoly.android.imfree.FriendRequestsActivity"
             android:label="@string/title_activity_friend_requests" >
         </activity>
-        
-        
-         <!-- Parse Push Manifest Requirements -->
-         <service android:name="com.parse.PushService" />
-			<receiver android:name="com.parse.ParseBroadcastReceiver">
-			  <intent-filter>
-			    <action android:name="android.intent.action.BOOT_COMPLETED" />
-			    <action android:name="android.intent.action.USER_PRESENT" />
-			  </intent-filter>
-			</receiver>
-			<receiver android:name="com.parse.GcmBroadcastReceiver"
-			    android:permission="com.google.android.c2dm.permission.SEND">
-			  <intent-filter>
-			    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-			    <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-			    <category android:name="edu.calpoly.android.imfree" />
-			  </intent-filter>
-			</receiver>
-			<!-- End of Parse Push Manifest Requirements -->
-			
-			
+
+        <!-- Parse Push Manifest Requirements -->
+        <service android:name="com.parse.PushService" />
+
+        <receiver android:name="com.parse.ParseBroadcastReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.parse.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="edu.calpoly.android.imfree" />
+            </intent-filter>
+        </receiver>
+        <!-- End of Parse Push Manifest Requirements -->
         
     </application>
 

@@ -58,5 +58,6 @@
     <string name="whosFree_removeFriend">Remove Friend</string>
     <string name="whosFree_viewRequests">Friend Requests</string>
     <string name="title_activity_friend_requests">FriendRequestsActivity</string>
+    <string name="title_activity_im_free_application">ImFreeApplication</string>
 
 </resources>

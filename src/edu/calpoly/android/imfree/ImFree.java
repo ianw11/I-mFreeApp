@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,7 +18,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.parse.GetCallback;
-import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
@@ -42,8 +40,8 @@ public class ImFree extends BaseActivity implements android.location.LocationLis
    
    private LocationManager locManager;
    
-   private static final int MIN_TIME_CHANGE = 3000;
-   private static final int MIN_DISTANCE_CHANGE = 3;
+   //private static final int MIN_TIME_CHANGE = 3000;
+   //private static final int MIN_DISTANCE_CHANGE = 3;
 
    @Override
    public void onCreate(Bundle savedInstanceState) {

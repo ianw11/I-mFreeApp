@@ -1,26 +1,17 @@
 package edu.calpoly.android.imfree;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.ListView;
+
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.google.android.gms.maps.model.LatLng;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
-
-import android.os.Bundle;
-import android.app.Activity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ListView;
-import android.widget.Toast;
 
 public class FriendRequestsActivity extends SherlockFragmentActivity {
 

@@ -3,12 +3,10 @@ package edu.calpoly.android.imfree;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.parse.ParsePush;
 import com.parse.PushService;
 
 public class BaseActivity extends SherlockFragmentActivity {
