@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,7 +37,7 @@ import com.parse.ParseUser;
  * a traveled path, mark the map with information and take pictures that become
  * associated with the map.
  */
-public class WhosFree extends BaseActivity implements OnClickListener {
+public class WhosFree extends BaseActivity implements OnClickListener, OnLongClickListener {
 
 	private ArrayList<Post> mPostList;
 	private PostListAdapter mPostAdapter;
@@ -222,4 +225,29 @@ public class WhosFree extends BaseActivity implements OnClickListener {
       }
       
    }
+
+	@Override
+	public boolean onLongClick(View v) {
+		
+		AlertDialog.Builder deleteDialog = new AlertDialog.Builder(WhosFree.this);
+		deleteDialog.setTitle("Delete Friend?");
+		
+		deleteDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Toast.makeText(WhosFree.this, "TODO: Delete", Toast.LENGTH_SHORT).show();
+			}
+		});
+		
+		deleteDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+	
+		deleteDialog.show();
+		
+		return false;
+	}
 }

@@ -22,6 +22,7 @@ public class PostView extends LinearLayout {
 		/* Yes, I know it uses an OnClickListener that's somewhere else. It's for scope reasons
 		 * The context is WhosFree, and it uses the default in the switch statement */
 		this.setOnClickListener((OnClickListener)context);
+		this.setOnLongClickListener((OnLongClickListener)context);
 		
 		this.setPost(post);
 	}
