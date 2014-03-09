@@ -55,4 +55,9 @@ public class FriendRequestsActivity extends SherlockFragmentActivity {
 			}
 		});
 	}
+	
+	public void removeEntry(String email) {
+	   mRequests.remove(email);
+	   mAdapter.notifyDataSetChanged();
+	}
 }

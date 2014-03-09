@@ -16,7 +16,7 @@ public class FriendRequestView extends LinearLayout implements OnClickListener {
 	private Button mDeclineButton;
 	
 	private String mEmail;
-	private Context context;
+	private FriendRequestsActivity context;
 	
 	public FriendRequestView(Context context, String email) {
 		super(context);
@@ -24,7 +24,7 @@ public class FriendRequestView extends LinearLayout implements OnClickListener {
 		inflater.inflate(R.layout.friend_request_view, this, true);
 		
 		mEmail = email;
-		this.context = context;
+		this.context = (FriendRequestsActivity)context;
 		mFriendNameTextView = (TextView)findViewById(R.id.friendReqTextView);
 		mFriendNameTextView.setText(mEmail);
 		
@@ -49,11 +49,13 @@ public class FriendRequestView extends LinearLayout implements OnClickListener {
 		case R.id.friendReqAccept:
 			Toast.makeText(context, "Accepted", Toast.LENGTH_SHORT).show();
 			DataStore.acceptFriendRequest(mEmail);
+			context.removeEntry(mEmail);
 			break;
 			
 		case R.id.friendReqDecline:
 			Toast.makeText(context, "Declined", Toast.LENGTH_SHORT).show();
 			DataStore.removeFriendRequest(mEmail);
+			context.removeEntry(mEmail);
 			break;
 			
 		default:

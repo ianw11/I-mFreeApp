@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -30,7 +28,6 @@ import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SendCallback;
 
 /**
  * Activity that contains an interactive Google Map fragment. Users can record
@@ -50,12 +47,15 @@ public class WhosFree extends BaseActivity implements OnClickListener {
 	private Button addFriend;
 	private Button removeFriend;
 	private Button viewRequests;
+	private EditText username;
 	
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
        MapsInitializer.initialize(this);
+       getWindow().setSoftInputMode(
+             WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
        int checkGooglePlayServices = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
        if (checkGooglePlayServices != ConnectionResult.SUCCESS) {
           Log.e("WhosFree", "No Google Play Services");
@@ -66,7 +66,7 @@ public class WhosFree extends BaseActivity implements OnClickListener {
 		   public void done(List<ParseObject> reqList, ParseException e) {
 			   if (e == null) {
 				   for (ParseObject obj : reqList) {
-					   if (obj.getString("OwnedBy").equals(DataStore.getCurrentUser().getEmail())) {
+					   if (obj != null && obj.getString("OwnedBy").equals(DataStore.getCurrentUser().getEmail())) {
 						   List<String> toAdd = obj.getList("AcceptedRequests");
 						   
 						   if (toAdd != null) {
@@ -138,10 +138,12 @@ public class WhosFree extends BaseActivity implements OnClickListener {
 		addFriend = (Button)findViewById(R.id.whosFreeAddFriendButton);
 		removeFriend = (Button)findViewById(R.id.whosFreeRemoveFriendButton);
 		viewRequests = (Button)findViewById(R.id.whosFreeViewRequestsButton);
+		username = (EditText)findViewById(R.id.whosFreeAddFriendEditText);
 		
 		addFriend.setOnClickListener(this);
 		removeFriend.setOnClickListener(this);
 		viewRequests.setOnClickListener(this);
+		
 	}
 
 	
@@ -163,17 +165,28 @@ public class WhosFree extends BaseActivity implements OnClickListener {
 
    @Override
    public void onClick(View v) {
+      String temp;
       switch(v.getId()) {
          
       case R.id.whosFreeAddFriendButton:
-         Toast.makeText(this, "Add Friend", Toast.LENGTH_SHORT).show();
-         DataStore.addParseFriend(((EditText)findViewById(R.id.whosFreeAddFriendEditText)).getText().toString());
+         temp = username.getText().toString();
+         if (!temp.equals("")) {
+            getWindow().setSoftInputMode(
+                  WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+            DataStore.addParseFriend(temp);
+            username.setText("");
+         }
          break;
          
       case R.id.whosFreeRemoveFriendButton:
-         final String removedUser = ((EditText)findViewById(R.id.whosFreeAddFriendEditText)).getText().toString();
-         DataStore.removeParseFriend(removedUser);
-         removePost(removedUser);
+         temp = username.getText().toString();
+         if (!temp.equals("")) {
+            getWindow().setSoftInputMode(
+                  WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+            DataStore.removeParseFriend(temp);
+            removePost(temp);
+            username.setText("");
+         }
          break;
          
       case R.id.whosFreeViewRequestsButton:

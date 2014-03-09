@@ -43,6 +43,8 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.Sherlock.Light"
         android:name="edu.calpoly.android.imfree.ImFreeApplication" >
+        
+        <!-- Google Map API Information -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -54,44 +56,52 @@
         <uses-library
             android:name="com.google.android.maps"
             android:required="true" />
+        <!-- End of Google Map API Information -->
 
         <!-- Activity Declarations -->
         <activity
             android:name="edu.calpoly.android.imfree.WhosFree"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="edu.calpoly.android.imfree.LoginActivity"
-            android:label="@string/title_activity_login" >
+            android:label="@string/title_activity_login"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="edu.calpoly.android.imfree.SignUpActivity"
-            android:label="@string/title_activity_sign_up" >
+            android:label="@string/title_activity_sign_up"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="edu.calpoly.android.imfree.ImFree"
-            android:label="@string/title_activity_im_free" >
+            android:label="@string/title_activity_im_free"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="edu.calpoly.android.imfree.MapsActivity"
-            android:label="@string/title_activity_maps" >
+            android:label="@string/title_activity_maps"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="edu.calpoly.android.imfree.SplashScreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/FullscreenTheme" >
+            android:theme="@style/FullscreenTheme"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>android 
         </activity>
         <activity
             android:name="edu.calpoly.android.imfree.FriendRequestsActivity"
-            android:label="@string/title_activity_friend_requests" >
+            android:label="@string/title_activity_friend_requests"
+            android:screenOrientation="portrait" >
         </activity>
 
+        
         <!-- Parse Push Manifest Requirements -->
         <service android:name="com.parse.PushService" />
 

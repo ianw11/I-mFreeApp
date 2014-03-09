@@ -1,9 +1,8 @@
 package edu.calpoly.android.imfree;
 
-import com.parse.Parse;
-
 import android.app.Application;
-import android.os.Bundle;
+
+import com.parse.Parse;
 
 public class ImFreeApplication extends Application {
    
