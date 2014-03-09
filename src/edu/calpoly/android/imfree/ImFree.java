@@ -128,7 +128,8 @@ public class ImFree extends BaseActivity implements android.location.LocationLis
 		   hour = hour - 12;
 		   timeOfDay = "PM";
 	   }
-	   mFreeUntilTime.setText(hour.toString() + ":" + minutes.toString() + timeOfDay);
+	   String minuteStr = minutes < 10 ? "0" + minutes.toString() : minutes.toString();
+	   mFreeUntilTime.setText(hour.toString() + ":" + minuteStr + timeOfDay);
 	   
 	   mPost.setEnabled(false);
 	   mPost.setVisibility(View.INVISIBLE);
