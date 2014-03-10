@@ -109,6 +109,9 @@ public class DataStore {
    }
    
    public static ParseUser getCurrentUser() {
+	  if (currentUser == null) {
+		  currentUser = ParseUser.getCurrentUser();
+	  }
       return currentUser;
    }
    
