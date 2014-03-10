@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            android:hint="@string/whosFree_addFriend" />
+            android:hint="@string/whosFree_addFriendHint" />
         
         <LinearLayout
 	        android:orientation="horizontal"
@@ -31,10 +31,10 @@
 	            android:text="@string/whosFree_addFriend" />
 	        
 	        <Button
-	            android:id="@+id/whosFreeRemoveFriendButton"
+	            android:id="@+id/whosFreeViewAllToggle"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:text="@string/whosFree_removeFriend" />
+	            android:text="@string/whosFree_viewAllToggle" />
 	        
 	        <Button
                android:id="@+id/whosFreeViewRequestsButton"

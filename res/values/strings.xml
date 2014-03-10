@@ -54,10 +54,12 @@
     <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="dummy_content">I\'m Free\nSPLASH\nSCREEN</string>
     <string name="whosFree_back">Back</string>
-    <string name="whosFree_addFriend">Add Friend</string>
-    <string name="whosFree_removeFriend">Remove Friend</string>
+    <string name="whosFree_addFriendHint">Add Friend (Email)</string>
     <string name="whosFree_viewRequests">Friend Requests</string>
     <string name="title_activity_friend_requests">FriendRequestsActivity</string>
     <string name="title_activity_im_free_application">ImFreeApplication</string>
+    <string name="whosFree_viewAllToggle">View All</string>
+    <string name="whosFree_viewActiveToggle">View Active</string>
+    <string name="whosFree_addFriend">Add Friend</string>
 
 </resources>
