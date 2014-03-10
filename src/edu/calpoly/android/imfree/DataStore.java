@@ -68,6 +68,31 @@ public class DataStore {
 	   currentUser.saveInBackground();
    }
    
+   public static void deleteParseFriend(final String friend) {
+	   // Prevent users from deleting someone who isn't their friend
+	   if (!friendsList.contains(friend))
+		   return;
+	   
+	   DataStore.removeParseFriend(friend);
+	   
+	   ParseQuery<ParseObject> query = ParseQuery.getQuery("FriendRequests");
+	   query.findInBackground(new FindCallback<ParseObject>() {
+		   public void done(List<ParseObject> reqList, ParseException e) {
+			   if (e == null) {
+				   // Emails are unique so first element is the desired user
+				   for (ParseObject obj : reqList) {
+					   if (obj.getString("OwnedBy").equals(friend)) {
+						   obj.addUnique("DeletedFriends", currentUser.getEmail());
+						   obj.saveInBackground();
+					   }
+				   }
+			   } else {
+				   Log.d("DataStore", "Error: " + e.toString());
+			   }
+		   }
+	   });
+   }
+   
    public static List<String> getParseFriends() {
       return friendsList;
    }

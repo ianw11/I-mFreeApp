@@ -68,6 +68,7 @@ public class WhosFree extends BaseActivity implements OnClickListener, OnLongCli
 	   query.findInBackground(new FindCallback<ParseObject>() {
 		   public void done(List<ParseObject> reqList, ParseException e) {
 			   if (e == null) {
+				   // Check for accepted friend requests
 				   for (ParseObject obj : reqList) {
 					   if (obj != null && obj.getString("OwnedBy").equals(DataStore.getCurrentUser().getEmail())) {
 						   List<String> toAdd = obj.getList("AcceptedRequests");
@@ -77,6 +78,20 @@ public class WhosFree extends BaseActivity implements OnClickListener, OnLongCli
 								   DataStore.trueAddParseFriend(s);
 							   }
 							   obj.removeAll("AcceptedRequests", toAdd);
+							   obj.saveInBackground();
+						   }
+					   }
+				   }
+				   // Check for friends who have deleted the user
+				   for (ParseObject obj : reqList) {
+					   if (obj != null && obj.getString("OwnedBy").equals(DataStore.getCurrentUser().getEmail())) {
+						   List<String> toDelete = obj.getList("DeletedFriends");
+						   
+						   if (toDelete != null) {
+							   for (String s : toDelete) {
+								   DataStore.removeParseFriend(s);
+							   }
+							   obj.removeAll("DeletedFriends", toDelete);
 							   obj.saveInBackground();
 						   }
 					   }
@@ -223,11 +238,10 @@ public class WhosFree extends BaseActivity implements OnClickListener, OnLongCli
          fullPost.setPost(((PostView)v).getPost());
          break;
       }
-      
    }
 
 	@Override
-	public boolean onLongClick(View v) {
+	public boolean onLongClick(final View v) {
 		
 		AlertDialog.Builder deleteDialog = new AlertDialog.Builder(WhosFree.this);
 		deleteDialog.setTitle("Delete Friend?");
@@ -236,6 +250,7 @@ public class WhosFree extends BaseActivity implements OnClickListener, OnLongCli
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				Toast.makeText(WhosFree.this, "TODO: Delete", Toast.LENGTH_SHORT).show();
+				DataStore.deleteParseFriend(((PostView)v).getPost().getEmail());
 			}
 		});
 		
