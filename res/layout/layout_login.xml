@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/loginBlue" >
+    android:background="@drawable/login_background" >
 
     <TextView
         android:id="@+id/loginTextView"
@@ -19,9 +19,8 @@
         android:id="@+id/forgotPasswordTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/signUpButton"
+        android:layout_below="@+id/signUpButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="39dp"
         android:clickable="true"
         android:text="@string/forgot_password" />
 
@@ -67,26 +66,27 @@
         android:paddingRight="5dp" />
 
     <Button
+        android:id="@+id/loginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/signUpButton"
+        android:layout_alignRight="@id/signUpButton"
+        android:layout_below="@id/rememberMeCheckBox"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/colored_button"
+        android:text="@string/login" />
+    
+    <Button
         android:id="@+id/signUpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/passwordEditText"
-        android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/passwordEditText"
-        android:layout_marginBottom="34dp"
-        android:background="@color/yellow"
+        android:layout_marginBottom="20dp"
+        android:layout_below="@id/loginButton"
+        android:background="@drawable/colored_button"
         android:text="@string/sign_up_text" />
-
-    <Button
-        android:id="@+id/loginButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/signUpButton"
-        android:layout_alignRight="@+id/signUpButton"
-        android:layout_below="@+id/rememberMeCheckBox"
-        android:layout_marginTop="14dp"
-        android:background="@color/green"
-        android:text="@string/login" />
 
     <ProgressBar
         android:id="@+id/loginProgressBar"

@@ -46,6 +46,7 @@
     <string name="friendReq_decline">Decline</string>
 
     <color name="loginBlue">#1197F0</color>
+    <color name="loginLightBlue">#00CCFF</color>
     <color name="black">#000</color>
     <color name="white">#FFF</color>
     <color name="green">#05A100</color>
