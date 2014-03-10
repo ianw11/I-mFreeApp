@@ -57,6 +57,10 @@ public class WhosFree extends BaseActivity implements OnClickListener, OnLongCli
 	private Button viewAllToggle;
 	private boolean isViewAll = false;
 	
+	private boolean isFullInflated = false;
+	
+	private LinearLayout masterLayout;
+	
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,7 +122,7 @@ public class WhosFree extends BaseActivity implements OnClickListener, OnLongCli
       setActivityName("WhosFree");
        
       initLayout();
-      initLocationData(); 
+      initLocationData();
     }
     
     /**
@@ -157,6 +161,8 @@ public class WhosFree extends BaseActivity implements OnClickListener, OnLongCli
      */
 	private void initLayout() {
 		this.setContentView(R.layout.layout_whosfree);
+		
+		masterLayout = (LinearLayout)findViewById(R.id.whosFreeLayout);
 		this.mPostLayout = (ListView)this.findViewById(R.id.postListViewGroup);
 		this.mPostLayout.setAdapter(mPostAdapter);
 		addFriend = (Button)findViewById(R.id.whosFreeAddFriendButton);
@@ -171,7 +177,12 @@ public class WhosFree extends BaseActivity implements OnClickListener, OnLongCli
 		
 	}
 
-	
+	private void destroyFullPostView() {
+	   if (isFullInflated) {
+         masterLayout.removeViewAt(1);
+         isFullInflated = false;
+      }
+	}
 	
 	public void addPost(Post post) {
 		this.mPostList.add(post);
@@ -194,16 +205,16 @@ public class WhosFree extends BaseActivity implements OnClickListener, OnLongCli
       switch(v.getId()) {
       
       case R.id.whosFreeViewAllToggle:
+         
+         destroyFullPostView();
+         
          if (isViewAll) {
-            
             viewAllToggle.setText(R.string.whosFree_viewAllToggle);
             isViewAll = false;
-            
             this.mPostLayout.setAdapter(mPostAdapter);
          } else {
             viewAllToggle.setText(R.string.whosFree_viewActiveToggle);
             isViewAll = true;
-            
             this.mPostLayout.setAdapter(mUserAdapter);
          }
          break;
@@ -236,16 +247,22 @@ public class WhosFree extends BaseActivity implements OnClickListener, OnLongCli
          break;
       
       default:
-         LinearLayout layout = (LinearLayout)findViewById(R.id.whosFreeLayout);
          if (fullPost == null) {
             fullPost = new FullPostView(this);
             // Adding this to index 1 of the linearlayout.  This needs to be
             // changed if more gets added to layout_whosfree.xml
-            Log.d("WhosFree", "width: " + layout.getWidth());
-            layout.addView(fullPost, 1, new LayoutParams(600, 600));
+            Log.d("WhosFree", "width: " + masterLayout.getWidth());
+            masterLayout.addView(fullPost, 1, new LayoutParams(600, 600));
+         } else {
+            if (!isFullInflated) {
+               // This portion is run only if destroyFullPostView() is called
+               // before this OnClick occurs
+               masterLayout.addView(fullPost, 1, new LayoutParams(600, 600));
+            }
          }
          
          fullPost.setPost(((PostView)v).getPost());
+         isFullInflated = true;
          break;
       }
    }
@@ -259,6 +276,8 @@ public class WhosFree extends BaseActivity implements OnClickListener, OnLongCli
 		deleteDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
+			   
+			   destroyFullPostView();
 
 			   if (((PostView)v).isUser()) {
                DataStore.deleteParseFriend(((PostView)v).getUser());
