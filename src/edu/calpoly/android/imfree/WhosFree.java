@@ -213,7 +213,7 @@ public class WhosFree extends BaseActivity implements OnClickListener, OnLongCli
     	  break;
          
       case R.id.fullPostHangButton:
-         Toast.makeText(this, "Hang Button Pressed", Toast.LENGTH_SHORT).show();
+         Toast.makeText(this, "The user has been notified that you're on the way.", Toast.LENGTH_SHORT).show();
          
          final ParseUser curr = DataStore.getCurrentUser();
          
