@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -82,7 +81,7 @@ public class SignUpActivity extends Activity implements OnClickListener {
     		  !email.equals("") && !password.equals("")) {
          
          if (!EMAIL_ADDRESS_PATTERN.matcher(email).matches()) {
-            Toast.makeText(this, "Enter a valid email", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.signUp_enterValidEmail, Toast.LENGTH_SHORT).show();
             return;
          }
          
@@ -104,14 +103,13 @@ public class SignUpActivity extends Activity implements OnClickListener {
                   ParseUser.logInInBackground(email, password, new LoginHelper(SignUpActivity.this, false, true));
                } else {
                   // Failed Signup
-                  Toast.makeText(SignUpActivity.this, "Sign up failed...", Toast.LENGTH_SHORT).show();
-                  Log.e("Sign up Failure", e.toString());
+                  Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                }
             }
          });
       }
       else {
-    	  Toast.makeText(this, "Make sure all fields are filled in.", Toast.LENGTH_SHORT).show();
+    	  Toast.makeText(this, R.string.signUp_notAllFieldsFilledIn, Toast.LENGTH_SHORT).show();
       }
    }
 }

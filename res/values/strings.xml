@@ -62,5 +62,7 @@
     <string name="whosFree_viewAllToggle">View All</string>
     <string name="whosFree_viewActiveToggle">View Active</string>
     <string name="whosFree_addFriend">Add Friend</string>
+    <string name="signUp_notAllFieldsFilledIn">Please fill in all fields</string>
+    <string name="signUp_enterValidEmail">Please Enter a Valid Email Address</string>
 
 </resources>
