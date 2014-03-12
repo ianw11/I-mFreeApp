@@ -25,7 +25,7 @@ import com.parse.ParseUser;
 import com.parse.PushService;
 import com.parse.SaveCallback;
 
-public class ImFree extends BaseActivity implements android.location.LocationListener, OnClickListener {
+public class ImFree extends BaseActivity implements OnClickListener {
    
    private String musername;
    private String mObjectId;
@@ -188,26 +188,6 @@ public class ImFree extends BaseActivity implements android.location.LocationLis
 	   
 	   mCancel.setOnClickListener(this);
    }
-
-   @Override
-   public void onLocationChanged(Location location) {
-	   // Nothing to be done
-   }
-	
-   @Override
-   public void onProviderDisabled(String provider) {
-	   // Nothing to be done
-   }
-	
-   @Override
-   public void onProviderEnabled(String provider) {
-	   // Nothing to be done
-   }
-	
-   @Override
-   public void onStatusChanged(String provider, int status, Bundle extras) {
-	   // Nothing to be done
-   }
    
    private void lockButtons() {
       mPost.setClickable(false);
@@ -257,15 +237,17 @@ public class ImFree extends BaseActivity implements android.location.LocationLis
                   
                   Location currLoc = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                   if (currLoc != null) {
-                   ParseGeoPoint geoPoint = new ParseGeoPoint(currLoc.getLatitude(), currLoc.getLongitude());
-                   user.put("Location", geoPoint);
-                   // Remove location updates after posting to save battery
-                   //locManager.removeUpdates(ImFree.this);
+                     ParseGeoPoint geoPoint = new ParseGeoPoint(currLoc.getLatitude(), currLoc.getLongitude());
+                     user.put("Location", geoPoint);
+                     // Remove location updates after posting to save battery
+                     //locManager.removeUpdates(ImFree.this);
                   }
                   else {
-                     Toast.makeText(ImFree.this, "Cannot post; GPS has no last known location.", Toast.LENGTH_SHORT).show();
+                     Toast.makeText(ImFree.this, "Location won't be shared; GPS not on", Toast.LENGTH_SHORT).show();
                      unlockButtons();
-                     return;
+                     user.put("Location", new ParseGeoPoint());
+                     //ParseGeoPoint gp = new ParseGeoPoint();
+                     //return;
                   }
                   
                   user.saveInBackground(new SaveCallback() {

@@ -221,11 +221,15 @@ public class WhosFree extends BaseActivity implements OnClickListener, OnLongCli
       
       case R.id.whosFreeAddFriendButton:
          temp = username.getText().toString();
-         if (!temp.equals("")) {
+         getWindow().setSoftInputMode(
+               WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+         if (!temp.equals("") && SignUpActivity.EMAIL_ADDRESS_PATTERN.matcher(temp).matches()) {
             getWindow().setSoftInputMode(
                   WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
             DataStore.addParseFriend(temp);
             username.setText("");
+         } else {
+            Toast.makeText(WhosFree.this, R.string.signUp_enterValidEmail, Toast.LENGTH_SHORT).show();
          }
          break;
          

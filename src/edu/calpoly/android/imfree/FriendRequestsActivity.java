@@ -5,6 +5,9 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -13,12 +16,14 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-public class FriendRequestsActivity extends SherlockFragmentActivity {
+public class FriendRequestsActivity extends SherlockFragmentActivity implements OnClickListener {
 
 	private List<String> mRequests;
 	private FriendReqListAdapter mAdapter;
 	
 	private ListView mFriendReqListView;
+	
+	private Button backButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,9 @@ public class FriendRequestsActivity extends SherlockFragmentActivity {
 			mRequests = new ArrayList<String>();
 		mAdapter = new FriendReqListAdapter(this, mRequests);
 		mFriendReqListView.setAdapter(mAdapter);
+		
+		backButton = (Button)findViewById(R.id.friendRequestsBackButton);
+		backButton.setOnClickListener(this);
 	}
 
 	private void updateFriendRequests() {
@@ -60,4 +68,9 @@ public class FriendRequestsActivity extends SherlockFragmentActivity {
 	   mRequests.remove(email);
 	   mAdapter.notifyDataSetChanged();
 	}
+
+   @Override
+   public void onClick(View v) {
+      finish();
+   }
 }

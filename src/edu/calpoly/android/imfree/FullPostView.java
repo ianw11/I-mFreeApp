@@ -56,18 +56,26 @@ public class FullPostView extends LinearLayout {
       map = fragment.getMap();
 
       mPosterNameTextView.setText(post.getPosterName());
-      mTimeSlotTextView.setText(post.getTimeSlot());
-      mLocationTextView.setText(post.getLocation());
+      mTimeSlotTextView.setText("Free until " + post.getTimeSlot());
+      mLocationTextView.setText("At " + post.getLocation());
       
       LatLng location = post.getGeoLoc();
       
-      map.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(location, 15, 0, 0)));
-      map.clear();
-      map.addMarker(new MarkerOptions().position(location));
+      
+      if (location.latitude == 0 && location.longitude == 0) {
+         mLocationTextView.setText(R.string.whosFree_noLocation);
+         map.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(location, 1, 0, 0)));
+         map.clear();
+      } else {
+         map.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(location, 15, 0, 0)));
+         map.clear();
+         map.addMarker(new MarkerOptions().position(location));
+      }
       
       UiSettings settings = map.getUiSettings();
       settings.setAllGesturesEnabled(false);
       settings.setZoomControlsEnabled(false);
+      
       
       return true;
    }

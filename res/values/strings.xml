@@ -27,6 +27,7 @@
     <string name="confirm">Confirm</string>
     <string name="title_activity_im_free">Set Availability</string>
     <string name="whos_free">See Who\'s Free</string>
+    <string name="whosFree_noLocation">[No Location Data]</string>
     <string name="where">Where?</string>
     <string name="post">POST</string>
     <string name="edit">EDIT</string>
@@ -45,15 +46,24 @@
     <string name="friendReq_accept">Accept</string>
     <string name="friendReq_decline">Decline</string>
 
-    <color name="loginBlue">#1197F0</color>
-    <color name="loginLightBlue">#00CCFF</color>
+    <color name="loginBase">#006064</color>
+    <color name="loginLight">#01939A</color>
     <color name="black">#000</color>
     <color name="white">#FFF</color>
     <color name="green">#05A100</color>
     <color name="yellow">#F2FF00</color>
+    <color name="buttonBase">#A66F00</color>
+    <color name="buttonLight">#FFAB00</color>
+    <color name="buttonStroke">#009999</color>
+    <color name="buttonPressed">#A66F00</color>
+    <color name="mainBase">#34C6CD</color>
+    <color name="mainLight">#5DC8CD</color>
+    <color name="postBase">#2E16B1</color>
+    <color name="postLight">#604BD8</color>
+    <color name="postPressed">#3B2E84</color>
 
     <string name="title_activity_splash_screen">SplashScreen</string>
-    <string name="dummy_content">I\'m Free\nSPLASH\nSCREEN</string>
+    <string name="dummy_content">I\'m Free</string>
     <string name="whosFree_back">Back</string>
     <string name="whosFree_addFriendHint">Add Friend (Email)</string>
     <string name="whosFree_viewRequests">Friend Requests</string>
@@ -64,5 +74,6 @@
     <string name="whosFree_addFriend">Add Friend</string>
     <string name="signUp_notAllFieldsFilledIn">Please fill in all fields</string>
     <string name="signUp_enterValidEmail">Please Enter a Valid Email Address</string>
+    <string name="friendRequest_done">Done</string>
 
 </resources>

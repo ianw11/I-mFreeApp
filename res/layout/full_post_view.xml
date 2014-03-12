@@ -24,7 +24,7 @@
     <fragment
          android:id="@+id/postMap"
          android:layout_width="match_parent"
-         android:layout_height="100dp"
+         android:layout_height="150dp"
          class="com.google.android.gms.maps.SupportMapFragment" />
 
 
@@ -32,6 +32,7 @@
        android:id="@+id/fullPostHangButton"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
-       android:text="@string/illHang_text" />
+       android:text="@string/illHang_text"
+       android:background="@drawable/colored_button" />
    
 </LinearLayout>

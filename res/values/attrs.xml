@@ -10,5 +10,8 @@
         <attr name="buttonBarStyle" format="reference" />
         <attr name="buttonBarButtonStyle" format="reference" />
     </declare-styleable>
+    <dimen name="editTextTextSize">30sp</dimen>
+    <dimen name="postViewHeight">50sp</dimen>
+    <dimen name="postTextViewTextSize">20sp</dimen>
 
 </resources>
