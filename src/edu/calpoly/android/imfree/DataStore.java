@@ -23,6 +23,8 @@ public class DataStore {
 
    private static ParseUser currentUser;
    private static ParseObject parseFriendRequests = null;
+   
+   private static String savedLocText = "";
 
    public static void clearData() {
       friendsList.clear();
@@ -31,6 +33,14 @@ public class DataStore {
       clearRequests();
    }
 
+   public static String getSavedLocText() {
+	   return savedLocText;
+   }
+   
+   public static void setSavedLocText(String s) {
+	   savedLocText = s;
+   }
+   
    public static void setRequests(List<Object> list) {
 	   mRequests.clear();
 	   for (Object s : list) {

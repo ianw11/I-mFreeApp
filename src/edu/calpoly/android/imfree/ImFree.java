@@ -32,7 +32,7 @@ public class ImFree extends BaseActivity implements OnClickListener {
    private TextView mFreeUntilTime;
    
    private LocationManager locManager;
-
+   
    @Override
    public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
@@ -55,6 +55,15 @@ public class ImFree extends BaseActivity implements OnClickListener {
 	   super.onResume();
 	   initLayout(true);
 	   DataStore.removeActivityFromCallStack(this);
+	   if (mLocation.getText().toString().equals("")) {
+		   mLocation.setText(DataStore.getSavedLocText());
+	   }
+   }
+   
+   @Override
+   public void onPause() {
+	   DataStore.setSavedLocText(mLocation.getText().toString());
+	   super.onPause();
    }
    
    private void initLayout(boolean resuming) {
@@ -67,22 +76,6 @@ public class ImFree extends BaseActivity implements OnClickListener {
 		   mFreeUntilTime = (TextView)findViewById(R.id.freeUntilTextView);
 	   }
       
-	   /*ParseQuery<ParseUser> query = ParseUser.getQuery();
-	   query.getInBackground(mObjectId, new GetCallback<ParseUser>() {
-		   
-		   @Override
-		   public void done(ParseUser user, ParseException e) {
-			   if (e == null) {
-				   Date mostRecentPostDate = user.getDate("TimeFree");
-				   if (mostRecentPostDate != null && mostRecentPostDate.after(new Date())) {
-					   setActivePostLayout(user, false);
-				   }
-				   else {
-					   setDefaultPostLayout(user, false);
-				   }
-			   }
-		   }
-	   });*/
 	   ParseUser user = DataStore.getCurrentUser();
 	   Date mostRecentPostDate = user.getDate("TimeFree");
 	   if (mostRecentPostDate != null && mostRecentPostDate.after(new Date())) {
@@ -204,71 +197,13 @@ public class ImFree extends BaseActivity implements OnClickListener {
       switch (v.getId()) {
       
       case R.id.freeEditButton:
-         /*ParseQuery<ParseUser> query = ParseUser.getQuery();
-         query.getInBackground(mObjectId, new GetCallback<ParseUser>() {
-            @Override
-            public void done(ParseUser user, ParseException e) {
-               if (e == null) {
-                     setDefaultPostLayout(user, true);
-               }
-            }
-         });*/
     	  setDefaultPostLayout(user, true);
     	  break;
          
       case R.id.freePostButton:
          //Upload to Server
-         
          lockButtons();
-         
-         /**
-          * Is this query object even required?  Can't we just pass the ParseUser object
-          * from login around through the intents?  Seems like that would lessen
-          * network calls....
-          */
-         /*ParseQuery<ParseUser> uploadQuery = ParseUser.getQuery();
-         uploadQuery.getInBackground(mObjectId, new GetCallback<ParseUser>() {
 
-            @Override
-            public void done(ParseUser user, ParseException e) {
-               if (e == null) {
-                  user.put("UserLocation", mLocation.getText().toString());
-                  Date temp = new Date();
-                  temp.setHours(mTimePicker.getCurrentHour());
-                  temp.setMinutes(mTimePicker.getCurrentMinute());
-                  user.put("TimeFree", temp);
-                  
-                  Location currLoc = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                  if (currLoc != null) {
-                     ParseGeoPoint geoPoint = new ParseGeoPoint(currLoc.getLatitude(), currLoc.getLongitude());
-                     user.put("Location", geoPoint);
-                     // Remove location updates after posting to save battery
-                     //locManager.removeUpdates(ImFree.this);
-                  }
-                  else {
-                     Toast.makeText(ImFree.this, R.string.imFree_gpsNote, Toast.LENGTH_LONG).show();
-                     user.put("Location", new ParseGeoPoint());
-                     //ParseGeoPoint gp = new ParseGeoPoint();
-                     //return;
-                  }
-                  
-                  user.saveInBackground(new SaveCallback() {
-                     @Override
-                     public void done(ParseException e) {
-                        if (e != null) {
-                           // Unsuccessful save
-                           Log.e("ImFree", e.toString());
-                           Toast.makeText(ImFree.this, "Save Unsuccessful", Toast.LENGTH_SHORT).show();
-                        }
-                     }
-                  });
-                  
-                  unlockButtons();
-                  setActivePostLayout(user, true);
-               }
-            }
-         });*/
-         
          user.put("UserLocation", mLocation.getText().toString());
          Date temp = new Date();
          temp.setHours(mTimePicker.getCurrentHour());
@@ -303,30 +238,6 @@ public class ImFree extends BaseActivity implements OnClickListener {
          break;
       
       case R.id.freeCancelButton:
-         /*ParseQuery<ParseUser> cancelQuery = ParseUser.getQuery();
-         cancelQuery.getInBackground(mObjectId, new GetCallback<ParseUser>() {
-               
-            @Override
-            public void done(ParseUser user, ParseException e) {
-               if (e == null) {
-                  user.put("TimeFree", new Date());
-                  setDefaultPostLayout(user, false);
-                  
-                  user.saveInBackground(new SaveCallback() {
-                     @Override
-                     public void done(ParseException e) {
-                        if (e == null) {
-                           // Nothing to do for successful cancel
-                        } else {
-                           // Unsuccessful cancel
-                           Log.e("ImFree", e.toString());
-                           Toast.makeText(ImFree.this, "Post could not be removed.", Toast.LENGTH_SHORT).show();
-                        }
-                     }
-                  });
-               }
-            }
-         });*/
     	  user.put("TimeFree", new Date());
           setDefaultPostLayout(user, false);
           
