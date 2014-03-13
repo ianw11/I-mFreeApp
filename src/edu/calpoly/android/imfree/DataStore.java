@@ -25,6 +25,8 @@ public class DataStore {
    private static ParseObject parseFriendRequests = null;
    
    private static String savedLocText = "";
+   private static Integer savedHour = null;
+   private static Integer savedMinute = null;
 
    public static void clearData() {
       friendsList.clear();
@@ -33,6 +35,22 @@ public class DataStore {
       clearRequests();
    }
 
+   public static Integer getSavedHour() {
+	   return savedHour;
+   }
+   
+   public static void setSavedHour(Integer newHour) {
+	   savedHour = newHour;
+   }
+   
+   public static Integer getSavedMinute() {
+	   return savedMinute;
+   }
+   
+   public static void setSavedMinute(Integer newMinute) {
+	   savedMinute = newMinute;
+   }
+   
    public static String getSavedLocText() {
 	   return savedLocText;
    }

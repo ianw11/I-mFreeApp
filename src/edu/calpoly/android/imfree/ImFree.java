@@ -58,11 +58,19 @@ public class ImFree extends BaseActivity implements OnClickListener {
 	   if (mLocation.getText().toString().equals("")) {
 		   mLocation.setText(DataStore.getSavedLocText());
 	   }
+	   Integer hour = DataStore.getSavedHour();
+	   Integer minute = DataStore.getSavedMinute();
+	   if (hour != null)
+		   mTimePicker.setCurrentHour(hour);
+	   if (minute != null)
+		   mTimePicker.setCurrentMinute(minute);
    }
    
    @Override
    public void onPause() {
 	   DataStore.setSavedLocText(mLocation.getText().toString());
+	   DataStore.setSavedHour(mTimePicker.getCurrentHour());
+	   DataStore.setSavedMinute(mTimePicker.getCurrentMinute());
 	   super.onPause();
    }
    
