@@ -3,13 +3,10 @@ package edu.calpoly.android.imfree;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -18,7 +15,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class FullPostView extends RelativeLayout implements OnClickListener {
+public class FullPostView extends RelativeLayout {
    
    private TextView mPosterNameTextView;
    private TextView mTimeSlotTextView;
@@ -50,7 +47,7 @@ public class FullPostView extends RelativeLayout implements OnClickListener {
       
       /* This is allowing WhosFree to be the handler of a click */
       mIllHangButton.setOnClickListener(parentActivity);
-      closeButton.setOnClickListener(this);
+      closeButton.setOnClickListener(parentActivity);
       
       fragment = (SupportMapFragment) (parentActivity.getSupportFragmentManager().findFragmentById(R.id.postMap));
       if (fragment == null) {
@@ -91,11 +88,6 @@ public class FullPostView extends RelativeLayout implements OnClickListener {
    
    public Post getPost() {
       return smallerPost;
-   }
-
-   @Override
-   public void onClick(View v) {
-      parentActivity.destroyFullPostView();
    }
 
 }
