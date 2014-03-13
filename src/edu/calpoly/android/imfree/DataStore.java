@@ -28,6 +28,7 @@ public class DataStore {
       friendsList.clear();
       currentUser = null;
       invalidateParseFriendRequestsObject();
+      clearRequests();
    }
 
    public static void setRequests(List<Object> list) {
@@ -39,6 +40,10 @@ public class DataStore {
    
    public static List<String> getRequests() {
 	   return mRequests;
+   }
+   
+   public static void clearRequests() {
+      mRequests.clear();
    }
    
    public static void addParseFriend(final String friend) {
@@ -226,7 +231,6 @@ public class DataStore {
       
       ParseQuery<ParseObject> query = ParseQuery.getQuery("FriendRequests");
       query.whereEqualTo("OwnedBy", getCurrentUserName());
-      
 
       query.findInBackground(new FindCallback<ParseObject>() {
          @Override

@@ -31,6 +31,7 @@ public class FriendRequestsActivity extends SherlockFragmentActivity implements 
 		setContentView(R.layout.layout_friend_requests);
 		
 		mFriendReqListView = (ListView)findViewById(R.id.friendRequestsListView);
+		DataStore.clearRequests();
 		updateFriendRequests();
 		mRequests = DataStore.getRequests();
 		if (mRequests == null)
@@ -44,12 +45,13 @@ public class FriendRequestsActivity extends SherlockFragmentActivity implements 
 
 	private void updateFriendRequests() {
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("FriendRequests");
+		query.whereEqualTo("OwnedBy", DataStore.getCurrentEmail());
 		query.findInBackground(new FindCallback<ParseObject>() {
 			public void done(List<ParseObject> reqList, ParseException e) {
 				if (e == null) {
 					// Emails are unique so first element is the desired user
 					for (ParseObject obj : reqList) {
-						if (obj.getString("OwnedBy").equals(DataStore.getCurrentUser().getEmail())) {
+						if ( obj.getString("OwnedBy").equals(DataStore.getCurrentEmail()) ) {
 						   List<Object> req = obj.getList("Requests");
 						   if (req != null) {
 						      DataStore.setRequests(obj.getList("Requests"));
@@ -58,7 +60,7 @@ public class FriendRequestsActivity extends SherlockFragmentActivity implements 
 						}
 					}
 				} else {
-					Log.d("DataStore", "Error: " + e.toString());
+					Log.d("FriendRequestsActivity", "Error: " + e.toString());
 				}
 			}
 		});
