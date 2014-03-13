@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:paddingTop="10sp"
+    android:background="@drawable/post_view_background" >
+
+    <TextView android:id="@+id/friendReqTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:ellipsize="end"
+        android:gravity="center"
+        android:textSize="@dimen/postTextViewTextSize"
+        android:textColor="@color/white"
+        android:paddingBottom="5sp" />
+
+    <LinearLayout android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center" >
+        
+	    <Button
+	        android:id="@+id/friendReqAccept"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/colored_button"
+	        android:text="@string/friendReq_accept"
+	        android:layout_marginRight="5sp"
+	        android:textColor="@color/buttonText"
+           android:textStyle="bold" />
+	
+	    <Button
+	        android:id="@+id/friendReqDecline"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginRight="10dp"
+	        android:background="@drawable/colored_button"
+	        android:text="@string/friendReq_decline"
+	        android:textColor="@color/buttonText"
+           android:textStyle="bold" />
+	    
+    </LinearLayout>
+
+</LinearLayout>

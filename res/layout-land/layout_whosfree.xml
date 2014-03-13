@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/whosFreeLayout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/main_background" >
+    
+    
+    <LinearLayout
+        android:id="@+id/whosFreeHeader"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+        
+        <EditText
+            android:id="@+id/whosFreeAddFriendEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="@string/whosFree_addFriendHint"
+            android:background="@color/white"
+            android:textSize="@dimen/editTextTextSize"
+            android:layout_marginBottom="5sp"
+            android:layout_marginTop="5sp"
+            android:layout_marginLeft="5sp"
+            android:paddingLeft="5sp" />
+        
+        <LinearLayout
+	        android:orientation="horizontal"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:paddingBottom="5sp"
+	        android:gravity="center" >
+	        
+	        <Button
+	            android:id="@+id/whosFreeAddFriendButton"
+	            android:layout_width="wrap_content"
+	            android:layout_height="fill_parent"
+	            android:text="@string/whosFree_addFriend"
+	            android:background="@drawable/colored_button"
+	            android:textColor="@color/buttonText"
+               android:textStyle="bold" />
+	        
+	        <Button
+	            android:id="@+id/whosFreeViewAllToggle"
+	            android:layout_width="wrap_content"
+	            android:layout_height="fill_parent"
+	            android:text="@string/whosFree_viewAllToggle"
+	            android:background="@drawable/colored_button"
+	            android:textColor="@color/buttonText"
+               android:textStyle="bold" />
+	        
+	        <Button
+               android:id="@+id/whosFreeViewRequestsButton"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/whosFree_viewRequests"
+               android:background="@drawable/colored_button"
+               android:textColor="@color/buttonText"
+               android:textStyle="bold" />
+	        
+        </LinearLayout>
+        
+    </LinearLayout>
+    
+	<ListView 
+	    android:id="@+id/postListViewGroup"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" 
+	    android:orientation="vertical" />
+
+</LinearLayout>

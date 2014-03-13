@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -16,7 +17,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class FullPostView extends LinearLayout {
+public class FullPostView extends RelativeLayout {
    
    private TextView mPosterNameTextView;
    private TextView mTimeSlotTextView;

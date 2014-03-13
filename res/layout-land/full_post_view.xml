@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/postViewParent"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/fullPostPosterName"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/fullPostTimeSlot"
+        android:layout_below="@id/fullPostPosterName"
+        android:layout_alignParentLeft="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/fullPostLocation"
+        android:layout_below="@id/fullPostTimeSlot"
+        android:layout_alignParentLeft="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    
+    <fragment
+         android:id="@+id/postMap"
+         android:layout_width="match_parent"
+         android:layout_height="90dp"
+         android:layout_below="@id/fullPostLocation"
+         class="com.google.android.gms.maps.SupportMapFragment" />
+
+
+   <Button
+       android:id="@+id/fullPostHangButton"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentTop="true"
+       android:layout_alignParentRight="true"
+       android:layout_above="@id/postMap"
+       android:text="@string/illHang_text"
+       android:background="@drawable/colored_button"
+       android:textColor="@color/buttonText"
+       android:textStyle="bold" />
+   
+</RelativeLayout>

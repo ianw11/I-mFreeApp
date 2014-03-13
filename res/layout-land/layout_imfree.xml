@@ -1,0 +1,104 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".ImFree"
+    android:background="@drawable/main_background" >
+
+    <Button
+        android:id="@+id/freePostButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="23dp"
+        android:visibility="invisible"
+        android:text="@string/post"
+        android:background="@drawable/colored_button"
+        android:textColor="@color/buttonText"
+        android:textStyle="bold"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/freeFreeUntil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="30dp"
+        android:text="@string/free_until"
+        android:textSize="25sp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:padding="5dp" />
+
+    <EditText
+        android:id="@+id/freeWhereEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="18dp"
+        android:background="@color/white"
+        android:ems="10"
+        android:hint="@string/where"
+        android:inputType="textCapSentences"
+        android:paddingLeft="5sp"
+        android:textSize="@dimen/editTextTextSize" />
+    
+    <TimePicker
+        android:id="@+id/freeTimePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"
+        android:background="@drawable/time_selector_border" />
+
+    <TextView
+        android:id="@+id/freeUntilTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/freeFreeUntil"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"
+        android:text=""
+        android:textSize="60sp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/freeCancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="23dp"
+        android:layout_marginBottom="40dp"
+        android:visibility="visible"
+        android:text="@string/cancel"
+        android:background="@drawable/colored_button"
+        android:textColor="@color/buttonText"
+        android:textStyle="bold"
+        android:textSize="25sp" />
+    
+    <Button
+        android:id="@+id/freeEditButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/freeCancelButton"
+        android:layout_alignRight="@id/freeCancelButton"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="23dp"
+        android:layout_marginTop="40dp"
+        android:visibility="visible"
+        android:text="@string/edit"
+        android:background="@drawable/colored_button"
+        android:textColor="@color/buttonText"
+        android:textStyle="bold"
+        android:textSize="25sp" />
+
+</RelativeLayout>
