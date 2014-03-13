@@ -12,7 +12,9 @@
         android:gravity="center"
         android:layout_marginTop="5sp"
         android:text="@string/friendRequest_done"
-        android:background="@drawable/colored_button" />
+        android:background="@drawable/colored_button"
+        android:textColor="@color/buttonText"
+        android:textStyle="bold" />
     
 	<ListView android:id="@+id/friendRequestsListView"
 	    android:layout_width="match_parent"

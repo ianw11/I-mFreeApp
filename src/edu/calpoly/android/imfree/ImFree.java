@@ -37,11 +37,7 @@ public class ImFree extends BaseActivity implements OnClickListener {
    private EditText mLocation;
    private TextView mFreeUntilTime;
    
-   
    private LocationManager locManager;
-   
-   //private static final int MIN_TIME_CHANGE = 3000;
-   //private static final int MIN_DISTANCE_CHANGE = 3;
 
    @Override
    public void onCreate(Bundle savedInstanceState) {
@@ -102,6 +98,9 @@ public class ImFree extends BaseActivity implements OnClickListener {
    private void setActivePostLayout(ParseUser user, boolean fromPost) {
 	   if (!fromPost)
 		   mLocation.setText(user.getString("UserLocation"));
+	   String curLocText = mLocation.getText().toString();
+	   if (curLocText.equals("") || curLocText.equals(R.string.where))
+		   mLocation.setText(R.string.imFree_defaultActiveLocation);
 	   mLocation.setEnabled(false);
 	   mLocation.setFocusable(false);
 	   mLocation.setFocusableInTouchMode(false);
@@ -243,8 +242,7 @@ public class ImFree extends BaseActivity implements OnClickListener {
                      //locManager.removeUpdates(ImFree.this);
                   }
                   else {
-                     Toast.makeText(ImFree.this, "Location won't be shared; GPS not on", Toast.LENGTH_SHORT).show();
-                     unlockButtons();
+                     Toast.makeText(ImFree.this, R.string.imFree_gpsNote, Toast.LENGTH_LONG).show();
                      user.put("Location", new ParseGeoPoint());
                      //ParseGeoPoint gp = new ParseGeoPoint();
                      //return;
@@ -261,6 +259,7 @@ public class ImFree extends BaseActivity implements OnClickListener {
                      }
                   });
                   
+                  unlockButtons();
                   setActivePostLayout(user, true);
                }
             }

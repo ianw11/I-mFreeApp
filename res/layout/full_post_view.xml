@@ -33,6 +33,8 @@
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:text="@string/illHang_text"
-       android:background="@drawable/colored_button" />
+       android:background="@drawable/colored_button"
+       android:textColor="@color/buttonText"
+       android:textStyle="bold" />
    
 </LinearLayout>

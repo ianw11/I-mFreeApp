@@ -93,36 +93,36 @@ public class WhosFree extends BaseActivity implements OnClickListener, OnLongCli
 						   // Check for friends who have deleted this user
 						   List<String> toDelete = obj.getList("DeletedFriends");
                      
-                     if (toDelete != null) {
-                        for (String s : toDelete) {
-                           DataStore.removeParseFriend(s);
-                        }
-                        obj.removeAll("DeletedFriends", toDelete);
-                        obj.saveInBackground();
-                     }
-                     
-                     break;
+						   if (toDelete != null) {
+							   for (String s : toDelete) {
+								   DataStore.removeParseFriend(s);
+							   }
+							   obj.removeAll("DeletedFriends", toDelete);
+							   obj.saveInBackground();
+						   }
+						   
+						   break;
 					   }
 				   }
-				} else {
-	        	   Log.d("WhosFree", "Error with FriendsList Query: " + e.getMessage());
-	         }
-	      }
+			   } else {
+				   Log.d("WhosFree", "Error with FriendsList Query: " + e.getMessage());
+			   }
+		   }
 	   });
-       
-      this.mPostList = new ArrayList<Post>();
-      this.mPostAdapter = new PostListAdapter(this, this.mPostList);
+	   
+	   this.mPostList = new ArrayList<Post>();
+	   this.mPostAdapter = new PostListAdapter(this, this.mPostList);
       
-      this.mUserList = DataStore.getParseFriends();
-      this.mUserAdapter = new PostUserListAdapter(this, this.mUserList);
+	   this.mUserList = DataStore.getParseFriends();
+	   this.mUserAdapter = new PostUserListAdapter(this, this.mUserList);
       
-      Intent i = getIntent();
-      musername = i.getStringExtra("ParseUser");
-      setBaseUsername(musername);
-      setActivityName("WhosFree");
+	   Intent i = getIntent();
+	   musername = i.getStringExtra("ParseUser");
+	   setBaseUsername(musername);
+	   setActivityName("WhosFree");
        
-      initLayout();
-      initLocationData();
+	   initLayout();
+	   initLocationData();
     }
     
     /**
@@ -216,6 +216,7 @@ public class WhosFree extends BaseActivity implements OnClickListener, OnLongCli
             viewAllToggle.setText(R.string.whosFree_viewActiveToggle);
             isViewAll = true;
             this.mPostLayout.setAdapter(mUserAdapter);
+            Toast.makeText(this, R.string.whosFree_longClickDel, Toast.LENGTH_LONG).show();
          }
          break;
       
@@ -228,6 +229,7 @@ public class WhosFree extends BaseActivity implements OnClickListener, OnLongCli
                   WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
             DataStore.addParseFriend(temp);
             username.setText("");
+            Toast.makeText(this, R.string.whosFree_friendReqSent, Toast.LENGTH_SHORT).show();
          } else {
             Toast.makeText(WhosFree.this, R.string.signUp_enterValidEmail, Toast.LENGTH_SHORT).show();
          }
@@ -239,7 +241,7 @@ public class WhosFree extends BaseActivity implements OnClickListener, OnLongCli
     	  break;
          
       case R.id.fullPostHangButton:
-         Toast.makeText(this, "The user has been notified that you're on the way.", Toast.LENGTH_SHORT).show();
+         Toast.makeText(this, R.string.illHang_sent, Toast.LENGTH_LONG).show();
          
          final ParseUser curr = DataStore.getCurrentUser();
          

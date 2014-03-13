@@ -28,7 +28,9 @@
 	        android:layout_height="wrap_content"
 	        android:background="@drawable/colored_button"
 	        android:text="@string/friendReq_accept"
-	        android:layout_marginRight="5sp" />
+	        android:layout_marginRight="5sp"
+	        android:textColor="@color/buttonText"
+           android:textStyle="bold" />
 	
 	    <Button
 	        android:id="@+id/friendReqDecline"
@@ -36,7 +38,9 @@
 	        android:layout_height="wrap_content"
 	        android:layout_marginRight="10dp"
 	        android:background="@drawable/colored_button"
-	        android:text="@string/friendReq_decline" />
+	        android:text="@string/friendReq_decline"
+	        android:textColor="@color/buttonText"
+           android:textStyle="bold" />
 	    
     </LinearLayout>
 

@@ -37,23 +37,29 @@
 	        <Button
 	            android:id="@+id/whosFreeAddFriendButton"
 	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
+	            android:layout_height="fill_parent"
 	            android:text="@string/whosFree_addFriend"
-	            android:background="@drawable/colored_button" />
+	            android:background="@drawable/colored_button"
+	            android:textColor="@color/buttonText"
+               android:textStyle="bold" />
 	        
 	        <Button
 	            android:id="@+id/whosFreeViewAllToggle"
 	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
+	            android:layout_height="fill_parent"
 	            android:text="@string/whosFree_viewAllToggle"
-	            android:background="@drawable/colored_button" />
+	            android:background="@drawable/colored_button"
+	            android:textColor="@color/buttonText"
+               android:textStyle="bold" />
 	        
 	        <Button
                android:id="@+id/whosFreeViewRequestsButton"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:text="@string/whosFree_viewRequests"
-               android:background="@drawable/colored_button" />
+               android:background="@drawable/colored_button"
+               android:textColor="@color/buttonText"
+               android:textStyle="bold" />
 	        
         </LinearLayout>
         

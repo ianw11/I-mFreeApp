@@ -75,7 +75,9 @@
         android:layout_marginTop="14dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/colored_button"
-        android:text="@string/login" />
+        android:text="@string/login"
+        android:textColor="@color/buttonText"
+        android:textStyle="bold" />
     
     <Button
         android:id="@+id/signUpButton"
@@ -86,7 +88,9 @@
         android:layout_marginBottom="20dp"
         android:layout_below="@id/loginButton"
         android:background="@drawable/colored_button"
-        android:text="@string/sign_up_text" />
+        android:text="@string/sign_up_text" 
+        android:textColor="@color/buttonText"
+        android:textStyle="bold" />
 
     <ProgressBar
         android:id="@+id/loginProgressBar"

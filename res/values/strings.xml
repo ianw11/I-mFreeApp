@@ -29,15 +29,16 @@
     <string name="whos_free">See Who\'s Free</string>
     <string name="whosFree_noLocation">[No Location Data]</string>
     <string name="where">Where?</string>
-    <string name="post">POST</string>
-    <string name="edit">EDIT</string>
-    <string name="cancel">CANCEL</string>
+    <string name="post">Post</string>
+    <string name="edit">Edit</string>
+    <string name="cancel">Cancel</string>
     <string name="free_until">Free Until</string>
     <string name="logout">Logout</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="menuTitle_logout">Logout</string>
     <string name="menuTitle_imfree">Post</string>
     <string name="menuTitle_whosfree">View Posts</string>
+    <string name="illHang_sent">The user has been notified that you\'re on the way.</string>
     <string name="reset_confirm">Reset</string>
     <string name="reset_cancel">Cancel</string>
     <string name="reset_sent">Check your e-mail for reset instructions.</string>
@@ -52,10 +53,11 @@
     <color name="white">#FFF</color>
     <color name="green">#05A100</color>
     <color name="yellow">#F2FF00</color>
-    <color name="buttonBase">#A66F00</color>
-    <color name="buttonLight">#FFAB00</color>
+    <color name="buttonBase">#005C99</color>
+    <color name="buttonLight">#0080FF</color>
     <color name="buttonStroke">#009999</color>
-    <color name="buttonPressed">#A66F00</color>
+    <color name="buttonPressed">#005C99</color>
+    <color name="buttonText">#FFFFFF</color>
     <color name="mainBase">#34C6CD</color>
     <color name="mainLight">#5DC8CD</color>
     <color name="postBase">#2E16B1</color>
@@ -64,6 +66,8 @@
 
     <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="dummy_content">I\'m Free</string>
+    <string name="imFree_defaultActiveLocation">No location specified.</string>
+    <string name="imFree_gpsNote">Enable GPS if you would like for friends to see your location on a map.</string>
     <string name="whosFree_back">Back</string>
     <string name="whosFree_addFriendHint">Add Friend (Email)</string>
     <string name="whosFree_viewRequests">Friend Requests</string>
@@ -72,6 +76,8 @@
     <string name="whosFree_viewAllToggle">View All</string>
     <string name="whosFree_viewActiveToggle">View Active</string>
     <string name="whosFree_addFriend">Add Friend</string>
+    <string name="whosFree_friendReqSent">Your friend request has been sent.</string>
+    <string name="whosFree_longClickDel">Long click to remove a friend.</string>
     <string name="signUp_notAllFieldsFilledIn">Please fill in all fields</string>
     <string name="signUp_enterValidEmail">Please Enter a Valid Email Address</string>
     <string name="friendRequest_done">Done</string>
