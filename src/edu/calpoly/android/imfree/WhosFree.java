@@ -229,7 +229,7 @@ public class WhosFree extends BaseActivity implements OnClickListener, OnLongCli
       
       default:
          if (fullPost == null) {
-            fullPost = new FullPostView(masterLayout.getContext());
+            fullPost = new FullPostView(this);
             // Adding this to index 1 of the linearlayout.  This needs to be
             // changed if more gets added to layout_whosfree.xml
             Log.d("WhosFree", "width: " + masterLayout.getWidth());

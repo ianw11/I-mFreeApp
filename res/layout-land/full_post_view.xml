@@ -47,4 +47,18 @@
        android:textColor="@color/buttonText"
        android:textStyle="bold" />
    
+   <Button 
+          android:id="@+id/fullPostCloseButton"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginRight="5dp"
+          android:layout_alignParentTop="true"
+          android:layout_toLeftOf="@id/fullPostHangButton"
+          android:layout_above="@id/postMap"
+          android:text="@string/close"
+          android:background="@drawable/colored_button"
+          android:textColor="@color/buttonText"
+          android:textStyle="bold"
+          android:layout_marginLeft="10sp" />
+   
 </RelativeLayout>
