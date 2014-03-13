@@ -61,7 +61,7 @@ public class LoginHelper extends LogInCallback {
          i.putExtra("ParseUser", user.getUsername());
          i.putExtra("ParseObjectId", user.getObjectId());
          context.startActivity(i);
-         context.finish();
+         //context.finish();
       } else {
          if (isFromSplash) {
             Toast.makeText(context, "Failed Login", Toast.LENGTH_SHORT).show();
