@@ -44,6 +44,7 @@ public class FriendRequestView extends LinearLayout implements OnClickListener {
 	
 	@Override
 	public void onClick(View v) {
+	   DataStore.invalidateParseFriendRequestsObject();
 		switch (v.getId()) {
 		
 		case R.id.friendReqAccept:

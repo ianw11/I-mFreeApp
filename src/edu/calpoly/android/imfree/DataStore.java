@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import android.app.Activity;
 import android.util.Log;
 
 import com.parse.FindCallback;
@@ -14,17 +15,21 @@ import com.parse.ParseUser;
 
 
 public class DataStore {
-   
+
    private static ArrayList<String> friendsList = new ArrayList<String>();
    private static List<String> mRequests = new ArrayList<String>();
-   
+
+   private static ArrayList<Activity> activities = new ArrayList<Activity>(2);
+
    private static ParseUser currentUser;
-   
+   private static ParseObject parseFriendRequests = null;
+
    public static void clearData() {
       friendsList.clear();
       currentUser = null;
+      invalidateParseFriendRequestsObject();
    }
-   
+
    public static void setRequests(List<Object> list) {
 	   mRequests.clear();
 	   for (Object s : list) {
@@ -115,6 +120,14 @@ public class DataStore {
       return currentUser;
    }
    
+   public static String getCurrentUserName() {
+      return currentUser.getUsername();
+   }
+   
+   public static String getCurrentEmail() {
+      return currentUser.getEmail();
+   }
+   
    public static void acceptFriendRequest(final String email) {
 	   DataStore.trueAddParseFriend(email);
 	   ParseQuery<ParseObject> query = ParseQuery.getQuery("FriendRequests");
@@ -152,5 +165,103 @@ public class DataStore {
 	           }
 	       }
 	   });
+   }
+   
+   public static void addActivityToCallStack(Activity a) {
+      if (!activities.contains(a)) {
+         activities.add(a);
+      }
+   }
+   
+   public static boolean removeActivityFromCallStack(Activity a) {
+      if (activities.contains(a)) {
+         activities.remove(a);
+         return true;
+      }
+      return false;
+   }
+   
+   public static void clearCallStack() {
+      for (Activity a : activities) {
+         a.finish();
+      }
+      activities.clear();
+   }
+   
+   public static void setParseFriendRequestsObject(ParseObject obj) {
+      if (obj.containsKey("OwnedBy")) {
+         parseFriendRequests = obj;
+         
+         // Check for accepted friend requests
+         List<String> toAdd = obj.getList("AcceptedRequests");
+         
+         if (toAdd != null) {
+            for (String s : toAdd) {
+               DataStore.trueAddParseFriend(s);
+            }
+            obj.removeAll("AcceptedRequests", toAdd);
+            obj.saveInBackground();
+         }
+         
+         // Check for friends who have deleted this user
+         List<String> toDelete = obj.getList("DeletedFriends");
+         
+         if (toDelete != null) {
+            for (String s : toDelete) {
+               DataStore.removeParseFriend(s);
+            }
+            obj.removeAll("DeletedFriends", toDelete);
+            obj.saveInBackground();
+         }
+      }
+   }
+   
+   public static void invalidateParseFriendRequestsObject() {
+      parseFriendRequests = null;
+   }
+   
+   public static ParseObject requeryParseFriendRequestsObject() {
+      
+      ParseObject parseFriendRequestsObject = null;
+      
+      ParseQuery<ParseObject> query = ParseQuery.getQuery("FriendRequests");
+      query.whereEqualTo("OwnedBy", getCurrentUserName());
+      
+      /*
+      query.findInBackground(new FindCallback<ParseObject>() {
+         @Override
+         public void done(List<ParseObject> reqList, ParseException e) {
+            if (e == null) {
+               for (ParseObject obj : reqList) {
+                  if (obj != null && obj.getString("OwnedBy").equals(getCurrentEmail())) {
+                     setParseFriendRequestsObject(obj);
+                     break;
+                  }
+               }
+            } else {
+               Log.e("DataStore", "Error with FriendsList Query: " + e.getMessage());
+            }
+         }
+      });
+      */
+      
+      try {
+         List<ParseObject> friendList = query.find();
+         for (ParseObject obj : friendList) {
+            if (obj != null && obj.getString("OwnedBy").equals(getCurrentEmail())) {
+               setParseFriendRequestsObject(obj);
+               parseFriendRequestsObject = obj;
+               break;
+            }
+         }
+      } catch (ParseException e) {
+         Log.e("DataStore", "Error with FriendsList Query: " + e.getMessage());
+      }
+      
+      return parseFriendRequestsObject;
+   }
+   
+   public static ParseObject getParseFriendRequestsObject() {
+      return parseFriendRequests;
    }
 }

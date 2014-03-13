@@ -27,7 +27,6 @@ import com.parse.SaveCallback;
 
 public class ImFree extends BaseActivity implements OnClickListener {
    
-   private String musername;
    private String mObjectId;
    
    private TimePicker mTimePicker;
@@ -47,8 +46,6 @@ public class ImFree extends BaseActivity implements OnClickListener {
       initLocationData();
       
       Intent i = getIntent();
-      musername = i.getStringExtra("ParseUser");
-      setBaseUsername(musername);
       setActivityName("ImFree");
       mObjectId = i.getStringExtra("ParseObjectId");
       
@@ -64,6 +61,7 @@ public class ImFree extends BaseActivity implements OnClickListener {
    protected void onResume() {
 	   super.onResume();
 	   initLayout(true);
+	   DataStore.removeActivityFromCallStack(this);
    }
    
    private void initLayout(boolean resuming) {

@@ -29,6 +29,7 @@ public class LoginActivity extends Activity implements OnClickListener {
    private CheckBox mRememberMeCheckBox;
    private TextView mForgotPasswordTextView;
    private Button mSignUpButton;
+   
    private ProgressBar mProgressBar;
 
    @Override
@@ -44,6 +45,13 @@ public class LoginActivity extends Activity implements OnClickListener {
          mUsernameEditText.setText(prefs.getString("username", ""));
       }
       
+   }
+   
+   @Override
+   protected void onResume() {
+      super.onResume();
+      DataStore.removeActivityFromCallStack(this);
+      DataStore.clearCallStack();
    }
    
    private void initLayout() {
@@ -90,6 +98,7 @@ public class LoginActivity extends Activity implements OnClickListener {
             break;
             
          case R.id.signUpButton:
+            DataStore.addActivityToCallStack(this);
             Intent i = new Intent(this, SignUpActivity.class);
             startActivity(i);
             break;
@@ -116,7 +125,7 @@ public class LoginActivity extends Activity implements OnClickListener {
             SharedPreferences prefs = this.getSharedPreferences("edu.calpoly.android.imfree", Context.MODE_PRIVATE);
             prefs.edit().putString("username", "").putString("password", "").commit();
          }
-
+         
          ParseUser.logInInBackground(username, password, new LoginHelper(LoginActivity.this));
       }
    }
@@ -134,29 +143,29 @@ public class LoginActivity extends Activity implements OnClickListener {
 	   resetDialog.setView(emailView);
 	   
 	   resetDialog.setPositiveButton(R.string.reset_confirm, new DialogInterface.OnClickListener() {
-
 		   @Override
 		   public void onClick(DialogInterface dialog, int which) {
 			   String email = emailView.getText().toString();
-			   if (!email.equals("")) {
-				   
-				   ParseUser.requestPasswordResetInBackground(email,
-						   new RequestPasswordResetCallback() {
+			   if (!email.equals("") && SignUpActivity.EMAIL_ADDRESS_PATTERN.matcher(email).matches()) {
+				   ParseUser.requestPasswordResetInBackground(email, new RequestPasswordResetCallback() {
+				      @Override
 					   public void done(ParseException e) {
 						   if (e == null) {
 							   Toast.makeText(LoginActivity.this, R.string.reset_sent, Toast.LENGTH_LONG).show();
-						   } else if (e.getCode() == ParseException.EMAIL_NOT_FOUND){
+						   } else if (e.getCode() == ParseException.EMAIL_NOT_FOUND) {
 							   Toast.makeText(LoginActivity.this, R.string.reset_emailNotFound, Toast.LENGTH_LONG).show();
 						   } else {
 							   Toast.makeText(LoginActivity.this, R.string.reset_genericError, Toast.LENGTH_LONG).show();
 						   }
 					   }
 				   });
+			   } else {
+			      Toast.makeText(LoginActivity.this, R.string.signUp_enterValidEmail, Toast.LENGTH_SHORT).show();
 			   }
 		   }
 	   });
+	   
 	   resetDialog.setNegativeButton(R.string.reset_cancel, new DialogInterface.OnClickListener() {
-		   
 		   @Override
 		   public void onClick(DialogInterface dialog, int which) {
 			   dialog.dismiss();

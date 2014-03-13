@@ -41,119 +41,85 @@ public class WhosFree extends BaseActivity implements OnClickListener, OnLongCli
 
 	private ArrayList<Post> mPostList;
 	private PostListAdapter mPostAdapter;
-	private ListView mPostLayout;
-	
-	private List<String> mUserList;
 	private PostUserListAdapter mUserAdapter;
 	
-	private String musername;
-	
+	private ListView mPostLayout;
 	private FullPostView fullPost;
-	
 	private Button addFriend;
 	private Button viewRequests;
 	private EditText username;
-	
 	private Button viewAllToggle;
-	private boolean isViewAll = false;
-	
-	private boolean isFullInflated = false;
-	
 	private LinearLayout masterLayout;
 	
+	private boolean isViewAll = false;
+	private boolean isFullInflated = false;
 	
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+	private ParseObject parseFriendRequests;
+	
+   @Override
+   public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       MapsInitializer.initialize(this);
       getWindow().setSoftInputMode(
-             WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+            WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
       int checkGooglePlayServices = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
       if (checkGooglePlayServices != ConnectionResult.SUCCESS) {
          Log.e("WhosFree", "No Google Play Services");
       }
-       
-      ParseQuery<ParseObject> query = ParseQuery.getQuery("FriendRequests");
-	   query.findInBackground(new FindCallback<ParseObject>() {
-		   public void done(List<ParseObject> reqList, ParseException e) {
-			   if (e == null) {
-				   // Check for accepted friend requests
-				   for (ParseObject obj : reqList) {
-					   if (obj != null && obj.getString("OwnedBy").equals(DataStore.getCurrentUser().getEmail())) {
-						   List<String> toAdd = obj.getList("AcceptedRequests");
-						   
-						   if (toAdd != null) {
-							   for (String s : toAdd) {
-								   DataStore.trueAddParseFriend(s);
-							   }
-							   obj.removeAll("AcceptedRequests", toAdd);
-							   obj.saveInBackground();
-						   }
-						   
-						   // Check for friends who have deleted this user
-						   List<String> toDelete = obj.getList("DeletedFriends");
-                     
-						   if (toDelete != null) {
-							   for (String s : toDelete) {
-								   DataStore.removeParseFriend(s);
-							   }
-							   obj.removeAll("DeletedFriends", toDelete);
-							   obj.saveInBackground();
-						   }
-						   
-						   break;
-					   }
-				   }
-			   } else {
-				   Log.d("WhosFree", "Error with FriendsList Query: " + e.getMessage());
-			   }
-		   }
-	   });
-	   
-	   this.mPostList = new ArrayList<Post>();
-	   this.mPostAdapter = new PostListAdapter(this, this.mPostList);
       
-	   this.mUserList = DataStore.getParseFriends();
-	   this.mUserAdapter = new PostUserListAdapter(this, this.mUserList);
-      
-	   Intent i = getIntent();
-	   musername = i.getStringExtra("ParseUser");
-	   setBaseUsername(musername);
-	   setActivityName("WhosFree");
-       
+      setActivityName("WhosFree");
+   }
+   
+   
+   @Override
+   protected void onResume() {
+      super.onResume();
+      parseFriendRequests = DataStore.getParseFriendRequestsObject();
+      if (parseFriendRequests == null) {
+         Log.d("WhosFree", "Null");
+         parseFriendRequests = DataStore.requeryParseFriendRequestsObject();
+      } else {
+         Log.d("WhosFree", "Not null");
+      }
+
+      this.mPostList = new ArrayList<Post>();
+      this.mPostAdapter = new PostListAdapter(this, this.mPostList);
+      this.mUserAdapter = new PostUserListAdapter(this, DataStore.getParseFriends());
 	   initLayout();
 	   initLocationData();
-    }
-    
+   }
+
     /**
      * Initializes all Location-related data.
      */
-    private void initLocationData() {
+   private void initLocationData() {
+      
     	// Get posts/info from database
     	ParseQuery<ParseUser> query = ParseUser.getQuery();
     	
     	query.findInBackground(new FindCallback<ParseUser>() {
-    	  public void done(List<ParseUser> objects, ParseException e) {
-    	    if (e == null) {
-    	      List<String> friends = DataStore.getParseFriends();
-    	        for (ParseUser user : objects) {
-    	           final Date date = user.getDate("TimeFree");
-    	           if (date != null && !user.getUsername().equals(musername) && date.after(new Date()) && friends.contains(user.getUsername())) {
-    	              final ParseGeoPoint gp = user.getParseGeoPoint("Location");
-    	              final LatLng loc = new LatLng(gp.getLatitude(), gp.getLongitude());
-    	              final String userLocation = user.getString("UserLocation");
-    	              
-    	              final Post post = new Post(user.getString("FirstName") + " " + user.getString("LastName"), user.getEmail(), date.toString(), userLocation, loc, user.getObjectId());
-    	              addPost(post);
-    	           }
-    	        }
-    	    } else {
-    	        // Something went wrong.
-    	       Log.e("WhosFree", "Exception in findInBackground");
-    	    }
-    	  }
+    	   public void done(List<ParseUser> objects, ParseException e) {
+    	      if (e == null) {
+    	         List<String> friends = DataStore.getParseFriends();
+    	         final Date timeNow = new Date();
+    	         
+    	         for (ParseUser user : objects) {
+    	            final Date date = user.getDate("TimeFree");
+    	            if (friends.contains(user.getUsername()) && date != null && date.after(timeNow)) {
+    	               final ParseGeoPoint gp = user.getParseGeoPoint("Location");
+    	               final LatLng loc = new LatLng(gp.getLatitude(), gp.getLongitude());
+    	               final String userLocation = user.getString("UserLocation");
+    	               final String fullName = user.getString("FirstName") + " " + user.getString("LastName");
+    	               
+    	               final Post post = new Post(fullName, user.getEmail(), date.toString(), userLocation, loc, user.getObjectId());
+    	               addPost(post);
+    	            }
+ 	            }
+    	      } else {
+    	         // e != null
+    	      }
+    	   }
     	});
-    	// call addPost for each that is still active
     }
     
     /**

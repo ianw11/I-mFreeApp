@@ -8,9 +8,11 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 public class LoginHelper extends LogInCallback {
@@ -37,6 +39,9 @@ public class LoginHelper extends LogInCallback {
    @Override
    public void done(ParseUser user, ParseException e) {
       if (user != null) {
+         // This block of the if-statement handles a successful login
+         
+         DataStore.clearCallStack();
          DataStore.setCurrentUser(user);
          
          List<Object> arr = user.getList("Friends");
@@ -51,9 +56,13 @@ public class LoginHelper extends LogInCallback {
          
          if (isNewUser) {
             ParseObject friendRequests = new ParseObject("FriendRequests");
+            Log.d("LoginHelper", "New FriendRequests object id: " + friendRequests.getObjectId());
             friendRequests.put("OwnedBy", user.getEmail());
             friendRequests.saveInBackground();
-            Log.d("LoginHelper", "Created new FriendRequests object");
+         }
+         
+         if (DataStore.getParseFriendRequestsObject() == null) {
+            DataStore.requeryParseFriendRequestsObject();
          }
          
          Intent i = new Intent(context, ImFree.class);
@@ -63,6 +72,7 @@ public class LoginHelper extends LogInCallback {
          context.startActivity(i);
          context.finish();
       } else {
+         // This block from here down handles a failed login
          if (isFromSplash) {
             Toast.makeText(context, "Failed Login", Toast.LENGTH_SHORT).show();
             Log.d("ParseException", e.toString());

@@ -10,7 +10,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.parse.PushService;
 
 public class BaseActivity extends SherlockFragmentActivity {
-	private String mBaseUsername;
+   
 	private String mActivityName;
 	
 	@Override
@@ -35,22 +35,25 @@ public class BaseActivity extends SherlockFragmentActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		
 		case R.id.menu_imfree:
          finish();
 			break;
 			
 		case R.id.menu_whosfree:
+		   DataStore.addActivityToCallStack(BaseActivity.this);
 			Intent whosFree = new Intent(BaseActivity.this, WhosFree.class);
-         whosFree.putExtra("ParseUser", mBaseUsername);
          startActivity(whosFree);
 			break;
 			
 		case R.id.menu_logout:
 		   PushService.unsubscribe(this, "channel"+DataStore.getCurrentUser().getObjectId());
 			DataStore.clearData();
+			DataStore.clearCallStack();
+			
 			this.getSharedPreferences("edu.calpoly.android.imfree", Context.MODE_PRIVATE).edit().putString("username", "").commit();
+			
          Intent logout = new Intent(BaseActivity.this, LoginActivity.class);
-         logout.putExtra("intent", mActivityName);
          logout.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
          startActivity(logout);
          finish();
@@ -60,10 +63,6 @@ public class BaseActivity extends SherlockFragmentActivity {
 		   break;
 		}
 		return true;
-	}
-	
-	public void setBaseUsername(String name) {
-		mBaseUsername = name;
 	}
 	
 	public void setActivityName(String name) {
