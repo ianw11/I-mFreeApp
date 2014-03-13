@@ -5,6 +5,7 @@ import java.util.Date;
 
 import android.content.Context;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +23,7 @@ import com.parse.ParseUser;
 import com.parse.PushService;
 import com.parse.SaveCallback;
 
-public class ImFree extends BaseActivity implements OnClickListener {
+public class ImFree extends BaseActivity implements OnClickListener, LocationListener {
    
    private TimePicker mTimePicker;
    private Button mPost;
@@ -32,6 +33,9 @@ public class ImFree extends BaseActivity implements OnClickListener {
    private TextView mFreeUntilTime;
    
    private LocationManager locManager;
+   
+   private static final int MIN_TIME_CHANGE = 3000;
+   private static final int MIN_DISTANCE_CHANGE = 3;
    
    @Override
    public void onCreate(Bundle savedInstanceState) {
@@ -179,7 +183,7 @@ public class ImFree extends BaseActivity implements OnClickListener {
    
    private void initLocationData() {
       locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-      //locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,ImFree.MIN_TIME_CHANGE,ImFree.MIN_DISTANCE_CHANGE,this);
+      locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, ImFree.MIN_TIME_CHANGE,ImFree.MIN_DISTANCE_CHANGE,this);
    }
    
    private void initOnClickListeners() {
@@ -223,7 +227,7 @@ public class ImFree extends BaseActivity implements OnClickListener {
             ParseGeoPoint geoPoint = new ParseGeoPoint(currLoc.getLatitude(), currLoc.getLongitude());
             user.put("Location", geoPoint);
             // Remove location updates after posting to save battery
-            //locManager.removeUpdates(ImFree.this);
+            locManager.removeUpdates(ImFree.this);
          }
          else {
             Toast.makeText(ImFree.this, R.string.imFree_gpsNote, Toast.LENGTH_LONG).show();
@@ -267,4 +271,28 @@ public class ImFree extends BaseActivity implements OnClickListener {
          break;
       }
    }
+
+	@Override
+	public void onLocationChanged(Location location) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+		
+	}
 }
