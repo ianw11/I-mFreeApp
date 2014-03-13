@@ -286,11 +286,11 @@ public class WhosFree extends BaseActivity implements OnClickListener, OnLongCli
 			   destroyFullPostView();
 
 			   if (((PostView)v).isUser()) {
-               DataStore.deleteParseFriend(((PostView)v).getUser());
-               mUserAdapter.notifyDataSetChanged();
+				   DataStore.deleteParseFriend(((PostView)v).getUser());
+				   mUserAdapter.notifyDataSetChanged();
 			   } else {
-			      final String email = ((PostView)v).getPost().getEmail();
-			      DataStore.deleteParseFriend(email);
+				   final String email = ((PostView)v).getPost().getEmail();
+				   DataStore.deleteParseFriend(email);
 				   removePost(email);
 				}
 			}

@@ -32,6 +32,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="26dp"
+        android:visibility="invisible"
         android:text="@string/post"
         android:background="@drawable/colored_button"
         android:textColor="@color/buttonText"
@@ -42,8 +43,10 @@
         android:id="@+id/freeFreeUntil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="30dp"
         android:text="@string/free_until"
+        android:textSize="30sp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:padding="5dp" />
 
@@ -52,6 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:visibility="invisible"
         android:layout_below="@id/freeFreeUntil"
         android:background="@drawable/time_selector_border" />
 
@@ -59,10 +63,11 @@
         android:id="@+id/freeUntilTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/freeFreeUntil"
-        android:layout_alignBottom="@id/freeFreeUntil"
+        android:layout_below="@id/freeFreeUntil"
         android:layout_centerHorizontal="true"
+        android:visibility="invisible"
         android:text=""
+        android:textSize="60sp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button

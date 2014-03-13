@@ -67,7 +67,7 @@
     <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="dummy_content">I\'m Free</string>
     <string name="imFree_defaultActiveLocation">No location specified.</string>
-    <string name="imFree_gpsNote">Enable GPS if you would like for friends to see your location on a map.</string>
+    <string name="imFree_gpsNote">Enable GPS if you would like your friends to see your location on a map.</string>
     <string name="whosFree_back">Back</string>
     <string name="whosFree_addFriendHint">Add Friend (Email)</string>
     <string name="whosFree_viewRequests">Friend Requests</string>
@@ -77,7 +77,7 @@
     <string name="whosFree_viewActiveToggle">View Active</string>
     <string name="whosFree_addFriend">Add Friend</string>
     <string name="whosFree_friendReqSent">Your friend request has been sent.</string>
-    <string name="whosFree_longClickDel">Long click to remove a friend.</string>
+    <string name="whosFree_longClickDel">Long click to delete a friend.</string>
     <string name="signUp_notAllFieldsFilledIn">Please fill in all fields</string>
     <string name="signUp_enterValidEmail">Please Enter a Valid Email Address</string>
     <string name="friendRequest_done">Done</string>
