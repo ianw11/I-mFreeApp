@@ -71,6 +71,7 @@ public class FriendRequestsActivity extends SherlockFragmentActivity implements 
 
    @Override
    public void onClick(View v) {
+      DataStore.invalidateParseFriendRequestsObject();
       finish();
    }
 }

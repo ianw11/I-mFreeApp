@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import android.content.Context;
-import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -17,17 +16,13 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.PushService;
 import com.parse.SaveCallback;
 
 public class ImFree extends BaseActivity implements OnClickListener {
-   
-   private String mObjectId;
    
    private TimePicker mTimePicker;
    private Button mPost;
@@ -45,9 +40,7 @@ public class ImFree extends BaseActivity implements OnClickListener {
       
       initLocationData();
       
-      Intent i = getIntent();
       setActivityName("ImFree");
-      mObjectId = i.getStringExtra("ParseObjectId");
       
       initLayout(false);
       initOnClickListeners();

@@ -3,7 +3,6 @@ package edu.calpoly.android.imfree;
 import android.app.Application;
 
 import com.parse.Parse;
-import com.parse.ParseUser;
 
 public class ImFreeApplication extends Application {
    

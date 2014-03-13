@@ -27,7 +27,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
-import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -54,7 +53,7 @@ public class WhosFree extends BaseActivity implements OnClickListener, OnLongCli
 	private boolean isViewAll = false;
 	private boolean isFullInflated = false;
 	
-	private ParseObject parseFriendRequests;
+	private boolean toastAppeared = false;
 	
    @Override
    public void onCreate(Bundle savedInstanceState) {
@@ -74,10 +73,9 @@ public class WhosFree extends BaseActivity implements OnClickListener, OnLongCli
    @Override
    protected void onResume() {
       super.onResume();
-      parseFriendRequests = DataStore.getParseFriendRequestsObject();
-      if (parseFriendRequests == null) {
+      if (DataStore.getParseFriendRequestsObject() == null) {
          Log.d("WhosFree", "Null");
-         parseFriendRequests = DataStore.requeryParseFriendRequestsObject();
+         DataStore.requeryParseFriendRequestsObject();
       } else {
          Log.d("WhosFree", "Not null");
       }
@@ -182,7 +180,11 @@ public class WhosFree extends BaseActivity implements OnClickListener, OnLongCli
             viewAllToggle.setText(R.string.whosFree_viewActiveToggle);
             isViewAll = true;
             this.mPostLayout.setAdapter(mUserAdapter);
-            Toast.makeText(this, R.string.whosFree_longClickDel, Toast.LENGTH_LONG).show();
+            
+            if (!toastAppeared) {
+               Toast.makeText(this, R.string.whosFree_longClickDel, Toast.LENGTH_LONG).show();
+               toastAppeared = true;
+            }
          }
          break;
       

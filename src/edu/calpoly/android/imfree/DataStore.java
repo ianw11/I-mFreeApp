@@ -197,7 +197,7 @@ public class DataStore {
          
          if (toAdd != null) {
             for (String s : toAdd) {
-               DataStore.trueAddParseFriend(s);
+               trueAddParseFriend(s);
             }
             obj.removeAll("AcceptedRequests", toAdd);
             obj.saveInBackground();
@@ -208,7 +208,7 @@ public class DataStore {
          
          if (toDelete != null) {
             for (String s : toDelete) {
-               DataStore.removeParseFriend(s);
+               removeParseFriend(s);
             }
             obj.removeAll("DeletedFriends", toDelete);
             obj.saveInBackground();
@@ -220,14 +220,12 @@ public class DataStore {
       parseFriendRequests = null;
    }
    
-   public static ParseObject requeryParseFriendRequestsObject() {
-      
-      ParseObject parseFriendRequestsObject = null;
+   public static void requeryParseFriendRequestsObject() {
       
       ParseQuery<ParseObject> query = ParseQuery.getQuery("FriendRequests");
       query.whereEqualTo("OwnedBy", getCurrentUserName());
       
-      /*
+
       query.findInBackground(new FindCallback<ParseObject>() {
          @Override
          public void done(List<ParseObject> reqList, ParseException e) {
@@ -243,22 +241,6 @@ public class DataStore {
             }
          }
       });
-      */
-      
-      try {
-         List<ParseObject> friendList = query.find();
-         for (ParseObject obj : friendList) {
-            if (obj != null && obj.getString("OwnedBy").equals(getCurrentEmail())) {
-               setParseFriendRequestsObject(obj);
-               parseFriendRequestsObject = obj;
-               break;
-            }
-         }
-      } catch (ParseException e) {
-         Log.e("DataStore", "Error with FriendsList Query: " + e.getMessage());
-      }
-      
-      return parseFriendRequestsObject;
    }
    
    public static ParseObject getParseFriendRequestsObject() {
