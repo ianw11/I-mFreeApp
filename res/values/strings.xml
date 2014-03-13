@@ -81,5 +81,6 @@
     <string name="signUp_notAllFieldsFilledIn">Please fill in all fields</string>
     <string name="signUp_enterValidEmail">Please Enter a Valid Email Address</string>
     <string name="friendRequest_done">Done</string>
+    <string name="close">Close</string>
 
 </resources>

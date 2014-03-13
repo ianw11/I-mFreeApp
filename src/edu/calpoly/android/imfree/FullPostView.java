@@ -3,6 +3,8 @@ package edu.calpoly.android.imfree;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,34 +18,41 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class FullPostView extends RelativeLayout {
+public class FullPostView extends RelativeLayout implements OnClickListener {
    
    private TextView mPosterNameTextView;
    private TextView mTimeSlotTextView;
    private TextView mLocationTextView;
    
    private Button mIllHangButton;
+   private Button closeButton;
    
    private SupportMapFragment fragment;
    private GoogleMap map;
    
    private Post smallerPost;
+   
+   private WhosFree parentActivity;
 
    public FullPostView(Context context) {
       super(context);
       
       ((Activity)context).getLayoutInflater().inflate(R.layout.full_post_view, this);
       
+      parentActivity = (WhosFree)context;
+      
       mPosterNameTextView = (TextView)findViewById(R.id.fullPostPosterName);
       mPosterNameTextView.setText("");
       mTimeSlotTextView = (TextView)findViewById(R.id.fullPostTimeSlot);
       mLocationTextView = (TextView)findViewById(R.id.fullPostLocation);
       mIllHangButton = (Button)findViewById(R.id.fullPostHangButton);
+      closeButton = (Button)findViewById(R.id.fullPostCloseButton);
       
       /* This is allowing WhosFree to be the handler of a click */
-      mIllHangButton.setOnClickListener((OnClickListener)context);
+      mIllHangButton.setOnClickListener(parentActivity);
+      closeButton.setOnClickListener(this);
       
-      fragment = (SupportMapFragment) ((SherlockFragmentActivity)context).getSupportFragmentManager().findFragmentById(R.id.postMap);
+      fragment = (SupportMapFragment) (parentActivity.getSupportFragmentManager().findFragmentById(R.id.postMap));
       if (fragment == null) {
          Log.e("FullPostView", "Null fragment");
       }
@@ -82,6 +91,11 @@ public class FullPostView extends RelativeLayout {
    
    public Post getPost() {
       return smallerPost;
+   }
+
+   @Override
+   public void onClick(View v) {
+      parentActivity.destroyFullPostView();
    }
 
 }

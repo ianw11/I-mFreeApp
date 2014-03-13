@@ -141,7 +141,7 @@ public class WhosFree extends BaseActivity implements OnClickListener, OnLongCli
 		
 	}
 
-	private void destroyFullPostView() {
+	public void destroyFullPostView() {
 	   if (isFullInflated) {
          masterLayout.removeViewAt(1);
          isFullInflated = false;

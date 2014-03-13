@@ -27,14 +27,30 @@
          android:layout_height="150dp"
          class="com.google.android.gms.maps.SupportMapFragment" />
 
-
-   <Button
-       android:id="@+id/fullPostHangButton"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="@string/illHang_text"
-       android:background="@drawable/colored_button"
-       android:textColor="@color/buttonText"
-       android:textStyle="bold" />
+   <LinearLayout
+       android:layout_width="fill_parent"
+       android:layout_height="fill_parent"
+       android:orientation="horizontal" >
+       
+	   <Button
+	       android:id="@+id/fullPostHangButton"
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content"
+	       android:text="@string/illHang_text"
+	       android:background="@drawable/colored_button"
+	       android:textColor="@color/buttonText"
+	       android:textStyle="bold" />
+	   
+	   <Button 
+	       android:id="@+id/fullPostCloseButton"
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content"
+	       android:text="@string/close"
+	       android:background="@drawable/colored_button"
+	       android:textColor = "@color/buttonText"
+	       android:textStyle="bold"
+	       android:layout_marginLeft="10sp" />
+	   
+   </LinearLayout>
    
 </LinearLayout>
