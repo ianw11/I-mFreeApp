@@ -131,6 +131,7 @@ public class DataStore {
    public static void acceptFriendRequest(final String email) {
 	   DataStore.trueAddParseFriend(email);
 	   ParseQuery<ParseObject> query = ParseQuery.getQuery("FriendRequests");
+	   query.whereEqualTo("OwnedBy", currentUser.getEmail());
 	   query.findInBackground(new FindCallback<ParseObject>() {
 		   public void done(List<ParseObject> reqList, ParseException e) {
 			   if (e == null) {
@@ -151,6 +152,7 @@ public class DataStore {
    
    public static void removeFriendRequest(final String email) {
 	   ParseQuery<ParseObject> query = ParseQuery.getQuery("FriendRequests");
+	   query.whereEqualTo("OwnedBy", currentUser.getEmail());
 	   query.findInBackground(new FindCallback<ParseObject>() {
 		   public void done(List<ParseObject> reqList, ParseException e) {
 			   if (e == null) {
